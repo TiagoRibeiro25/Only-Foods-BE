@@ -1,9 +1,9 @@
 import cors from 'cors';
-import express, { Request, Response } from 'express';
+import express, { Application, Request, Response } from 'express';
 import helmet from 'helmet';
 import handleResponse from './utils/handleResponse';
 
-const app = express();
+const app: Application = express();
 app.use(cors());
 app.use(helmet());
 app.use(express.json({ limit: '15mb' }));
