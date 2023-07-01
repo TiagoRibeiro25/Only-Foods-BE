@@ -6,8 +6,8 @@ interface Props {
 	status: 'success' | 'error';
 	statusCode: number;
 	message: string;
-	data?: any;
-	error?: any;
+	data?: unknown;
+	error?: string;
 }
 
 const handleResponse = (props: Props): void => {
