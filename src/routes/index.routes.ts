@@ -6,4 +6,4 @@ router.route('/').get((_req: Request, res: Response) => {
 	handleResponse({ res, status: 'success', statusCode: 200, message: 'Hello World!' });
 });
 
-module.exports = router;
+export default router;
