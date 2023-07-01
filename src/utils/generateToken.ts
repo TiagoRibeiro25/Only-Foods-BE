@@ -7,6 +7,7 @@ interface GenerateResetPasswordTokenProps {
 
 interface GenerateAuthTokenProps extends GenerateResetPasswordTokenProps {
 	username: string;
+	rememberMe: boolean;
 }
 
 const resetPasswordToken = (props: GenerateResetPasswordTokenProps): string => {
@@ -15,10 +16,11 @@ const resetPasswordToken = (props: GenerateResetPasswordTokenProps): string => {
 };
 
 const authToken = (props: GenerateAuthTokenProps): string => {
-	const token = jwt.sign(props, process.env.JWT_SECRET, {
-		expiresIn: process.env.JWT_EXPIRES_IN,
-	});
+	const expiresIn = props.rememberMe
+		? process.env.JWT_EXPIRES_IN_REMEMBER_ME
+		: process.env.JWT_EXPIRES_IN;
 
+	const token = jwt.sign(props, process.env.JWT_SECRET, { expiresIn });
 	return token;
 };
 
