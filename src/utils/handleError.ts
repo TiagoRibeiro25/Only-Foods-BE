@@ -1,3 +1,4 @@
+import colors from 'colors';
 import { Response } from 'express';
 import ERRORS from '../data/errors.json';
 import handleResponse from './handleResponse';
@@ -18,6 +19,12 @@ const handleError = (props: Props): void => {
 		statusCode: errorFound ? errorFound.status : 500,
 		message: errorFound ? errorFound.message : 'Something went wrong!',
 	});
+
+	// If the status is a 500, then log the error
+	if (!errorFound) {
+		console.log(colors.red('Error: ') + colors.yellow(props.error.name));
+		console.log(colors.red('Message: ') + colors.yellow(props.error.message));
+	}
 };
 
 export default handleError;
