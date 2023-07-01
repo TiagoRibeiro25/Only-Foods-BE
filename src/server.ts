@@ -1,10 +1,12 @@
 import colors from 'colors';
+import checkEnvs from './utils/checkEnvs';
 
 if (process.env.NODE_ENV !== 'production') {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	require('dotenv').config();
 }
 
-if (!require('./utils/checkEnvs')()) {
+if (!checkEnvs()) {
 	process.exit(1);
 }
 

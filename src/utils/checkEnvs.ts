@@ -9,7 +9,7 @@ const VALID_ENVS = [
 ];
 
 /** Check if all the required environment variables are set */
-module.exports = (): boolean => {
+const checkEnvs = (): boolean => {
 	const missingEnvs = VALID_ENVS.filter(env => !process.env[env]);
 	if (missingEnvs.length) {
 		console.log(
@@ -20,3 +20,5 @@ module.exports = (): boolean => {
 	}
 	return true;
 };
+
+export default checkEnvs;
