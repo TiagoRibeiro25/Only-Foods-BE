@@ -4,6 +4,10 @@
 		"status": 400
 	},
 	{
+		"message": "Invalid username",
+		"status": 400
+	},
+	{
 		"message": "Invalid email",
 		"status": 400
 	},
@@ -42,5 +46,9 @@
 	{
 		"message": "Account not found",
 		"status": 404
+	},
+	{
+		"message": "Email already in use",
+		"status": 409
 	}
 ]
