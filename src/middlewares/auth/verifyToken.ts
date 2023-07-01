@@ -1,10 +1,10 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { DecodedToken, Request } from 'types';
-import handleError from 'utils/handleError';
 import generateToken from '../../utils/generateToken';
+import handleError from '../../utils/handleError';
 
-export default (req: Request, res: Response, next: NextFunction) => {
+export default (req: Request, res: Response, next: NextFunction): void => {
 	// Get auth header value
 	const token = req.cookies['authorization'];
 
@@ -25,13 +25,20 @@ export default (req: Request, res: Response, next: NextFunction) => {
 				id: decoded.id,
 				email: decoded.email,
 				username: decoded.username,
+				rememberMe: decoded.rememberMe,
 			});
 
 			// Update the cookie
-			res.cookie('authorization', newToken, {
+			const cookieOptions = {
 				httpOnly: true,
-				maxAge: parseInt(process.env.JWT_EXPIRES_IN),
-			});
+				maxAge: parseInt(
+					decoded.rememberMe
+						? process.env.JWT_EXPIRES_IN_REMEMBER_ME
+						: process.env.JWT_EXPIRES_IN,
+				),
+			};
+
+			res.cookie('authorization', newToken, cookieOptions);
 		}
 
 		// Set the decoded token in the request
