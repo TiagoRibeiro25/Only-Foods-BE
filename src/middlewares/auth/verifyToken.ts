@@ -1,17 +1,8 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { DecodedToken, Request } from 'types';
+import handleError from 'utils/handleError';
 import generateToken from '../../utils/generateToken';
-import handleResponse from '../../utils/handleResponse';
-
-// Possible errors
-const ERRORS = [
-	{ message: 'No token provided!', status: 401 },
-	{ message: 'invalid token', status: 403 },
-	{ message: 'jwt expired', status: 403 },
-	{ message: 'jwt malformed', status: 403 },
-	{ message: 'jwt not active', status: 403 },
-];
 
 module.exports = (req: Request, res: Response, next: NextFunction) => {
 	// Get auth header value
@@ -49,16 +40,6 @@ module.exports = (req: Request, res: Response, next: NextFunction) => {
 		// Call the next middleware
 		next();
 	} catch (error: any) {
-		// Find the error
-		const errorFound = ERRORS.find(err => err.message === error.message);
-
-		// Send the response (if the error is not found, then send 500)
-		handleResponse({
-			res,
-			status: 'error',
-			statusCode: errorFound ? errorFound.status : 500,
-			message: errorFound ? errorFound.message : 'Something went wrong!',
-			error: errorFound ? undefined : error,
-		});
+		handleError({ res, error });
 	}
 };

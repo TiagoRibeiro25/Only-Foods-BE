@@ -1,0 +1,22 @@
+[
+	{
+		"message": "No token provided!",
+		"status": 401
+	},
+	{
+		"message": "invalid token",
+		"status": 403
+	},
+	{
+		"message": "jwt expired",
+		"status": 403
+	},
+	{
+		"message": "jwt malformed",
+		"status": 403
+	},
+	{
+		"message": "jwt not active",
+		"status": 403
+	}
+]
