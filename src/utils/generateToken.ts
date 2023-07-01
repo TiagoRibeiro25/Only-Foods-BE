@@ -1,12 +1,20 @@
 import jwt from 'jsonwebtoken';
 
-interface Props {
+interface GenerateResetPasswordTokenProps {
 	id: string;
 	email: string;
+}
+
+interface GenerateAuthTokenProps extends GenerateResetPasswordTokenProps {
 	username: string;
 }
 
-const generateToken = (props: Props): string => {
+const resetPasswordToken = (props: GenerateResetPasswordTokenProps): string => {
+	const token = jwt.sign(props, process.env.JWT_SECRET);
+	return token;
+};
+
+const authToken = (props: GenerateAuthTokenProps): string => {
 	const token = jwt.sign(props, process.env.JWT_SECRET, {
 		expiresIn: process.env.JWT_EXPIRES_IN,
 	});
@@ -14,4 +22,4 @@ const generateToken = (props: Props): string => {
 	return token;
 };
 
-export default generateToken;
+export default { resetPasswordToken, authToken };
