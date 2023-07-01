@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import { Request } from 'types';
 import handleError from '../../utils/handleError';
-import validateEmail from '../../utils/validateEmail';
+import validateData from '../../utils/validateData';
 
 interface LoginData {
 	email: string;
@@ -10,7 +10,7 @@ interface LoginData {
 }
 
 export default (req: Request, res: Response, next: NextFunction) => {
-	req.body.email = req.body.email.toLowerCase().trim();
+	req.body.email = req.body.email?.toLowerCase().trim();
 	const { email, password, rememberMe }: LoginData = req.body;
 
 	try {
@@ -26,7 +26,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
 			throw new Error('Invalid remember me');
 		}
 
-		if (!validateEmail(email)) {
+		if (!validateData.email(email)) {
 			throw new Error('Invalid email');
 		}
 
