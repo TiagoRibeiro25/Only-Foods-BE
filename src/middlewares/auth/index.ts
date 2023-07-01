@@ -1,3 +1,3 @@
-module.exports = {
-	verifyToken: require('./verifyToken'),
-};
+import verifyToken from './verifyToken';
+
+export default { verifyToken };
