@@ -1,6 +1,26 @@
 [
 	{
-		"message": "No token provided!",
+		"message": "All fields are required",
+		"status": 400
+	},
+	{
+		"message": "Invalid email",
+		"status": 400
+	},
+	{
+		"message": "Invalid email or password",
+		"status": 400
+	},
+	{
+		"message": "Invalid remember me",
+		"status": 400
+	},
+	{
+		"message": "Invalid password",
+		"status": 401
+	},
+	{
+		"message": "No token provided",
 		"status": 401
 	},
 	{
@@ -18,5 +38,9 @@
 	{
 		"message": "jwt not active",
 		"status": 403
+	},
+	{
+		"message": "Account not found",
+		"status": 404
 	}
 ]
