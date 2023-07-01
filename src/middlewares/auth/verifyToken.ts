@@ -17,8 +17,10 @@ export default (req: Request, res: Response, next: NextFunction) => {
 		// Verify token
 		const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
 
-		// If the token was generated "JWT_GENERATE_TOKEN_IN" seconds ago, then generate a new one
-		if (Date.now() / 1000 - decoded.iat > parseInt(process.env.JWT_GENERATE_TOKEN_IN)) {
+		// If the token was generated "JWT_GENERATE_TOKEN_IN" milliseconds ago, then generate a new one
+		const tokenExpiration = parseInt(process.env.JWT_GENERATE_TOKEN_IN);
+		const shouldGenerateNewToken = Date.now() - decoded.iat * 1000 > tokenExpiration;
+		if (shouldGenerateNewToken) {
 			const newToken = generateToken.authToken({
 				id: decoded.id,
 				email: decoded.email,
