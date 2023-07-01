@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String            @id @default(cuid()) @map("_id")
+  email              String            @unique
+  username           String
+  password           String
+  description        String?
+  resetPasswordToken String
+  userImage          UserImage?
+  following          Following[]       @relation("UserFollowing")
+  followers          Following[]       @relation("UserFollowers")
+  thoughts           Thought[]
+  recipes            Recipe[]
+  likes              Like[]
+  comments           Comment[]
+  groups             GroupMembership[]
+  chatroom           ChatRoom?         @relation(fields: [chatRoomId], references: [id])
+  chatRoomId         String?
+  messages           Message[]
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+}
+
+model UserImage {
+  id              String @id @default(cuid()) @map("_id")
+  cloudinaryImage String
+  cloudinaryId    String
+  user            User   @relation(fields: [userId], references: [id])
+  userId          String @unique
+}
+
+model Following {
+  id          String   @id @default(cuid()) @map("_id")
+  follower    User     @relation("UserFollowing", fields: [followerId], references: [id])
+  followerId  String
+  following   User     @relation("UserFollowers", fields: [followingId], references: [id])
+  followingId String
+  createdAt   DateTime @default(now())
+}
+
+model Group {
+  id        String            @id @default(cuid()) @map("_id")
+  name      String
+  members   GroupMembership[]
+  thoughts  Thought[]
+  recipes   Recipe[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model GroupMembership {
+  id        String   @id @default(cuid()) @map("_id")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  group     Group    @relation(fields: [groupId], references: [id])
+  groupId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, groupId])
+}
+
+model Thought {
+  id        String    @id @default(cuid()) @map("_id")
+  content   String
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String    @unique
+  likes     Like[]
+  comments  Comment[]
+  group     Group?    @relation(fields: [groupId], references: [id])
+  groupId   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Like {
+  id        String   @id @default(cuid()) @map("_id")
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  thought   Thought? @relation(fields: [thoughtId], references: [id])
+  thoughtId String?
+  recipe    Recipe?  @relation(fields: [recipeId], references: [id])
+  recipeId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([authorId, thoughtId])
+  @@unique([authorId, recipeId])
+}
+
+model Comment {
+  id        String   @id @default(cuid()) @map("_id")
+  content   String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  thought   Thought? @relation(fields: [thoughtId], references: [id])
+  thoughtId String?
+  recipe    Recipe?  @relation(fields: [recipeId], references: [id])
+  recipeId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([authorId, thoughtId])
+  @@unique([authorId, recipeId])
+}
+
+model Recipe {
+  id           String        @id @default(cuid()) @map("_id")
+  title        String
+  recipeImages RecipeImage[]
+  author       User          @relation(fields: [authorId], references: [id])
+  authorId     String
+  ingredients  String[]
+  instructions String[]
+  notes        String
+  likes        Like[]
+  comments     Comment[]
+  group        Group?        @relation(fields: [groupId], references: [id])
+  groupId      String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model RecipeImage {
+  id              String @id @default(cuid()) @map("_id")
+  cloudinaryImage String
+  cloudinaryId    String
+  recipe          Recipe @relation(fields: [recipeId], references: [id])
+  recipeId        String @unique
+}
+
+model ChatRoom {
+  id        String    @id @default(cuid()) @map("_id")
+  members   User[]
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid()) @map("_id")
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  room      ChatRoom @relation(fields: [roomId], references: [id])
+  roomId    String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
