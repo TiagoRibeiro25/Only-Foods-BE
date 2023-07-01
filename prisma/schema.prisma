@@ -16,7 +16,7 @@ model User {
   username           String
   password           String
   description        String?
-  resetPasswordToken String
+  resetPasswordToken String            @default("")
   userImage          UserImage?
   following          Following[]       @relation("UserFollowing")
   followers          Following[]       @relation("UserFollowers")
