@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { AsyncRouter } from 'types';
-import UsersController from '../controllers/users/index';
-import AuthMiddlewares from '../middlewares/auth/index';
-import UsersMiddlewares from '../middlewares/users/index';
+import UsersController from '../controllers/users/index.users.controllers';
+import AuthMiddlewares from '../middlewares/auth/index.auth.middleware';
+import UsersMiddlewares from '../middlewares/users/index.users.middleware';
 
 const router: AsyncRouter = Router();
 
