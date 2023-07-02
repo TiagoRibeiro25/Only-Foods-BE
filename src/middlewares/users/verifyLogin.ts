@@ -9,7 +9,7 @@ interface LoginData {
 	rememberMe: boolean;
 }
 
-export default (req: Request, res: Response, next: NextFunction) => {
+export default (req: Request, res: Response, next: NextFunction): void => {
 	req.body.email = req.body.email?.toLowerCase().trim();
 	const { email, password, rememberMe }: LoginData = req.body;
 

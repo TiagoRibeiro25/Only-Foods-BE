@@ -10,7 +10,7 @@ interface RegisterData {
 	password: string;
 }
 
-export default async (req: Request, res: Response, next: NextFunction) => {
+export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	req.body.email = req.body.email?.toLowerCase().trim();
 	const { username, email, password }: RegisterData = req.body;
 

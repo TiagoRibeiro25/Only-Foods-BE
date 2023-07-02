@@ -1,8 +1,9 @@
 import { Router } from 'express';
+import { AsyncRouter } from 'types';
 import UsersController from '../controllers/users/index';
 import UsersMiddlewares from '../middlewares/users/index';
 
-const router = Router();
+const router: AsyncRouter = Router();
 
 router.route('/login').post(UsersMiddlewares.verifyLogin, UsersController.login);
 
