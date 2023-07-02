@@ -31,4 +31,31 @@ interface AsyncRouter extends Router {
 		path: string,
 		...handlers: Array<(req: Request, res: Response, next: NextFunction) => Promise<void>>
 	): this;
+
+	put(
+		path: string,
+		...handlers: Array<(req: Request, res: Response, next: NextFunction) => void>
+	): this;
+	put(
+		path: string,
+		...handlers: Array<(req: Request, res: Response, next: NextFunction) => Promise<void>>
+	): this;
+
+	delete(
+		path: string,
+		...handlers: Array<(req: Request, res: Response, next: NextFunction) => void>
+	): this;
+	delete(
+		path: string,
+		...handlers: Array<(req: Request, res: Response, next: NextFunction) => Promise<void>>
+	): this;
+
+	patch(
+		path: string,
+		...handlers: Array<(req: Request, res: Response, next: NextFunction) => void>
+	): this;
+	patch(
+		path: string,
+		...handlers: Array<(req: Request, res: Response, next: NextFunction) => Promise<void>>
+	): this;
 }
