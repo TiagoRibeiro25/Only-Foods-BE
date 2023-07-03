@@ -6,7 +6,7 @@ type PersonData = {
 };
 
 interface Props {
-	from: PersonData;
+	from: string;
 	to: PersonData[];
 	subject: string;
 	content: string;
@@ -24,7 +24,7 @@ export default async (props: Props): Promise<void> => {
 			{
 				From: {
 					Email: process.env.MAILJET_FROM_EMAIL,
-					Name: `${props.from.name} - ${props.from.email}`,
+					Name: props.from,
 				},
 				To: props.to,
 				Subject: props.subject,

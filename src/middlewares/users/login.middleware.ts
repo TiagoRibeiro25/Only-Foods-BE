@@ -14,7 +14,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 	const { email, password, rememberMe }: LoginData = req.body;
 
 	try {
-		if (!email || !password || !rememberMe) {
+		if (!email || !password || rememberMe === undefined) {
 			throw new Error('All fields are required');
 		}
 
