@@ -10,6 +10,10 @@ router.route('/login').post(UsersMiddlewares.verifyLogin, UsersController.login)
 
 router.route('/').post(UsersMiddlewares.verifyRegister, UsersController.register);
 
+router
+	.route('/forgot-password')
+	.post(UsersMiddlewares.forgotPasswordMiddleware, UsersController.forgotPassword);
+
 router.get('/:id', AuthMiddlewares.verifyToken, UsersController.getUser);
 
 export default router;

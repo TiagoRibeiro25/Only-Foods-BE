@@ -8,10 +8,12 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 	const email: string = req.body.email;
 
 	try {
+		// Check if the email is provided
 		if (!email) {
 			throw new Error('All fields are required');
 		}
 
+		// Check if the email is valid
 		if (typeof email !== 'string' || !validateData.email(email)) {
 			throw new Error('Invalid email');
 		}

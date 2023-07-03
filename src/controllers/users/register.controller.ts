@@ -32,7 +32,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 			const resetPwToken = generateToken.resetPasswordToken({
 				id: createdUser.id,
-				email: createdUser.email,
 			});
 
 			await prisma.user.update({

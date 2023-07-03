@@ -2,16 +2,16 @@ import jwt from 'jsonwebtoken';
 
 interface GenerateResetPasswordTokenProps {
 	id: string;
-	email: string;
 }
 
 interface GenerateAuthTokenProps extends GenerateResetPasswordTokenProps {
+	email: string;
 	username: string;
 	rememberMe: boolean;
 }
 
 const resetPasswordToken = (props: GenerateResetPasswordTokenProps): string => {
-	const token = jwt.sign(props, process.env.JWT_SECRET);
+	const token = jwt.sign({ uniqueNumber: Date.now(), ...props }, process.env.JWT_SECRET);
 	return token;
 };
 
