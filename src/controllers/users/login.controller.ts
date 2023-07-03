@@ -26,7 +26,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Compare the password provided with the one in the database
 		const passwordMath = bcrypt.compareSync(password, user.password);
 		if (!passwordMath) {
-			throw new Error('Invalid password');
+			throw new Error('Password does not match');
 		}
 
 		// Create a token for the user

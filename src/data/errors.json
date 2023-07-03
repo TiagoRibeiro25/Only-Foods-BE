@@ -12,6 +12,10 @@
 		"status": 400
 	},
 	{
+		"message": "Invalid password",
+		"status": 400
+	},
+	{
 		"message": "Invalid email or password",
 		"status": 400
 	},
@@ -20,7 +24,7 @@
 		"status": 400
 	},
 	{
-		"message": "Invalid password",
+		"message": "Password does not match",
 		"status": 401
 	},
 	{
