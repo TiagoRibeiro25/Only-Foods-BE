@@ -8,6 +8,11 @@ interface Props {
 	data?: unknown;
 }
 
+/**
+ * Handle the response and send it
+ * @param props - The response and the data to send
+ * @returns {void}
+ */
 const handleResponse = (props: Props): void => {
 	const { res, status, statusCode, message, data } = props;
 

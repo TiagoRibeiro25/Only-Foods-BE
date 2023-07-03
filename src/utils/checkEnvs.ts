@@ -8,7 +8,10 @@ const VALID_ENVS = [
 	'JWT_GENERATE_TOKEN_IN',
 ];
 
-/** Check if all the required environment variables are set */
+/**
+ * Check if all the required environment variables are set
+ * @returns {boolean} true if all the required environment variables are set, false otherwise
+ */
 const checkEnvs = (): boolean => {
 	const missingEnvs = VALID_ENVS.filter(env => !process.env[env]);
 	if (missingEnvs.length) {

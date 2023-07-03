@@ -8,6 +8,11 @@ interface Props {
 	error: Error;
 }
 
+/**
+ * Handle an error and send the response
+ * @param props - The response and the error
+ * @returns {void}
+ */
 const handleError = (props: Props): void => {
 	// Find the error
 	const errorFound = ERRORS.find(err => err.message === props.error.message);
