@@ -11,7 +11,7 @@ import handleError from '../../utils/handleError';
  ** Important: This middleware doesn't check if the token is mandatory or not
  */
 export default (req: Request, res: Response, next: NextFunction): void => {
-	// Get auth header value
+	// Get token value
 	const token = req.cookies['authorization'];
 
 	try {
