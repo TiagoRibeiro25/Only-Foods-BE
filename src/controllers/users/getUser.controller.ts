@@ -110,7 +110,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			});
 		}
 
-		// if there's no token, return the user data
+		// If there's no token, return the user data
 		handleResponse({
 			res,
 			status: 'success',

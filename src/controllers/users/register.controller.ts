@@ -16,10 +16,10 @@ export default async (req: Request, res: Response): Promise<void> => {
 	const { username, email, password }: RegisterData = req.body;
 
 	try {
-		// encrypt the password
+		// Encrypt the password
 		const passwordEncrypted = await bcrypt.hash(password, 10);
 
-		// create the user and generate reset password token in one database transaction
+		// Create the user and generate reset password token in one database transaction
 		await prisma.$transaction(async prisma => {
 			const createdUser = await prisma.user.create({
 				data: {

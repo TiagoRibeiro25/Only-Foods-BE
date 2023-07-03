@@ -16,20 +16,20 @@ export default async (req: Request, res: Response): Promise<void> => {
 	const { email, password, rememberMe }: LoginData = req.body;
 
 	try {
-		// search if there's a user with the email provided
+		// Search if there's a user with the email provided
 		const user = await prisma.user.findUnique({ where: { email } });
 
 		if (!user) {
 			throw new Error('Account not found');
 		}
 
-		// compare the password provided with the one in the database
+		// Compare the password provided with the one in the database
 		const passwordMath = bcrypt.compareSync(password, user.password);
 		if (!passwordMath) {
 			throw new Error('Invalid password');
 		}
 
-		// create a token for the user
+		// Create a token for the user
 		const token = generateToken.authToken({
 			id: user.id,
 			email: user.email,
@@ -37,7 +37,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			rememberMe,
 		});
 
-		// set the cookie
+		// Set the cookie
 		const cookieOptions = {
 			httpOnly: true,
 			maxAge: parseInt(
@@ -47,7 +47,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 		res.cookie('authorization', token, cookieOptions);
 
-		// send the response
+		// Send the response
 		handleResponse({
 			res,
 			status: 'success',

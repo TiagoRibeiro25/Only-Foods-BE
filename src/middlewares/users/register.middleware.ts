@@ -35,7 +35,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			throw new Error('Invalid email');
 		}
 
-		// verify if the email is already in use
+		// Verify if the email is already in use
 		const user = await prisma.user.findUnique({ where: { email } });
 
 		if (user) {

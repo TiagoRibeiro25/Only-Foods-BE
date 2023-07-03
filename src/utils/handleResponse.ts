@@ -19,7 +19,7 @@ const handleResponse = (props: Props): void => {
 	res.status(statusCode).json({
 		success: status === 'success',
 		message,
-		...(data && { data }), // if the data is undefined, then don't send it
+		...(data && { data }), // If the data is undefined, then don't send it
 	});
 };
 

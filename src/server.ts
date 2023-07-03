@@ -18,7 +18,7 @@ app.listen(PORT, () => {
 	console.clear();
 	console.log(colors.cyan('Starting the server...'));
 
-	// connect to the database
+	// Connect to the database
 	prisma
 		.$connect()
 		.then(() => {

@@ -4,16 +4,17 @@ import { DecodedToken, Request } from 'types';
 import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
 
+/**
+ * Middleware that handles the token
+ * This middleware will check if the token is valid and if it is, it will set the decoded token in the request
+ * If the token is not valid, it will call the error handler middleware
+ ** Important: This middleware doesn't check if the token is mandatory or not
+ */
 export default (req: Request, res: Response, next: NextFunction): void => {
 	// Get auth header value
 	const token = req.cookies['authorization'];
 
 	try {
-		//TODO: Do this in the route that needs it
-		// (if req.tokenData is undefined, then throw an error)
-		// Check if the token is undefined
-		// throw new Error('No token provided');
-
 		if (token) {
 			// Verify token
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
