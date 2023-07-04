@@ -14,7 +14,7 @@ const email = (emailInput: string): boolean => {
  * @returns {boolean} - Whether the username is valid or not
  */
 const username = (usernameInput: string): boolean => {
-	const usernameRegex = /^[a-zA-Z0-9_-]{3,20}$/;
+	const usernameRegex = /^[a-zA-Z0-9_-]{4,20}$/;
 	return usernameRegex.test(usernameInput);
 };
 
