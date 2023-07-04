@@ -1,3 +1,4 @@
-import verifyToken from './handleToken.middleware';
+import handleToken from './handleToken.middleware';
+import verifyToken from './verifyToken.middleware';
 
-export default { verifyToken };
+export default { handleToken, verifyToken };

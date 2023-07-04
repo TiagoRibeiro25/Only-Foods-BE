@@ -4,8 +4,8 @@ import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
-const getUser = async (id: string) => {
-	const user = await prisma.user.findUnique({
+const getUser = (id: string) => {
+	return prisma.user.findUnique({
 		where: {
 			id: id,
 		},
@@ -56,8 +56,6 @@ const getUser = async (id: string) => {
 			},
 		},
 	});
-
-	return user;
 };
 
 export default async (req: Request, res: Response): Promise<void> => {

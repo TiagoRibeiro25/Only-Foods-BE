@@ -8,12 +8,16 @@ const router: AsyncRouter = Router();
 
 router.route('/login').post(UsersMiddlewares.verifyLogin, UsersController.login);
 
-router.route('/').post(UsersMiddlewares.verifyRegister, UsersController.register);
-
 router
 	.route('/forgot-password')
-	.post(UsersMiddlewares.forgotPasswordMiddleware, UsersController.forgotPassword);
+	.post(UsersMiddlewares.forgotPassword, UsersController.forgotPassword);
 
-router.get('/:id', AuthMiddlewares.verifyToken, UsersController.getUser);
+router
+	.route('/reset-password/:token')
+	.patch(UsersMiddlewares.resetPassword, UsersController.resetPassword);
+
+router.route('/').post(UsersMiddlewares.verifyRegister, UsersController.register);
+
+router.get('/:id', AuthMiddlewares.handleToken, UsersController.getUser);
 
 export default router;
