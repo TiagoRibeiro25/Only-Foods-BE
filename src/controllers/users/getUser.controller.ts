@@ -16,43 +16,13 @@ const getUser = (id: string) => {
 			createdAt: true,
 			updatedAt: true,
 			userImage: {
-				select: { cloudinaryImage: true, cloudinaryId: true },
+				select: { cloudinaryImage: true },
 			},
 			followers: {
-				select: { id: true },
+				select: { id: true, followerId: true },
 			},
 			following: {
-				select: { id: true },
-			},
-			groups: {
-				select: {
-					group: {
-						select: {
-							id: true,
-							name: true,
-							members: { select: { id: true } },
-						},
-					},
-				},
-			},
-			thoughts: {
-				where: { groupId: null },
-				select: {
-					id: true,
-					content: true,
-					likes: { select: { id: true } },
-					comments: { select: { id: true } },
-				},
-			},
-			recipes: {
-				where: { groupId: null },
-				select: {
-					id: true,
-					title: true,
-					recipeImages: { select: { cloudinaryImage: true, cloudinaryId: true } },
-					likes: { select: { id: true } },
-					comments: { select: { id: true } },
-				},
+				select: { id: true, followingId: true },
 			},
 		},
 	});
@@ -97,7 +67,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			// Check if the logged user is following the user
 			const isFollowing = isLoggedUser
 				? null
-				: user.followers.some(follower => follower.id === req.tokenData.id);
+				: user.followers.some(follower => follower.followerId === req.tokenData.id);
 
 			return handleResponse({
 				res,
