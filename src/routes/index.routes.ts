@@ -9,4 +9,8 @@ router.route('/').get((_req: Request, res: Response) => {
 
 router.use('/users', usersRoutes);
 
+router.use((_req: Request, res: Response) => {
+	handleResponse({ res, status: 'error', statusCode: 404, message: 'Not Found' });
+});
+
 export default router;

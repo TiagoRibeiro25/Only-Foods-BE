@@ -17,10 +17,6 @@ if (process.env.NODE_ENV !== 'production' && process.env.ENABLE_LOGGING === 'tru
 
 import routes from './routes/index.routes';
 
-app.use('/api', routes);
-
-app.use((_req: Request, res: Response) => {
-	handleResponse({ res, status: 'error', statusCode: 404, message: 'Not Found' });
-});
+app.use('/api', routes); // Enable Routes
 
 export default app;
