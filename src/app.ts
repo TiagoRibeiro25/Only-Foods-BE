@@ -10,7 +10,7 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(express.json({ limit: '15mb' }));
 
-if (process.env.ENABLE_LOGGING === 'true') {
+if (process.env.NODE_ENV !== 'production' && process.env.ENABLE_LOGGING === 'true') {
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	app.use(require('morgan')('dev'));
 }
