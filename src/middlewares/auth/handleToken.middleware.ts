@@ -1,4 +1,4 @@
-import { NextFunction, Response } from 'express';
+import { CookieOptions, NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { DecodedToken, Request } from 'types';
 import generateToken from '../../utils/generateToken';
@@ -31,7 +31,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 				});
 
 				// Update the cookie
-				const cookieOptions = {
+				const cookieOptions: CookieOptions = {
 					httpOnly: true,
 					secure: process.env.NODE_ENV === 'production',
 					maxAge: parseInt(
