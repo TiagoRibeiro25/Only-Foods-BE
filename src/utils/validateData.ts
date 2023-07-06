@@ -9,13 +9,17 @@ const email = (emailInput: string): boolean => {
 };
 
 /**
- * Validate a username (can only have letters, numbers, underscores, hyphens, no spaces, and must be between 3 and 20 characters)
+ * Validate a username
+ * - Can only have letters, numbers, underscores, hyphens, and one space between words
+ * - Must be between 4 and 20 characters
  * @param usernameInput - The username to validate
  * @returns {boolean} - Whether the username is valid or not
  */
 const username = (usernameInput: string): boolean => {
-	const usernameRegex = /^[a-zA-Z0-9_-]{4,20}$/;
-	return usernameRegex.test(usernameInput);
+	const usernameRegex = /^[a-zA-Z0-9_\\-]+( [a-zA-Z0-9_\\-]+)*$/;
+	const isValidFormat = usernameRegex.test(usernameInput);
+	const isValidLength = usernameInput.length >= 4 && usernameInput.length <= 20;
+	return isValidFormat && isValidLength;
 };
 
 export default { email, username };

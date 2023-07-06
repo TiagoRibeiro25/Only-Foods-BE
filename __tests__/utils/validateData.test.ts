@@ -30,7 +30,7 @@ describe('validateUtils', () => {
 
 	describe('username', () => {
 		it('should return true for a valid username', () => {
-			const validUsernames = ['john_doe', 'user123', 'jane-doe'];
+			const validUsernames = ['john_doe', 'user123', 'jane-doe', 'john doe'];
 
 			validUsernames.forEach(username => {
 				const isValid = validateUtils.username(username);
@@ -39,15 +39,12 @@ describe('validateUtils', () => {
 		});
 
 		it('should return false for an invalid username', () => {
-			const invalidUsernames = [
-				'123',
-				'user@name',
-				'john doe',
-				'user12345678901234567890',
-			];
+			const invalidUsernames = ['123', 'user@name', 'user12345678901234567890'];
 
 			invalidUsernames.forEach(username => {
 				const isValid = validateUtils.username(username);
+				console.log(username, isValid);
+
 				expect(isValid).toBe(false);
 			});
 		});
