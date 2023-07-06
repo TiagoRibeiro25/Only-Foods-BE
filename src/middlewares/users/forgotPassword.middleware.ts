@@ -14,7 +14,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 		}
 
 		// Check if the email is valid
-		if (typeof email !== 'string' || !validateData.email(email)) {
+		if (!validateData.email(email)) {
 			throw new Error('Invalid email');
 		}
 

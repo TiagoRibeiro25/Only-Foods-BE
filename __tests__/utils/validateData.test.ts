@@ -1,52 +1,105 @@
 import validateUtils from '../../src/utils/validateData';
 
-describe('validateUtils', () => {
-	describe('email', () => {
-		it('should return true for a valid email', () => {
-			const validEmails = ['test@example.com', 'user123@test.co', 'john.doe@test.com'];
+describe('email', () => {
+	it('should return true for a valid email', () => {
+		const validEmails = ['test@example.com', 'user123@test.co', 'john.doe@test.com'];
 
-			validEmails.forEach(email => {
-				const isValid = validateUtils.email(email);
-				expect(isValid).toBe(true);
-			});
-		});
-
-		it('should return false for an invalid email', () => {
-			const invalidEmails = [
-				'test',
-				'test@',
-				'test@example',
-				'test@example.',
-				'test@example.c',
-				'@example.com',
-			];
-
-			invalidEmails.forEach(email => {
-				const isValid = validateUtils.email(email);
-				expect(isValid).toBe(false);
-			});
+		validEmails.forEach(email => {
+			const isValid = validateUtils.email(email);
+			expect(isValid).toBe(true);
 		});
 	});
 
-	describe('username', () => {
-		it('should return true for a valid username', () => {
-			const validUsernames = ['john_doe', 'user123', 'jane-doe', 'john doe'];
+	it('should return false for an invalid email', () => {
+		const invalidEmails = [
+			'test',
+			'test@',
+			'test@example',
+			'test@example.',
+			'test@example.c',
+			'@example.com',
+		];
 
-			validUsernames.forEach(username => {
-				const isValid = validateUtils.username(username);
-				expect(isValid).toBe(true);
-			});
+		invalidEmails.forEach(email => {
+			const isValid = validateUtils.email(email);
+			expect(isValid).toBe(false);
 		});
+	});
+});
 
-		it('should return false for an invalid username', () => {
-			const invalidUsernames = ['123', 'user@name', 'user12345678901234567890'];
+describe('username', () => {
+	it('should return true for a valid username', () => {
+		const validUsernames = ['john_doe', 'user123', 'jane-doe', 'john doe'];
 
-			invalidUsernames.forEach(username => {
-				const isValid = validateUtils.username(username);
-				console.log(username, isValid);
+		validUsernames.forEach(username => {
+			const isValid = validateUtils.username(username);
+			expect(isValid).toBe(true);
+		});
+	});
 
-				expect(isValid).toBe(false);
-			});
+	it('should return false for an invalid username', () => {
+		const invalidUsernames = ['123', 'user@name', 'user12345678901234567890'];
+
+		invalidUsernames.forEach(username => {
+			const isValid = validateUtils.username(username);
+			expect(isValid).toBe(false);
+		});
+	});
+});
+
+describe('description', () => {
+	it('should return true for a valid description', () => {
+		const validDescriptions = [
+			'This is a valid description.',
+			'A valid description with punctuation marks: !?.,',
+			'A valid description with numbers: 1234567890',
+		];
+
+		validDescriptions.forEach(description => {
+			const isValid = validateUtils.description(description);
+			expect(isValid).toBe(true);
+		});
+	});
+
+	it('should return false for an invalid description', () => {
+		const invalidDescriptions = [
+			'Short',
+			'A description with invalid characters #@$%',
+			'A very long description that exceeds the maximum limit of 200 characters. A very long description that exceeds the maximum limit of 200 characters. A very long description that exceeds the maximum limit of 200 characters.',
+		];
+
+		invalidDescriptions.forEach(description => {
+			const isValid = validateUtils.description(description);
+			expect(isValid).toBe(false);
+		});
+	});
+});
+
+describe('base64Image', () => {
+	it('should return true for a valid base64 image', () => {
+		const validImages = [
+			'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAEElEQVQImWP4z8DwHwAFAAJ/uC+c8AAAAASUVORK5CYII=',
+			'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAoHBwkHBgoJCAkLCwoMDxkQDw4ODx4WFxIZJCAmJSMgIyIoLTkwKCo2KyIjMkQyNjs9QEBAJjBGS0U+Sjk=',
+		];
+
+		validImages.forEach(image => {
+			const isValid = validateUtils.base64Image(image);
+			console.log(isValid, image);
+			expect(isValid).toBe(true);
+		});
+	});
+
+	it('should return false for an invalid base64 image', () => {
+		const invalidImages = [
+			'invalid',
+			'data:image/png;base64,',
+			'data:image/jpg;base64,SGVsbG8gV29ybGQh',
+			'data:audio/mp3;base64,SGVsbG8gV29ybGQh',
+		];
+
+		invalidImages.forEach(image => {
+			const isValid = validateUtils.base64Image(image);
+			expect(isValid).toBe(false);
 		});
 	});
 });

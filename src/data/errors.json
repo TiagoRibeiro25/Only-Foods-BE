@@ -16,6 +16,14 @@
 		"status": 400
 	},
 	{
+		"message": "Invalid description",
+		"status": 400
+	},
+	{
+		"message": "Invalid image",
+		"status": 400
+	},
+	{
 		"message": "Invalid email or password",
 		"status": 400
 	},
