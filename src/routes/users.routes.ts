@@ -22,6 +22,7 @@ router
 // Register
 router.route('/').post(UsersMiddlewares.verifyRegister, UsersController.register);
 
+// Get specific user by id
 router.get('/:id', AuthMiddlewares.handleToken, UsersController.getUser);
 
 // Follow / Unfollow someone
@@ -31,6 +32,14 @@ router.patch(
 	AuthMiddlewares.handleToken,
 	UsersMiddlewares.followUser,
 	UsersController.followUser,
+);
+
+router.patch(
+	'/',
+	AuthMiddlewares.verifyToken,
+	AuthMiddlewares.handleToken,
+	UsersMiddlewares.editProfile,
+	UsersController.editProfile,
 );
 
 export default router;
