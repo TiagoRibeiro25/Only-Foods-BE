@@ -33,6 +33,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 				// Update the cookie
 				const cookieOptions = {
 					httpOnly: true,
+					secure: process.env.NODE_ENV === 'production',
 					maxAge: parseInt(
 						decoded.rememberMe
 							? process.env.JWT_EXPIRES_IN_REMEMBER_ME
