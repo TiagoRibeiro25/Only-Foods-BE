@@ -1,3 +1,11 @@
-.vscode
-node_modules
+# Ignore VS Code configuration files
+.vscode/
+
+# Ignore the "node_modules" directory
+node_modules/
+
+# Ignore environment variable files
 .env
+
+# Ignore the "scripts" folder within the "src" directory
+/src/scripts/
