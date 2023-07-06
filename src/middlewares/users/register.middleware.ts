@@ -12,6 +12,7 @@ interface RegisterData {
 
 export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	req.body.email = req.body.email?.toLowerCase().trim();
+	req.body.username = req.body.username?.trim();
 	const { username, email, password }: RegisterData = req.body;
 
 	try {
