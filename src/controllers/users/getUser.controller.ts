@@ -13,6 +13,7 @@ const getUser = (id: string) => {
 			id: true,
 			username: true,
 			email: true,
+			description: true,
 			userImage: {
 				select: { cloudinaryImage: true },
 			},
