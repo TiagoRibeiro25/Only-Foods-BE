@@ -23,8 +23,6 @@ describe('authToken', () => {
 	it('should generate an authentication token', () => {
 		const props = {
 			id: '123',
-			email: 'example@example.com',
-			username: 'example',
 			rememberMe: false,
 		};
 		const expiresIn = 'mockedExpiresIn';
@@ -41,8 +39,6 @@ describe('authToken', () => {
 	it('should generate an authentication token with remember me', () => {
 		const props = {
 			id: '123',
-			email: 'example@example.com',
-			username: 'example',
 			rememberMe: true,
 		};
 		const expiresInRememberMe = 'mockedExpiresInRememberMe';

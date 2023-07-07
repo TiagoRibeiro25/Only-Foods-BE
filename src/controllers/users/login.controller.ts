@@ -32,8 +32,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Create a token for the user
 		const token = generateToken.authToken({
 			id: user.id,
-			email: user.email,
-			username: user.username,
 			rememberMe,
 		});
 

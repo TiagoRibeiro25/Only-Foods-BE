@@ -27,8 +27,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		// Set the user in the request
 		req.tokenData = {
 			id: user.id,
-			email: user.email,
-			username: user.username,
 			rememberMe: false,
 			iat: 0,
 			exp: 0,
