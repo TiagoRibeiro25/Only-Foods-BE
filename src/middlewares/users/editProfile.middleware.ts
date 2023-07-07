@@ -12,6 +12,18 @@ interface EditProfileData {
 	picture?: Base64Img;
 }
 
+async function validateEmail(email: string) {
+	if (email && !validateData.email(email)) {
+		throw new Error('Invalid email');
+	}
+
+	// Check if there's an account with the same email
+	const isEmailInUse = await prisma.user.findUnique({ where: { email } });
+	if (isEmailInUse) {
+		throw new Error('Email already in use');
+	}
+}
+
 export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	try {
 		// Get the data from the request body
@@ -34,15 +46,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 		}
 
 		// Check email
-		if (email && !validateData.email(email)) {
-			throw new Error('Invalid email');
-		}
-
-		// Check if there's an account with the same email
-		const isEmailInUse = await prisma.user.findUnique({ where: { email } });
-		if (isEmailInUse) {
-			throw new Error('Email already in use');
-		}
+		await validateEmail(email);
 
 		// Check description
 		if (description && !validateData.description(description)) {
