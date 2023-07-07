@@ -26,6 +26,9 @@ router.patch(
 // Register
 router.post('/', UsersMiddlewares.verifyRegister, UsersController.register);
 
+// Search users
+router.get('/search', UsersController.searchUsers);
+
 // Get specific user by id
 router.get('/:id', AuthMiddlewares.handleToken, UsersController.getUser);
 

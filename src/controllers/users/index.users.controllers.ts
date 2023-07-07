@@ -5,6 +5,7 @@ import getUser from './getUser.controller';
 import login from './login.controller';
 import register from './register.controller';
 import resetPassword from './resetPassword.controller';
+import searchUsers from './searchUsers.controller';
 
 export default {
 	login,
@@ -14,4 +15,5 @@ export default {
 	resetPassword,
 	followUser,
 	editProfile,
+	searchUsers,
 };
