@@ -38,7 +38,7 @@ model UserImage {
   cloudinaryId    String
   user            User     @relation(fields: [userId], references: [id])
   userId          String   @unique
-  createAt        DateTime @default(now())
+  createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
 
@@ -141,7 +141,7 @@ model RecipeImage {
   cloudinaryId    String
   recipe          Recipe   @relation(fields: [recipeId], references: [id])
   recipeId        String   @unique
-  createAt        DateTime @default(now())
+  createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
 
