@@ -54,6 +54,14 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			throw new Error('Invalid image');
 		}
 
+		// Remove all the data from the request body that isn't needed
+		req.body = {
+			...(username && { username }),
+			...(email && { email }),
+			...(description && { description }),
+			...(picture && { picture }),
+		};
+
 		// Call the next middleware
 		next();
 	} catch (error) {
