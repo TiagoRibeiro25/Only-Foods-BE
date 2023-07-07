@@ -3,6 +3,8 @@ import { Request as ExpressRequest, NextFunction, Response, Router } from 'expre
 type ImgMimeType = 'png' | 'jpg' | 'jpeg' | 'bmp' | 'webp';
 type Base64Img = `data:image/${ImgMimeType};base64${string}`;
 
+type FollowType = 'followers' | 'following';
+
 interface DecodedToken {
 	id: string;
 	rememberMe: boolean;
