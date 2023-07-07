@@ -7,20 +7,24 @@ import UsersMiddlewares from '../middlewares/users/index.users.middleware';
 const router: AsyncRouter = Router();
 
 // Login
-router.route('/login').post(UsersMiddlewares.verifyLogin, UsersController.login);
+router.post('/login', UsersMiddlewares.verifyLogin, UsersController.login);
 
 // Forgot password
-router
-	.route('/forgot-password')
-	.post(UsersMiddlewares.forgotPassword, UsersController.forgotPassword);
+router.post(
+	'/forgot-password',
+	UsersMiddlewares.forgotPassword,
+	UsersController.forgotPassword,
+);
 
 // Reset password
-router
-	.route('/reset-password/:token')
-	.patch(UsersMiddlewares.resetPassword, UsersController.resetPassword);
+router.patch(
+	'/reset-password/:token',
+	UsersMiddlewares.resetPassword,
+	UsersController.resetPassword,
+);
 
 // Register
-router.route('/').post(UsersMiddlewares.verifyRegister, UsersController.register);
+router.post('/', UsersMiddlewares.verifyRegister, UsersController.register);
 
 // Get specific user by id
 router.get('/:id', AuthMiddlewares.handleToken, UsersController.getUser);
@@ -34,6 +38,7 @@ router.patch(
 	UsersController.followUser,
 );
 
+// Edit profile
 router.patch(
 	'/',
 	AuthMiddlewares.verifyToken,
