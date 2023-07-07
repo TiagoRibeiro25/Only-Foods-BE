@@ -45,11 +45,22 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Fetch users
 		const users = await getUsers(keyword as string, Number(page), Number(limit));
 
+		const tokenDataId = req.tokenData?.id;
+
 		const searchResult = users.map(user => {
+			let isFollowing: boolean | null = null;
+
+			if (tokenDataId && user.id !== tokenDataId) {
+				isFollowing = user.followers.some(
+					follower => follower.followerId === tokenDataId,
+				);
+			}
+
 			return {
 				...user,
 				followers: user.followers.length,
 				following: user.following.length,
+				isFollowing,
 			};
 		});
 
