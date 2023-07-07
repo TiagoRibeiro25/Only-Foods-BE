@@ -12,4 +12,15 @@ const shouldCompress = (req: Request, res: Response) => {
 	return compression.filter(req, res);
 };
 
-export default shouldCompress;
+const compressionConfig: compression.CompressionOptions = {
+	filter: shouldCompress,
+	level: 9,
+	memLevel: 8,
+	chunkSize: 16 * 1024,
+	strategy: 0,
+	threshold: 0,
+	flush: 2,
+	windowBits: 15,
+};
+
+export default compressionConfig;
