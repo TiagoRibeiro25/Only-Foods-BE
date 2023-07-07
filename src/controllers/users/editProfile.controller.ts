@@ -12,6 +12,56 @@ interface EditProfileData {
 	picture?: Base64Img;
 }
 
+interface HandleUserPictureProps {
+	userId: string;
+	picture: Base64Img;
+}
+
+async function handleUserPicture(props: HandleUserPictureProps): Promise<void> {
+	const { userId, picture } = props;
+
+	// Check if the user already has a picture
+	const userPicture = await prisma.userImage.findFirst({
+		where: {
+			userId,
+		},
+	});
+
+	// If the user already has a picture, update the cloudinary image with the id userPicture.cloudinaryId
+	if (userPicture) {
+		const result = await cloudinary.uploader.upload(picture, {
+			public_id: userPicture.cloudinaryId,
+			overwrite: true,
+		});
+
+		// Update the user image in the database
+		await prisma.userImage.update({
+			where: {
+				id: userPicture.id,
+			},
+			data: {
+				cloudinaryId: result.public_id,
+				cloudinaryImage: result.secure_url,
+			},
+		});
+	} else {
+		// Create a new user image in Cloudinary
+		const result = await cloudinary.uploader.upload(picture, {
+			folder: 'only_foods/users',
+			crop: 'scale',
+		});
+
+		// Create a new user image in the database
+		await prisma.userImage.create({
+			data: {
+				cloudinaryId: result.public_id,
+				cloudinaryImage: result.secure_url,
+				userId: userId,
+			},
+		});
+	}
+}
+
 export default async (req: Request, res: Response): Promise<void> => {
 	// Get the data from the request body
 	const updates: EditProfileData = req.body;
@@ -20,48 +70,10 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Get the user id from the request
 		const userId = req.tokenData.id;
 
-		// Update the user
+		// Check if the user already has an image
 		if (updates.picture) {
-			// Check if the user already has a picture
-			const userPicture = await prisma.userImage.findFirst({
-				where: {
-					userId,
-				},
-			});
-
-			// If the user already has a picture, update the cloudinary image with the id userPicture.cloudinaryId
-			if (userPicture) {
-				const result = await cloudinary.uploader.upload(updates.picture, {
-					public_id: userPicture.cloudinaryId,
-					overwrite: true,
-				});
-
-				// Update the user image in the database
-				await prisma.userImage.update({
-					where: {
-						id: userPicture.id,
-					},
-					data: {
-						cloudinaryId: result.public_id,
-						cloudinaryImage: result.secure_url,
-					},
-				});
-			} else {
-				// Create a new user image in Cloudinary
-				const result = await cloudinary.uploader.upload(updates.picture, {
-					folder: 'only_foods/users',
-					crop: 'scale',
-				});
-
-				// Create a new user image in the database
-				await prisma.userImage.create({
-					data: {
-						cloudinaryId: result.public_id,
-						cloudinaryImage: result.secure_url,
-						userId: userId,
-					},
-				});
-			}
+			// Handle the user picture
+			await handleUserPicture({ userId, picture: updates.picture });
 
 			// Remove the picture from the updates object
 			delete updates.picture;
