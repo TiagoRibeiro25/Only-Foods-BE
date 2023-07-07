@@ -25,8 +25,6 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 			if (shouldGenerateNewToken) {
 				const newToken = generateToken.authToken({
 					id: decoded.id,
-					email: decoded.email,
-					username: decoded.username,
 					rememberMe: decoded.rememberMe,
 				});
 

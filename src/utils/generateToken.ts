@@ -5,8 +5,6 @@ interface GenerateResetPasswordTokenProps {
 }
 
 interface GenerateAuthTokenProps extends GenerateResetPasswordTokenProps {
-	email: string;
-	username: string;
 	rememberMe: boolean;
 }
 

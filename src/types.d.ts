@@ -5,8 +5,6 @@ type Base64Img = `data:image/${ImgMimeType};base64${string}`;
 
 interface DecodedToken {
 	id: string;
-	email: string;
-	username: string;
 	rememberMe: boolean;
 	iat: number; // Issued at
 	exp: number; // Expires
