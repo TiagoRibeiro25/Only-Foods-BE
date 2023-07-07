@@ -1,6 +1,7 @@
 import { Request as ExpressRequest, NextFunction, Response, Router } from 'express';
 
-type Base64Img = `data:image/${'png' | 'jpg' | 'jpeg' | 'bmp' | 'webp'};base64${string}`;
+type ImgMimeType = 'png' | 'jpg' | 'jpeg' | 'bmp' | 'webp';
+type Base64Img = `data:image/${ImgMimeType};base64${string}`;
 
 interface DecodedToken {
 	id: string;
