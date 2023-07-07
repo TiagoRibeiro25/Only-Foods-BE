@@ -14,7 +14,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 	try {
 		// Check if there's a token
 		if (!token) {
-			throw new Error('TNo token provided');
+			throw new Error('No token provided');
 		}
 
 		// Call the next middleware
