@@ -47,7 +47,12 @@ export default async (req: Request, res: Response): Promise<void> => {
 				res,
 				status: 'success',
 				statusCode: 200,
-				data: { ...user, isLoggedUser: true },
+				data: {
+					...user,
+					followers: user.followers.length,
+					following: user.following.length,
+					isLoggedUser: true,
+				},
 				message: 'User data retrieved successfully',
 			});
 		}
@@ -72,7 +77,13 @@ export default async (req: Request, res: Response): Promise<void> => {
 				res,
 				status: 'success',
 				statusCode: 200,
-				data: { ...user, isLoggedUser, isFollowing },
+				data: {
+					...user,
+					followers: user.followers.length,
+					following: user.following.length,
+					isLoggedUser,
+					isFollowing,
+				},
 				message: 'User data retrieved successfully',
 			});
 		}
@@ -82,7 +93,11 @@ export default async (req: Request, res: Response): Promise<void> => {
 			res,
 			status: 'success',
 			statusCode: 200,
-			data: user,
+			data: {
+				...user,
+				followers: user.followers.length,
+				following: user.following.length,
+			},
 			message: 'User data retrieved successfully',
 		});
 	} catch (error) {
