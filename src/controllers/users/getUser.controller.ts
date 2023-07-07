@@ -13,16 +13,14 @@ const getUser = (id: string) => {
 			id: true,
 			username: true,
 			email: true,
-			createdAt: true,
-			updatedAt: true,
 			userImage: {
 				select: { cloudinaryImage: true },
 			},
 			followers: {
-				select: { id: true, followerId: true },
+				select: { followerId: true },
 			},
 			following: {
-				select: { id: true, followingId: true },
+				select: { followingId: true },
 			},
 		},
 	});
