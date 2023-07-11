@@ -33,7 +33,6 @@ const username = (usernameInput: string): boolean => {
 	return isValidFormat && isValidLength;
 };
 
-//TODO: Fix punctuation marks validation
 /**
  * Validate a description
  * - Can have letters, numbers, spaces, and common punctuation marks
@@ -46,7 +45,7 @@ const description = (descriptionInput: string): boolean => {
 		return false;
 	}
 
-	const descriptionRegex = /^[a-zA-Z0-9\s,.!?'"\\-]+$/;
+	const descriptionRegex = /^[a-zA-Z0-9\s:,.!?'"\\-]+$/;
 	const isValidFormat = descriptionRegex.test(descriptionInput);
 	const isValidLength = descriptionInput.length >= 10 && descriptionInput.length <= 200;
 	return isValidFormat && isValidLength;
