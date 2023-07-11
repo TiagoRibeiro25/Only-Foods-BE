@@ -70,7 +70,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Get the user id from the request
 		const userId = req.tokenData.id;
 
-		// Check if the user already has an image
+		// Check if the user wants to update the picture
 		if (updates.picture) {
 			// Handle the user picture
 			await handleUserPicture({ userId, picture: updates.picture });
