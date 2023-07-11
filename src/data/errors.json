@@ -76,6 +76,10 @@
 		"status": 404
 	},
 	{
+		"message": "No thoughts found",
+		"status": 404
+	},
+	{
 		"message": "Email already in use",
 		"status": 409
 	}
