@@ -1,6 +1,6 @@
-import rateLimit from 'express-rate-limit';
+import rateLimit, { RateLimitRequestHandler } from 'express-rate-limit';
 
-const limiter = rateLimit({
+const limiter: RateLimitRequestHandler = rateLimit({
 	// This value determines the time window within which the rate limits are enforced. It is typically set in milliseconds or seconds. The appropriate value depends on the expected frequency of requests and the desired granularity of rate limiting.
 	windowMs: 1 * 60 * 1000,
 

@@ -4,13 +4,21 @@ import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
+interface FollowingData {
+	id: string;
+	followerId: string;
+	followingId: string;
+	createdAt: Date;
+	updatedAt: Date;
+}
+
 export default async (req: Request, res: Response) => {
-	const followingId = req.params.id; // The id of the user to follow/unfollow
-	const followerId = req.tokenData.id; // The id of the user who wants to follow/unfollow
+	const followingId: string = req.params.id; // The id of the user to follow/unfollow
+	const followerId: string = req.tokenData.id; // The id of the user who wants to follow/unfollow
 
 	try {
 		// Check if the user is already following the other user
-		const existingFollowing = await prisma.following.findFirst({
+		const existingFollowing: FollowingData = await prisma.following.findFirst({
 			where: {
 				followerId: followerId,
 				followingId: followingId,

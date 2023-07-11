@@ -3,13 +3,17 @@ import { Request } from 'types';
 import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
 
+interface User {
+	isAdmin: boolean;
+}
+
 export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	// Get logged user id
 	const userId = req.tokenData.id;
 
 	try {
 		// Get the user from the database
-		const user = await prisma.user.findUnique({
+		const user: User = await prisma.user.findUnique({
 			where: { id: userId },
 			select: { isAdmin: true },
 		});

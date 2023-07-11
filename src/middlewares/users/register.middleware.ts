@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import { NextFunction, Response } from 'express';
 import { Request } from 'types';
 import prisma from '../../config/db.config';
@@ -37,7 +38,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 		}
 
 		// Verify if the email is already in use
-		const user = await prisma.user.findUnique({ where: { email } });
+		const user: User = await prisma.user.findUnique({ where: { email } });
 
 		if (user) {
 			throw new Error('Email already in use');

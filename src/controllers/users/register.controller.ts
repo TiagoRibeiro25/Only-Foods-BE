@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import { Request } from 'types';
@@ -17,11 +18,11 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 	try {
 		// Encrypt the password
-		const passwordEncrypted = await bcrypt.hash(password, 10);
+		const passwordEncrypted: string = await bcrypt.hash(password, 10);
 
 		// Create the user and generate reset password token in one database transaction
 		await prisma.$transaction(async prisma => {
-			const createdUser = await prisma.user.create({
+			const createdUser: User = await prisma.user.create({
 				data: {
 					username,
 					email,
@@ -31,7 +32,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 				},
 			});
 
-			const resetPwToken = generateToken.resetPasswordToken({
+			const resetPwToken: string = generateToken.resetPasswordToken({
 				id: createdUser.id,
 			});
 

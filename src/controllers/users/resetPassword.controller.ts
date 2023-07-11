@@ -7,19 +7,17 @@ import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
 export default async (req: Request, res: Response) => {
-	const { password } = req.body;
-	const userId = req.tokenData.id;
-	const newToken = generateToken.resetPasswordToken({ id: userId });
+	const password: string = req.body.password;
+	const userId: string = req.tokenData.id;
+	const newToken: string = generateToken.resetPasswordToken({ id: userId });
 
 	// Encrypt new password
-	const passwordEncrypted = await bcrypt.hash(password, 10);
+	const passwordEncrypted: string = await bcrypt.hash(password, 10);
 
 	// Update the user's password
 	try {
 		await prisma.user.update({
-			where: {
-				id: userId,
-			},
+			where: { id: userId },
 			data: {
 				password: passwordEncrypted,
 				resetPasswordToken: newToken,

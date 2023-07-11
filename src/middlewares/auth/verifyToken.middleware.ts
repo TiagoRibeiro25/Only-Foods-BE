@@ -9,7 +9,7 @@ import handleError from '../../utils/handleError';
  */
 export default (req: Request, res: Response, next: NextFunction): void => {
 	// Get token value
-	const token = req.cookies['authorization'];
+	const token: string | undefined = req.cookies['authorization'];
 
 	try {
 		// Check if there's a token

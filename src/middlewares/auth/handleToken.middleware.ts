@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import { CookieOptions, NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { DecodedToken, Request } from 'types';
@@ -13,7 +14,7 @@ import handleError from '../../utils/handleError';
  */
 export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	// Get token value
-	const token = req.cookies['authorization'];
+	const token: string | undefined = req.cookies['authorization'];
 
 	try {
 		if (token) {
@@ -21,7 +22,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
 
 			// Check if the user exists
-			const user = await prisma.user.findUnique({
+			const user: User = await prisma.user.findUnique({
 				where: { id: decoded.id },
 			});
 
@@ -32,11 +33,14 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			// Set the user data in the decoded token
 			decoded.isAdmin = user.isAdmin;
 
+			// Check if the token should be regenerated
+			const tokenExpiration: number = parseInt(process.env.JWT_GENERATE_TOKEN_IN);
+			const shouldGenerateNewToken: boolean =
+				Date.now() - decoded.iat * 1000 > tokenExpiration;
+
 			// If the token was generated "JWT_GENERATE_TOKEN_IN" milliseconds ago, then generate a new one
-			const tokenExpiration = parseInt(process.env.JWT_GENERATE_TOKEN_IN);
-			const shouldGenerateNewToken = Date.now() - decoded.iat * 1000 > tokenExpiration;
 			if (shouldGenerateNewToken) {
-				const newToken = generateToken.authToken({
+				const newToken: string = generateToken.authToken({
 					id: decoded.id,
 					rememberMe: decoded.rememberMe,
 					isAdmin: decoded.isAdmin,

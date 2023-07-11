@@ -1,10 +1,49 @@
+import { User as PrismaUser } from '@prisma/client';
 import { Response } from 'express';
 import { FollowType, Request } from 'types';
 import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
-const getUser = (userId: string) => {
+interface FollowData {
+	id: string;
+	username: string;
+	description: string;
+	userImage?: {
+		cloudinaryImage: string;
+	};
+	isAdmin: boolean;
+}
+
+interface UserFollower {
+	follower: FollowData;
+}
+
+interface UserFollowing {
+	following: FollowData;
+}
+
+interface User extends PrismaUser {
+	followers: UserFollower[];
+	following: UserFollowing[];
+}
+
+interface Relation {
+	followingId: string;
+}
+
+interface ResultItem {
+	id: string;
+	username: string;
+	description: string;
+	userImage?: {
+		cloudinaryImage: string;
+	};
+	isAdmin: boolean;
+	isFollowing: boolean | null;
+}
+
+function getUser(userId: string): Promise<User> {
 	return prisma.user.findUnique({
 		where: { id: userId },
 		include: {
@@ -44,15 +83,15 @@ const getUser = (userId: string) => {
 			},
 		},
 	});
-};
+}
 
 export default async (req: Request, res: Response): Promise<void> => {
 	const type = req.query.type as FollowType;
-	const userId = req.params.id === 'me' ? req.tokenData.id : req.params.id;
+	const userId: string = req.params.id === 'me' ? req.tokenData.id : req.params.id;
 
 	try {
 		// Fetch the user
-		const user = await getUser(userId);
+		const user: User = await getUser(userId);
 
 		// Check if user exists
 		if (!user) {
@@ -64,7 +103,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			throw new Error('No users found');
 		}
 
-		const result = user[type].map(item => ({
+		const result: ResultItem[] = user[type].map((item: UserFollower | UserFollowing) => ({
 			id: item[type].id,
 			username: item[type].username,
 			description: item[type].description,
@@ -78,7 +117,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 		// Check if logged user is following any of the users
 		if (tokenDataId && followingIds.includes(tokenDataId)) {
-			const relations = await prisma.following.findMany({
+			const relations: Relation[] = await prisma.following.findMany({
 				where: {
 					followerId: tokenDataId,
 					followingId: { in: followingIds },
@@ -88,7 +127,9 @@ export default async (req: Request, res: Response): Promise<void> => {
 				},
 			});
 
-			const followingSet = new Set(relations.map(relation => relation.followingId));
+			const followingSet: Set<string> = new Set(
+				relations.map(relation => relation.followingId),
+			);
 
 			for (const item of result) {
 				// Check if logged user is the same as the current user

@@ -4,7 +4,7 @@ import handleError from '../../utils/handleError';
 
 export default (req: Request, res: Response, next: NextFunction): void => {
 	const type = req.query.type as FollowType;
-	const userId = req.params.id;
+	const userId: string = req.params.id;
 
 	try {
 		// Check if type is valid

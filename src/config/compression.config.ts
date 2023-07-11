@@ -1,8 +1,8 @@
-import compression from 'compression';
+import compression, { CompressionOptions } from 'compression';
 import { Response } from 'express';
 import { Request } from 'types';
 
-const shouldCompress = (req: Request, res: Response) => {
+const shouldCompress = (req: Request, res: Response): boolean => {
 	// don't compress responses with this request header
 	if (req.headers['x-no-compression']) {
 		return false;
@@ -12,7 +12,7 @@ const shouldCompress = (req: Request, res: Response) => {
 	return compression.filter(req, res);
 };
 
-const compressionConfig: compression.CompressionOptions = {
+const compressionConfig: CompressionOptions = {
 	filter: shouldCompress,
 	level: 9,
 	memLevel: 8,

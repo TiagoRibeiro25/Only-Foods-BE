@@ -1,3 +1,5 @@
+import { UserImage } from '@prisma/client';
+import { UploadApiResponse } from 'cloudinary';
 import { Response } from 'express';
 import { Base64Img, Request } from 'types';
 import cloudinary from '../../config/cloudinary.config';
@@ -21,15 +23,13 @@ async function handleUserPicture(props: HandleUserPictureProps): Promise<void> {
 	const { userId, picture } = props;
 
 	// Check if the user already has a picture
-	const userPicture = await prisma.userImage.findFirst({
-		where: {
-			userId,
-		},
+	const userPicture: UserImage = await prisma.userImage.findFirst({
+		where: { userId },
 	});
 
 	// If the user already has a picture, update the cloudinary image with the id userPicture.cloudinaryId
 	if (userPicture) {
-		const result = await cloudinary.uploader.upload(picture, {
+		const result: UploadApiResponse = await cloudinary.uploader.upload(picture, {
 			public_id: userPicture.cloudinaryId,
 			overwrite: true,
 		});
@@ -46,7 +46,7 @@ async function handleUserPicture(props: HandleUserPictureProps): Promise<void> {
 		});
 	} else {
 		// Create a new user image in Cloudinary
-		const result = await cloudinary.uploader.upload(picture, {
+		const result: UploadApiResponse = await cloudinary.uploader.upload(picture, {
 			folder: 'only_foods/users',
 			crop: 'scale',
 		});
@@ -68,7 +68,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 	try {
 		// Get the user id from the request
-		const userId = req.tokenData.id;
+		const userId: string = req.tokenData.id;
 
 		// Check if the user wants to update the picture
 		if (updates.picture) {

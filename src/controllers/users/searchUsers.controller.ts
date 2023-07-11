@@ -4,8 +4,37 @@ import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
-function getUsers(keyword: string, page: number, limit: number) {
-	const offset = (page - 1) * limit;
+interface Query {
+	keyword: string;
+	page: number;
+	limit: number;
+}
+
+interface User {
+	id: string;
+	username: string;
+	description: string;
+	isAdmin: boolean;
+	blocked: boolean;
+	userImage: {
+		cloudinaryImage: string;
+	};
+	followers: {
+		followerId: string;
+	}[];
+	following: {
+		followingId: string;
+	}[];
+}
+
+interface ResponseData extends Omit<User, 'followers' | 'following'> {
+	followers: number;
+	following: number;
+	isFollowing?: boolean;
+}
+
+function getUsers(keyword: string, page: number, limit: number): Promise<User[]> {
+	const offset: number = (page - 1) * limit;
 
 	// Fetch users
 	return prisma.user.findMany({
@@ -22,7 +51,6 @@ function getUsers(keyword: string, page: number, limit: number) {
 		},
 		select: {
 			id: true,
-			email: false,
 			username: true,
 			description: true,
 			isAdmin: true,
@@ -41,16 +69,16 @@ function getUsers(keyword: string, page: number, limit: number) {
 }
 
 export default async (req: Request, res: Response): Promise<void> => {
-	const { keyword, page = 1, limit = 10 } = req.query;
+	const { keyword, page = 1, limit = 10 } = req.query as unknown as Query;
 
 	try {
 		// Fetch users
-		const users = await getUsers(keyword as string, Number(page), Number(limit));
+		const users: User[] = await getUsers(keyword, Number(page), Number(limit));
 
-		const tokenDataId = req.tokenData?.id;
+		const tokenDataId: string = req.tokenData?.id;
 
-		const searchResult = users.map(user => {
-			let isFollowing: boolean | null = null;
+		const searchResult: ResponseData[] = users.map(user => {
+			let isFollowing: boolean = null;
 
 			if (tokenDataId && user.id !== tokenDataId) {
 				isFollowing = user.followers.some(
@@ -75,7 +103,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		const totalCount: number = await prisma.user.count({
 			where: {
 				username: {
-					contains: keyword as string,
+					contains: keyword,
 					mode: 'insensitive',
 				},
 			},

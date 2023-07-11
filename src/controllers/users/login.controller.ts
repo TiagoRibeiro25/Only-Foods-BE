@@ -1,5 +1,6 @@
+import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import { Response } from 'express';
+import { CookieOptions, Response } from 'express';
 import { Request } from 'types';
 import prisma from '../../config/db.config';
 import generateToken from '../../utils/generateToken';
@@ -17,27 +18,27 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 	try {
 		// Search if there's a user with the email provided
-		const user = await prisma.user.findUnique({ where: { email } });
+		const user: User = await prisma.user.findUnique({ where: { email } });
 
 		if (!user) {
 			throw new Error('Account not found');
 		}
 
 		// Compare the password provided with the one in the database
-		const passwordMath = bcrypt.compareSync(password, user.password);
+		const passwordMath: boolean = bcrypt.compareSync(password, user.password);
 		if (!passwordMath) {
 			throw new Error('Password does not match');
 		}
 
 		// Create a token for the user
-		const token = generateToken.authToken({
+		const token: string = generateToken.authToken({
 			id: user.id,
 			rememberMe,
 			isAdmin: user.isAdmin,
 		});
 
 		// Set the cookie
-		const cookieOptions = {
+		const cookieOptions: CookieOptions = {
 			httpOnly: true,
 			maxAge: parseInt(
 				rememberMe ? process.env.JWT_EXPIRES_IN_REMEMBER_ME : process.env.JWT_EXPIRES_IN,

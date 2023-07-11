@@ -37,6 +37,16 @@ interface OrderByType {
 	};
 }
 
+interface WhereType {
+	author?: {
+		followers: {
+			some: {
+				followerId: string;
+			};
+		};
+	};
+}
+
 interface FetchThoughtsProps {
 	page: number;
 	limit: number;
@@ -53,14 +63,14 @@ function fetchThoughts(props: FetchThoughtsProps): Promise<Thought[]> {
 	const { page, limit, type, userId } = props;
 
 	// Calculate the offset
-	const offset = (page - 1) * limit;
+	const offset: number = (page - 1) * limit;
 
 	// Set the order by depending on the filter
 	const orderBy: OrderByType =
 		type === 'popular' ? { likes: { _count: 'desc' } } : { createdAt: 'desc' };
 
 	// Set the where depending on the filter
-	const where =
+	const where: WhereType =
 		type === 'following' && userId
 			? { author: { followers: { some: { followerId: userId } } } }
 			: {};
@@ -95,7 +105,7 @@ function fetchThoughts(props: FetchThoughtsProps): Promise<Thought[]> {
 
 export default async (req: Request, res: Response): Promise<void> => {
 	const { filter, page = 1, limit = 10 } = req.query as unknown as Query;
-	const isUserLogged = req.tokenData !== null;
+	const isUserLogged: boolean = req.tokenData !== null;
 
 	try {
 		// Fetch thoughts

@@ -28,8 +28,8 @@ const username = (usernameInput: string): boolean => {
 	}
 
 	const usernameRegex = /^[a-zA-Z0-9_\\-]+( [a-zA-Z0-9_\\-]+)*$/;
-	const isValidFormat = usernameRegex.test(usernameInput);
-	const isValidLength = usernameInput.length >= 4 && usernameInput.length <= 20;
+	const isValidFormat: boolean = usernameRegex.test(usernameInput);
+	const isValidLength: boolean = usernameInput.length >= 4 && usernameInput.length <= 20;
 	return isValidFormat && isValidLength;
 };
 

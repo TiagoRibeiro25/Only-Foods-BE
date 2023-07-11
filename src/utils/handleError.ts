@@ -8,6 +8,11 @@ interface Props {
 	error: Error;
 }
 
+interface ApiError {
+	message: string;
+	status: number;
+}
+
 /**
  * Handle an error and send the response
  * @param props - The response and the error
@@ -15,7 +20,7 @@ interface Props {
  */
 const handleError = (props: Props): void => {
 	// Find the error
-	const errorFound = ERRORS.find(err => err.message === props.error.message);
+	const errorFound: ApiError = ERRORS.find(err => err.message === props.error.message);
 
 	// Send the response (if the error is not found, then send 500)
 	handleResponse({

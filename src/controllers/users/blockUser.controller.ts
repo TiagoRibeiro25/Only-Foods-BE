@@ -4,12 +4,18 @@ import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
+interface User {
+	id: string;
+	blocked: boolean;
+	isAdmin: boolean;
+}
+
 export default async (req: Request, res: Response): Promise<void> => {
-	const { id } = req.params;
+	const id: string = req.params.id;
 
 	try {
 		// Get the user to block
-		const user = await prisma.user.findUnique({
+		const user: User = await prisma.user.findUnique({
 			where: { id },
 			select: { id: true, blocked: true, isAdmin: true },
 		});
@@ -25,7 +31,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		}
 
 		// If the user is blocked, unblock it and vice versa
-		const blockStatus = user.blocked;
+		const blockStatus: boolean = user.blocked;
 
 		// Update the user
 		await prisma.user.update({

@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import { Response } from 'express';
 import { Request } from 'types';
 import prisma from '../../config/db.config';
@@ -10,7 +11,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		const email: string = req.body.email;
 
 		// Check there's an account with the email provided
-		const user = await prisma.user.findUnique({
+		const user: User = await prisma.user.findUnique({
 			where: { email },
 		});
 
@@ -18,7 +19,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			throw new Error('Account not found');
 		}
 
-		const token = user.resetPasswordToken;
+		const token: string = user.resetPasswordToken;
 
 		// TODO: Update the email content with the email template and correct link
 		await sendEmail({
