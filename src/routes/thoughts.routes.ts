@@ -1,8 +1,8 @@
-import ThoughtsControllers from 'controllers/thoughts/index.thoughts.controllers';
 import { Router } from 'express';
-import AuthMiddlewares from 'middlewares/auth/index.auth.middleware';
-import ThoughtsMiddleware from 'middlewares/thoughts/index.thoughts.middleware';
 import { AsyncRouter } from 'types';
+import ThoughtsControllers from '../controllers/thoughts/index.thoughts.controllers';
+import AuthMiddlewares from '../middlewares/auth/index.auth.middleware';
+import ThoughtsMiddleware from '../middlewares/thoughts/index.thoughts.middleware';
 
 const router: AsyncRouter = Router();
 

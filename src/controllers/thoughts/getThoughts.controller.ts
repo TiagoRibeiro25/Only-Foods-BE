@@ -3,6 +3,7 @@ import { Request } from 'types';
 import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
+import handleTime from '../../utils/handleTime';
 
 interface Query {
 	filter: 'recent' | 'popular' | 'following';
@@ -21,7 +22,7 @@ interface Thought {
 	likes: { authorId: string }[];
 	comments: { authorId: string }[];
 	createdAt: Date;
-	updatedAt: Date;
+	createdAgo?: string;
 	isAuthor?: boolean;
 	isLiked?: boolean;
 }
@@ -56,9 +57,7 @@ function fetchThoughts(props: FetchThoughtsProps): Promise<Thought[]> {
 
 	// Set the order by depending on the filter
 	const orderBy: OrderByType =
-		type === 'popular'
-			? { likes: { _count: 'desc' }, comments: { _count: 'desc' } }
-			: { createdAt: 'desc' };
+		type === 'popular' ? { likes: { _count: 'desc' } } : { createdAt: 'desc' };
 
 	// Set the where depending on the filter
 	const where =
@@ -90,7 +89,6 @@ function fetchThoughts(props: FetchThoughtsProps): Promise<Thought[]> {
 				select: { authorId: true },
 			},
 			createdAt: true,
-			updatedAt: true,
 		},
 	});
 }
@@ -122,6 +120,14 @@ export default async (req: Request, res: Response): Promise<void> => {
 				return { ...thought, isAuthor, isLiked };
 			});
 		}
+
+		// Calculate the time created ago (e.g. 2 hours ago)
+		thoughts = thoughts.map(thought => {
+			return {
+				...thought,
+				createdAgo: handleTime.calculateTimeAgo({ createdAt: thought.createdAt }),
+			};
+		});
 
 		// Check if there are any thoughts
 		if (thoughts.length === 0) {
