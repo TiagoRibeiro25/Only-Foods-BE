@@ -6,6 +6,7 @@ interface GenerateResetPasswordTokenProps {
 
 interface GenerateAuthTokenProps extends GenerateResetPasswordTokenProps {
 	rememberMe: boolean;
+	isAdmin: boolean;
 }
 
 /**

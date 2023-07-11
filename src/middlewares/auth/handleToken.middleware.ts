@@ -1,6 +1,7 @@
 import { CookieOptions, NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { DecodedToken, Request } from 'types';
+import prisma from '../../config/db.config';
 import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
 
@@ -10,7 +11,7 @@ import handleError from '../../utils/handleError';
  * If the token is not valid, it will call the error handler middleware
  ** Important: This middleware doesn't check if the token is mandatory or not
  */
-export default (req: Request, res: Response, next: NextFunction): void => {
+export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	// Get token value
 	const token = req.cookies['authorization'];
 
@@ -19,6 +20,18 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 			// Verify token
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
 
+			// Check if the user exists
+			const user = await prisma.user.findUnique({
+				where: { id: decoded.id },
+			});
+
+			if (!user) {
+				throw new Error('invalid token');
+			}
+
+			// Set the user data in the decoded token
+			decoded.isAdmin = user.isAdmin;
+
 			// If the token was generated "JWT_GENERATE_TOKEN_IN" milliseconds ago, then generate a new one
 			const tokenExpiration = parseInt(process.env.JWT_GENERATE_TOKEN_IN);
 			const shouldGenerateNewToken = Date.now() - decoded.iat * 1000 > tokenExpiration;
@@ -26,6 +39,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 				const newToken = generateToken.authToken({
 					id: decoded.id,
 					rememberMe: decoded.rememberMe,
+					isAdmin: decoded.isAdmin,
 				});
 
 				// Update the cookie

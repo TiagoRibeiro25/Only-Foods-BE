@@ -8,6 +8,7 @@ type FollowType = 'followers' | 'following';
 interface DecodedToken {
 	id: string;
 	rememberMe: boolean;
+	isAdmin: boolean;
 	iat: number; // Issued at
 	exp: number; // Expires
 }

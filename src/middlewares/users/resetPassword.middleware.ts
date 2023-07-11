@@ -28,6 +28,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		req.tokenData = {
 			id: user.id,
 			rememberMe: false,
+			isAdmin: user.isAdmin,
 			iat: 0,
 			exp: 0,
 		};

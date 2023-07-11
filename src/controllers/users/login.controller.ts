@@ -33,6 +33,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		const token = generateToken.authToken({
 			id: user.id,
 			rememberMe,
+			isAdmin: user.isAdmin,
 		});
 
 		// Set the cookie
