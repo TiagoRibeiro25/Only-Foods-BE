@@ -15,6 +15,7 @@ const getUser = (userId: string) => {
 							id: true,
 							username: true,
 							description: true,
+							isAdmin: true,
 							userImage: {
 								select: {
 									cloudinaryImage: true,
@@ -31,6 +32,7 @@ const getUser = (userId: string) => {
 							id: true,
 							username: true,
 							description: true,
+							isAdmin: true,
 							userImage: {
 								select: {
 									cloudinaryImage: true,
@@ -67,6 +69,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			username: item[type].username,
 			description: item[type].description,
 			userImage: item[type].userImage,
+			isAdmin: item[type].isAdmin,
 			isFollowing: null,
 		}));
 
