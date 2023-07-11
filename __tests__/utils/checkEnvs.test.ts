@@ -23,6 +23,9 @@ describe('checkEnvs', () => {
 			MAILJET_PUBLIC_KEY: 'public-key',
 			MAILJET_SECRET_KEY: 'secret-key',
 			MAILJET_FROM_EMAIL: 'noreply@example.com',
+			CLOUDINARY_CLOUD_NAME: 'cloud-name',
+			CLOUDINARY_API_KEY: 'api-key',
+			CLOUDINARY_API_SECRET: 'api-secret',
 			DATABASE_URL: 'mongodb://localhost:27017/my_db',
 		};
 
@@ -44,7 +47,7 @@ describe('checkEnvs', () => {
 			MAILJET_URL: 'https://api.mailjet.com/v3',
 			MAILJET_PUBLIC_KEY: 'public-key',
 			MAILJET_SECRET_KEY: 'secret-key',
-			MAILJET_FROM_EMAIL: '',
+			MAILJET_FROM_EMAIL: 'noreply@example.com',
 			DATABASE_URL: 'mongodb://localhost:27017/my_db',
 		};
 
@@ -54,7 +57,7 @@ describe('checkEnvs', () => {
 		expect(mockConsoleLog).toHaveBeenCalledTimes(1);
 		expect(mockConsoleLog).toHaveBeenCalledWith(
 			colors.red('\nMissing environment variables: ') +
-				colors.yellow('MAILJET_FROM_EMAIL'),
+				colors.yellow('CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET'),
 		);
 	});
 });
