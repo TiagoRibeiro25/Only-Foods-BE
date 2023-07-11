@@ -13,7 +13,7 @@
 	},
 	"keywords": [],
 	"author": "Tiago Ribeiro",
-	"license": "ISC",
+	"license": "MIT",
 	"dependencies": {
 		"@prisma/client": "^4.16.2",
 		"axios": "^1.4.0",
