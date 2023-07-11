@@ -1,3 +1,4 @@
+import { Base64Img } from '../../src/types';
 import validateUtils from '../../src/utils/validateData';
 
 describe('email', () => {
@@ -77,7 +78,7 @@ describe('description', () => {
 
 describe('base64Image', () => {
 	it('should return true for a valid base64 image', () => {
-		const validImages = [
+		const validImages: Base64Img[] = [
 			'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAEElEQVQImWP4z8DwHwAFAAJ/uC+c8AAAAASUVORK5CYII=',
 			'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAoHBwkHBgoJCAkLCwoMDxkQDw4ODx4WFxIZJCAmJSMgIyIoLTkwKCo2KyIjMkQyNjs9QEBAJjBGS0U+Sjk=',
 		];
@@ -95,7 +96,7 @@ describe('base64Image', () => {
 			'data:image/png;base64,',
 			'data:image/jpg;base64,SGVsbG8gV29ybGQh',
 			'data:audio/mp3;base64,SGVsbG8gV29ybGQh',
-		];
+		] as Base64Img[];
 
 		invalidImages.forEach(image => {
 			const isValid = validateUtils.base64Image(image);
