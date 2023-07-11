@@ -25,6 +25,8 @@ function getUsers(keyword: string, page: number, limit: number) {
 			email: false,
 			username: true,
 			description: true,
+			isAdmin: true,
+			blocked: true,
 			userImage: {
 				select: { cloudinaryImage: true },
 			},

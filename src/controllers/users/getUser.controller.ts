@@ -14,6 +14,8 @@ const getUser = (id: string) => {
 			username: true,
 			email: true,
 			description: true,
+			blocked: true,
+			isAdmin: true,
 			userImage: {
 				select: { cloudinaryImage: true },
 			},

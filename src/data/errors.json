@@ -64,6 +64,10 @@
 		"status": 403
 	},
 	{
+		"message": "You cannot block an admin",
+		"status": 403
+	},
+	{
 		"message": "Account not found",
 		"status": 404
 	},

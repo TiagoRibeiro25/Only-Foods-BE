@@ -49,6 +49,15 @@ router.patch(
 	UsersController.followUser,
 );
 
+// Block / Unblock User (Admin only)
+router.patch(
+	'/:id/block',
+	AuthMiddlewares.verifyToken,
+	AuthMiddlewares.handleToken,
+	AuthMiddlewares.verifyIsAdmin,
+	UsersController.blockUser,
+);
+
 // Edit profile
 router.patch(
 	'/',

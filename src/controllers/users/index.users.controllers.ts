@@ -1,3 +1,4 @@
+import blockUser from './blockUser.controller';
 import editProfile from './editProfile.controller';
 import followUser from './followUser.controller';
 import forgotPassword from './forgotPassword.controller';
@@ -18,4 +19,5 @@ export default {
 	editProfile,
 	searchUsers,
 	getFollowers,
+	blockUser,
 };
