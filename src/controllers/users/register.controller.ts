@@ -27,6 +27,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 					email,
 					password: passwordEncrypted,
 					resetPasswordToken: '',
+					description: '',
 				},
 			});
 
