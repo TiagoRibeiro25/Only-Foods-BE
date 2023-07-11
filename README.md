@@ -17,10 +17,10 @@
   <p align="center">
     This is the back end of the Only Foods project, a web application that allows users to share thoughts and recipes, create and join groups, and chat with each other about food.
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/TiagoRibeiro25/Only-Foods-BE"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://onlyfoods.netlify.app/">View Demo</a>
     ·
     <a href="https://github.com/TiagoRibeiro25/Only-Foods-BE/issues">Report Bug</a>
     ·
@@ -45,12 +45,9 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -63,8 +60,6 @@ Only Foods is a web application that allows users to share thoughts and recipes,
 
 This project was made as a side project to elevate my skills in Prisma and Typescript. It was made fully alone, from the design to the deployment.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ### Built With
 
 * [Nodejs](https://nodejs.org/en)
@@ -72,8 +67,6 @@ This project was made as a side project to elevate my skills in Prisma and Types
 * [Typescript](https://www.typescriptlang.org/)
 * [Prisma](https://www.prisma.io/)
 * [Socket.io](https://socket.io/)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -126,8 +119,6 @@ In order to run this project, you need to have installed
   npm run dev
   ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -141,22 +132,16 @@ If you have a suggestion that would make this better, please fork the repo and c
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
 ## Contact
 
 Contact section of my personal website:
 [tiagoribeiro.tech](https://tiagoribeiro.tech/)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
