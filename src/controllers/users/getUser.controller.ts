@@ -4,7 +4,32 @@ import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
-const getUser = (id: string) => {
+interface User {
+	id: string;
+	username: string;
+	email: string;
+	description: string;
+	blocked: boolean;
+	isAdmin: boolean;
+	userImage: {
+		cloudinaryImage: string;
+	};
+	followers: {
+		followerId: string;
+	}[];
+	following: {
+		followingId: string;
+	}[];
+}
+
+interface ResponseData extends Omit<User, 'followers' | 'following'> {
+	followers: number;
+	following: number;
+	isLoggedUser: boolean;
+	isFollowing?: boolean;
+}
+
+const getUser = (id: string): Promise<User> => {
 	return prisma.user.findUnique({
 		where: {
 			id: id,
@@ -31,9 +56,11 @@ const getUser = (id: string) => {
 
 export default async (req: Request, res: Response): Promise<void> => {
 	// Get id from url params
-	const { id } = req.params;
+	const id: string = req.params.id;
 	// Check if there's a token
-	const isTokenProvided = req.tokenData !== undefined;
+	const isTokenProvided: boolean = req.tokenData !== undefined;
+	// Declare response data variable
+	let responseData: ResponseData;
 
 	try {
 		// If the id is "me" and there's no token, return 401
@@ -42,64 +69,46 @@ export default async (req: Request, res: Response): Promise<void> => {
 		}
 
 		// If the id is "me" and there's a token, return the user data
-		if (id === 'me') {
-			const user = await getUser(req.tokenData.id);
+		if (id === 'me' || id === req.tokenData?.id) {
+			const user: User = await getUser(req.tokenData.id);
 
-			return handleResponse({
-				res,
-				status: 'success',
-				statusCode: 200,
-				data: {
-					...user,
-					followers: user.followers.length,
-					following: user.following.length,
-					isLoggedUser: true,
-				},
-				message: 'User data retrieved successfully',
-			});
+			responseData = {
+				...user,
+				followers: user.followers.length,
+				following: user.following.length,
+				isLoggedUser: true,
+			};
+		} else {
+			// Check if the user exists
+			const user: User = await getUser(id);
+			if (!user) {
+				throw new Error('Account not found');
+			}
+
+			responseData = {
+				...user,
+				followers: user.followers.length,
+				following: user.following.length,
+				isLoggedUser: false,
+			};
+
+			// If there's a token,
+			if (isTokenProvided) {
+				// Check if the logged user is following the user
+				const isFollowing: boolean = user.followers.some(
+					follower => follower.followerId === req.tokenData.id,
+				);
+
+				responseData.isFollowing = isFollowing;
+			}
 		}
 
-		// Check if the user exists
-		const user = await getUser(id);
-		if (!user) {
-			throw new Error('Account not found');
-		}
-
-		// If there's a token,
-		if (isTokenProvided) {
-			// check if the user is the logged user
-			const isLoggedUser = user.id === req.tokenData.id;
-
-			// Check if the logged user is following the user
-			const isFollowing = isLoggedUser
-				? null
-				: user.followers.some(follower => follower.followerId === req.tokenData.id);
-
-			return handleResponse({
-				res,
-				status: 'success',
-				statusCode: 200,
-				data: {
-					...user,
-					followers: user.followers.length,
-					following: user.following.length,
-					isLoggedUser,
-					isFollowing,
-				},
-				message: 'User data retrieved successfully',
-			});
-		}
-
-		// If there's no token, return the user data
+		// Send response
 		handleResponse({
 			res,
 			status: 'success',
 			statusCode: 200,
-			data: {
-				...user,
-				followers: user.followers.length,
-				following: user.following.length,
-			},
+			data: responseData,
 			message: 'User data retrieved successfully',
 		});
 	} catch (error) {
