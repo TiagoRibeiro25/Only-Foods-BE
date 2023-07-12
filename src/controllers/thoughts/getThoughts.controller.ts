@@ -105,7 +105,7 @@ function fetchThoughts(props: FetchThoughtsProps): Promise<Thought[]> {
 
 export default async (req: Request, res: Response): Promise<void> => {
 	const { filter, page = 1, limit = 10 } = req.query as unknown as Query;
-	const isUserLogged: boolean = req.tokenData !== null;
+	const isUserLogged: boolean = req.tokenData !== undefined;
 
 	try {
 		// Fetch thoughts
@@ -113,7 +113,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			page: Number(page), // Page number
 			limit: Number(limit), // Number of thoughts per page
 			type: filter, // 'recent' | 'popular' | 'following'
-			userId: req.tokenData.id, // User ID (required for filter 'following')
+			userId: req.tokenData?.id, // User ID (required for filter 'following')
 		});
 
 		// Check if the user is logged in
