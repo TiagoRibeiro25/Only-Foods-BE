@@ -15,7 +15,7 @@
   <h3 align="center">Only Foods - Back End</h3>
 
   <p align="center">
-    This is the back end of the Only Foods project, a web application that allows users to share thoughts and recipes, create and join groups, and chat with each other about food.
+    This is the back end of the Only Foods project, a web application that allows users to share thoughts, recipes, and chat with each other about food.
     <br />
     <a href="https://github.com/TiagoRibeiro25/Only-Foods-BE"><strong>Explore the docs »</strong></a>
     <br />
@@ -56,7 +56,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://onlyfoods.netlify.app/)
 
-Only Foods is a web application that allows users to share thoughts and recipes, create and join groups, and chat with each other about food.
+Only Foods is a web application that allows users to share thoughts, recipes, and chat with each other about food.
 
 This project was made as a side project to elevate my skills in Prisma and Typescript. It was made fully alone, from the design to the deployment.
 
