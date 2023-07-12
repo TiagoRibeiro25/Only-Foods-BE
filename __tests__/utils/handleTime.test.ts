@@ -38,7 +38,7 @@ describe('calculateTimeAgo', () => {
 			const createdAt = new Date('2023-07-01T00:00:00Z');
 			const currentTime = new Date('2023-07-01T01:00:00Z');
 			const result = handleTime.calculateTimeAgo({ createdAt, currentTime });
-			expect(result).toBe('1 hour ago'); //TODO: fix this (received: NaN years ago")
+			expect(result).toBe('1 hour ago');
 		});
 
 		it('plural', () => {
