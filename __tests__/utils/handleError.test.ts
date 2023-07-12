@@ -28,7 +28,7 @@ describe('handleError', () => {
 		(ERRORS as Error[]).find = jest.fn().mockReturnValueOnce(errorFound);
 		(console.log as jest.Mock) = jest.fn();
 
-		handleError({ res: responseMock, error });
+		handleError({ res: responseMock, error, fileName: 'handleError.test.ts' });
 
 		expect(ERRORS.find).toHaveBeenCalledWith(expect.any(Function));
 		expect(handleResponse).toHaveBeenCalledWith({
@@ -49,7 +49,7 @@ describe('handleError', () => {
 		(ERRORS as Error[]).find = jest.fn().mockReturnValueOnce(undefined);
 		(console.log as jest.Mock) = jest.fn();
 
-		handleError({ res: responseMock, error });
+		handleError({ res: responseMock, error, fileName: 'handleError.test.ts' });
 
 		expect(ERRORS.find).toHaveBeenCalledWith(expect.any(Function));
 		expect(handleResponse).toHaveBeenCalledWith({

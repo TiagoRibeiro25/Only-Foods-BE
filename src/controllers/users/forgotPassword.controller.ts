@@ -36,6 +36,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 			message: 'Email sent',
 		});
 	} catch (error) {
-		handleError({ error, res });
+		handleError({ error, res, fileName: __filename.split('\\').at(-1) });
 	}
 };

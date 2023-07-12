@@ -32,6 +32,6 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 
 		next();
 	} catch (error) {
-		handleError({ res, error });
+		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
 	}
 };

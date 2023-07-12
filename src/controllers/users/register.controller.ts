@@ -51,6 +51,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 			message: 'User created successfully',
 		});
 	} catch (error) {
-		handleError({ res, error });
+		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
 	}
 };

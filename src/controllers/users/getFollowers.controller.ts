@@ -151,6 +151,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 			data: result,
 		});
 	} catch (error) {
-		handleError({ error, res });
+		handleError({ error, res, fileName: __filename.split('\\').at(-1) });
 	}
 };

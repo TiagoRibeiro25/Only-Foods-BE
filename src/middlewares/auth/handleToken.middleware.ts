@@ -1,4 +1,5 @@
 import { User } from '@prisma/client';
+import colors from 'colors';
 import { CookieOptions, NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { DecodedToken, Request } from 'types';
@@ -11,6 +12,11 @@ const tokenBlacklist: Set<string> = new Set();
 
 // Function to remove expired tokens from the blacklist
 function removeExpiredTokens() {
+	console.log(
+		colors.yellow('[handleToken.middleware.ts] ') +
+			colors.cyan('Removing expired tokens from the blacklist'),
+	);
+
 	const now = Date.now();
 	for (const token of tokenBlacklist) {
 		const decoded = jwt.decode(token) as DecodedToken;
@@ -92,6 +98,6 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 		// Call the next middleware
 		next();
 	} catch (error) {
-		handleError({ res, error });
+		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
 	}
 };

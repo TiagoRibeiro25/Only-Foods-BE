@@ -9,7 +9,8 @@ const checkEnvs = (): boolean => {
 	const missingEnvs = VALID_ENVS.filter(env => !process.env[env]);
 	if (missingEnvs.length) {
 		console.log(
-			colors.red('\nMissing environment variables: ') +
+			colors.yellow('\n[checkEnvs.ts] ') +
+				colors.red('Missing environment variables: ') +
 				colors.yellow(missingEnvs.join(', ')),
 		);
 		return false;

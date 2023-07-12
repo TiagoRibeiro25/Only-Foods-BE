@@ -12,21 +12,30 @@ if (!checkEnvs()) {
 
 import app from './app';
 import prisma from './config/db.config';
-const PORT = process.env.PORT;
+const PORT: string = process.env.PORT;
 
 app.listen(PORT, () => {
 	console.clear();
-	console.log(colors.cyan('Starting the server...'));
+	console.log(colors.yellow('[server.ts] ') + colors.cyan('Starting the server...'));
 
 	// Connect to the database
 	prisma
 		.$connect()
 		.then(() => {
-			console.log(colors.cyan('Connected to the database'));
-			console.log(colors.cyan('Server is running on port ' + colors.green(PORT)));
+			console.log(
+				colors.yellow('[server.ts] ') + colors.cyan('Connected to the database'),
+			);
+			console.log(
+				colors.yellow('[server.ts] ') +
+					colors.cyan('Server.ts is running on port ' + colors.green(PORT)),
+			);
 		})
 		.catch(error => {
-			console.log(colors.red('Failed to connect to the database'));
-			console.log(colors.red('Error: ') + colors.yellow(error));
+			console.log(
+				colors.yellow('[server.ts] ') + colors.red('Failed to connect to the database'),
+			);
+			console.log(
+				colors.yellow('[server.ts] ') + colors.red('Error: ') + colors.yellow(error),
+			);
 		});
 });

@@ -85,7 +85,6 @@ describe('base64Image', () => {
 
 		validImages.forEach(image => {
 			const isValid = validateUtils.base64Image(image);
-			console.log(isValid, image);
 			expect(isValid).toBe(true);
 		});
 	});

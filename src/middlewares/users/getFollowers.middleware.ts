@@ -20,6 +20,6 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 		// Call the next middleware
 		next();
 	} catch (error) {
-		handleError({ error, res });
+		handleError({ error, res, fileName: __filename.split('\\').at(-1) });
 	}
 };

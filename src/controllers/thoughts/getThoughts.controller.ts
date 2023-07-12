@@ -103,6 +103,7 @@ function fetchThoughts(props: FetchThoughtsProps): Promise<Thought[]> {
 	});
 }
 
+//TODO: Add filter by group id (thoughts can me global or group specific)
 export default async (req: Request, res: Response): Promise<void> => {
 	const { filter, page = 1, limit = 10 } = req.query as unknown as Query;
 	const isUserLogged: boolean = req.tokenData !== undefined;
@@ -153,6 +154,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 			data: thoughts,
 		});
 	} catch (error) {
-		handleError({ error, res });
+		handleError({ error, res, fileName: __filename.split('\\').at(-1) });
 	}
 };

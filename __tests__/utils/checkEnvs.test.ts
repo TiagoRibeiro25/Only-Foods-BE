@@ -56,7 +56,8 @@ describe('checkEnvs', () => {
 		expect(result).toBe(false);
 		expect(mockConsoleLog).toHaveBeenCalledTimes(1);
 		expect(mockConsoleLog).toHaveBeenCalledWith(
-			colors.red('\nMissing environment variables: ') +
+			colors.yellow('\n[checkEnvs.ts] ') +
+				colors.red('Missing environment variables: ') +
 				colors.yellow('CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET'),
 		);
 	});

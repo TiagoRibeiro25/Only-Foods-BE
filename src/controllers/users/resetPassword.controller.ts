@@ -32,6 +32,6 @@ export default async (req: Request, res: Response) => {
 			message: 'Password updated successfully',
 		});
 	} catch (error) {
-		handleError({ res, error });
+		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
 	}
 };

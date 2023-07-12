@@ -6,6 +6,7 @@ import handleResponse from './handleResponse';
 interface Props {
 	res: Response;
 	error: Error;
+	fileName: string; // The file name where the error occurred (for debugging)
 }
 
 interface ApiError {
@@ -32,8 +33,16 @@ const handleError = (props: Props): void => {
 
 	// If the status is a 500, then log the error
 	if (!errorFound) {
-		console.log(colors.red('Error: ') + colors.yellow(props.error.name));
-		console.log(colors.red('Message: ') + colors.yellow(props.error.message));
+		console.log(
+			colors.yellow(`[${props.fileName}] `) +
+				colors.red('Error: ') +
+				colors.yellow(props.error.name),
+		);
+		console.log(
+			colors.yellow(`[${props.fileName}] `) +
+				colors.red('Message: ') +
+				colors.yellow(props.error.message),
+		);
 	}
 };
 
