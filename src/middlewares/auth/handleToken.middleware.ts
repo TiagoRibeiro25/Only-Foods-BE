@@ -6,6 +6,23 @@ import prisma from '../../config/db.config';
 import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
 
+// Maintain a blacklist of revoked tokens
+const tokenBlacklist: Set<string> = new Set();
+
+// Function to remove expired tokens from the blacklist
+function removeExpiredTokens() {
+	const now = Date.now();
+	for (const token of tokenBlacklist) {
+		const decoded = jwt.decode(token) as DecodedToken;
+		if (decoded.exp && decoded.exp * 1000 < now) {
+			tokenBlacklist.delete(token);
+		}
+	}
+}
+
+// Schedule the removal of expired tokens at a desired interval
+setInterval(removeExpiredTokens, 24 * 60 * 60 * 1000); // Run every 24 hours
+
 /**
  * Middleware that handles the token
  * This middleware will check if the token is valid and if it is, it will set the decoded token in the request
@@ -18,6 +35,11 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 
 	try {
 		if (token) {
+			// Check if the token is in the blacklist
+			if (tokenBlacklist.has(token)) {
+				throw new Error('Token revoked');
+			}
+
 			// Verify token
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
 
@@ -27,7 +49,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			});
 
 			if (!user) {
-				throw new Error('invalid token');
+				throw new Error('Invalid token');
 			}
 
 			// Set the user data in the decoded token
@@ -58,6 +80,9 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				};
 
 				res.cookie('authorization', newToken, cookieOptions);
+
+				// Add the previous token to the blacklist
+				tokenBlacklist.add(token);
 			}
 
 			// Set the decoded token in the request

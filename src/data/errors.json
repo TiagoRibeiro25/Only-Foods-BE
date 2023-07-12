@@ -44,7 +44,11 @@
 		"status": 401
 	},
 	{
-		"message": "invalid token",
+		"message": "Token revoked",
+		"status": 401
+	},
+	{
+		"message": "Invalid token",
 		"status": 403
 	},
 	{
