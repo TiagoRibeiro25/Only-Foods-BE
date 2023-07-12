@@ -75,7 +75,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Fetch users
 		const users: User[] = await getUsers(keyword, Number(page), Number(limit));
 
-		const tokenDataId: string = req.tokenData.id;
+		const tokenDataId: string = req.tokenData?.id;
 
 		const searchResult: ResponseData[] = users.map(user => {
 			let isFollowing: boolean = null;
