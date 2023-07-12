@@ -91,7 +91,7 @@ In order to run this project, you need to have installed
 2. Install NPM packages
 
    ```sh
-   npm install
+   npm install --force
    ```
 
 3. Create a .env file, add the variables in the .env.sample file and fill them with your own values. The .env file should have the following variables:
@@ -113,11 +113,17 @@ In order to run this project, you need to have installed
    DATABASE_URL
    ```
 
-4. Run the project
+4. Run the migrations
 
-  ```sh
-  npm run dev
-  ```
+   ```sh
+   npm run migrate
+   ```
+
+5. Run the project
+
+   ```sh
+   npm run dev
+   ```
 
 <!-- CONTRIBUTING -->
 ## Contributing

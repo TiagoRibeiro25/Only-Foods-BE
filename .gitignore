@@ -9,3 +9,6 @@ node_modules/
 
 # Ignore the "scripts" folder within the "src" directory
 /src/scripts/
+
+# Ignore the "dist" folder directory (where the compiled code goes)
+dist/
