@@ -23,11 +23,21 @@ router.post(
 	ThoughtsControllers.addThought,
 );
 
+// Edit Thought
+router.put(
+	'/:id',
+	AuthMiddlewares.verifyToken,
+	AuthMiddlewares.handleToken,
+	ThoughtsMiddleware.editThought,
+	ThoughtsControllers.editThought,
+);
+
 // Delete Thought
 router.delete(
 	'/:id',
 	AuthMiddlewares.verifyToken,
 	AuthMiddlewares.handleToken,
+	ThoughtsMiddleware.deleteThought,
 	ThoughtsControllers.deleteThought,
 );
 
