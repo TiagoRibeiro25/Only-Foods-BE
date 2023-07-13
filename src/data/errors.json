@@ -1,5 +1,9 @@
 [
 	{
+		"message": "Invalid id",
+		"status": 400
+	},
+	{
 		"message": "Invalid users type",
 		"status": 400
 	},

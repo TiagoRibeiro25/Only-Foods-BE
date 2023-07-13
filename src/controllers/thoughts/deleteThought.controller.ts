@@ -5,7 +5,7 @@ import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
 export default async (req: Request, res: Response): Promise<void> => {
-	const thoughtId: string = req.params.id;
+	const thoughtId: number = +req.params.id;
 
 	try {
 		// Delete the thought, its comments and likes from the database

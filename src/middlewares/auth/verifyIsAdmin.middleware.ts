@@ -9,7 +9,7 @@ interface User {
 
 export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	// Get logged user id
-	const userId = req.tokenData.id;
+	const userId: number = req.tokenData.id;
 
 	try {
 		// Get the user from the database

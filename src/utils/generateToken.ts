@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 interface GenerateResetPasswordTokenProps {
-	id: string;
+	id: number;
 }
 
 interface GenerateAuthTokenProps extends GenerateResetPasswordTokenProps {

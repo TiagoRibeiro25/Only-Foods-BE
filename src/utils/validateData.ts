@@ -86,4 +86,11 @@ const base64Image = (imageInput: Base64Img): boolean => {
 	return base64Regex.test(imageInput);
 };
 
-export default { email, username, description, thoughtContent, base64Image };
+/**
+ * Validate an id (integer bigger than 0)
+ * @param idInput - The id to validate
+ * @returns {boolean} - Whether the id is valid or not
+ */
+const id = (idInput: string | number): boolean => +idInput > 0;
+
+export default { email, username, description, thoughtContent, base64Image, id };

@@ -11,7 +11,7 @@ interface Query {
 }
 
 interface User {
-	id: string;
+	id: number;
 	username: string;
 	description: string;
 	isAdmin: boolean;
@@ -20,10 +20,10 @@ interface User {
 		cloudinaryImage: string;
 	};
 	followers: {
-		followerId: string;
+		followerId: number;
 	}[];
 	following: {
-		followingId: string;
+		followingId: number;
 	}[];
 }
 
@@ -75,7 +75,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Fetch users
 		const users: User[] = await getUsers(keyword, Number(page), Number(limit));
 
-		const tokenDataId: string = req.tokenData?.id;
+		const tokenDataId: number = req.tokenData?.id;
 
 		const searchResult: ResponseData[] = users.map(user => {
 			let isFollowing: boolean = null;

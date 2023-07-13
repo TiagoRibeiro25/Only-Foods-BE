@@ -1,12 +1,9 @@
-import { User } from '@prisma/client';
 import { NextFunction, Response } from 'express';
 import { Request } from 'types';
-import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
 import validateData from '../../utils/validateData';
 
-export default async (req: Request, res: Response, next: NextFunction) => {
-	// Get the id of the user to follow/unfollow
+export default (req: Request, res: Response, next: NextFunction): void => {
 	const id = +req.params.id;
 
 	try {
@@ -15,14 +12,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			throw new Error('Invalid id');
 		}
 
-		// Check if the user exists
-		const user: User = await prisma.user.findUnique({ where: { id } });
-
-		if (!user) {
-			throw new Error('Account not found');
-		}
-
-		// Call the next middleware
 		next();
 	} catch (error) {
 		handleError({ res, error, fileName: __filename.split('\\').at(-1) });

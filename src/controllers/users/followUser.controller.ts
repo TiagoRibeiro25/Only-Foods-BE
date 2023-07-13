@@ -5,16 +5,18 @@ import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
 interface FollowingData {
-	id: string;
-	followerId: string;
-	followingId: string;
+	id: number;
+	followerId: number;
+	followingId: number;
 	createdAt: Date;
 	updatedAt: Date;
 }
 
 export default async (req: Request, res: Response) => {
-	const followingId: string = req.params.id; // The id of the user to follow/unfollow
-	const followerId: string = req.tokenData.id; // The id of the user who wants to follow/unfollow
+	// The id of the user to follow/unfollow
+	const followingId: number = +req.params.id;
+	// The id of the user who wants to follow/unfollow
+	const followerId: number = req.tokenData.id;
 
 	try {
 		// Check if the user is already following the other user

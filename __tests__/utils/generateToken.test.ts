@@ -5,7 +5,7 @@ jest.mock('jsonwebtoken');
 
 describe('resetPasswordToken', () => {
 	it('should generate a reset password token', () => {
-		const props = { id: '123' };
+		const props = { id: 123 };
 		const mockedToken = 'mockedTokenValue';
 		(jwt.sign as jest.Mock).mockReturnValueOnce(mockedToken);
 
@@ -22,7 +22,7 @@ describe('resetPasswordToken', () => {
 describe('authToken', () => {
 	it('should generate an authentication token', () => {
 		const props = {
-			id: '123',
+			id: 123,
 			rememberMe: false,
 			isAdmin: false,
 		};
@@ -39,7 +39,7 @@ describe('authToken', () => {
 
 	it('should generate an authentication token with remember me', () => {
 		const props = {
-			id: '123',
+			id: 123,
 			rememberMe: true,
 			isAdmin: false,
 		};

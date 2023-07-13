@@ -5,13 +5,13 @@ import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
 interface User {
-	id: string;
+	id: number;
 	blocked: boolean;
 	isAdmin: boolean;
 }
 
 export default async (req: Request, res: Response): Promise<void> => {
-	const id: string = req.params.id;
+	const id: number = +req.params.id;
 
 	try {
 		// Get the user to block

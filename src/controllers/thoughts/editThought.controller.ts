@@ -6,7 +6,7 @@ import handleResponse from '../../utils/handleResponse';
 
 export default async (req: Request, res: Response): Promise<void> => {
 	const content: string = req.body.content;
-	const thoughtId: string = req.params.id;
+	const thoughtId: number = +req.params.id;
 
 	try {
 		// Update thought

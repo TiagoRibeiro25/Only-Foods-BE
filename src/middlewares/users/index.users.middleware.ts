@@ -1,3 +1,4 @@
+import blockUser from './blockUser.middleware';
 import editProfile from './editProfile.middleware';
 import followUser from './followUser.middleware';
 import forgotPassword from './forgotPassword.middleware';
@@ -14,4 +15,5 @@ export default {
 	followUser,
 	editProfile,
 	getFollowers,
+	blockUser,
 };

@@ -6,7 +6,7 @@ import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
 interface FollowData {
-	id: string;
+	id: number;
 	username: string;
 	description: string;
 	userImage?: {
@@ -29,11 +29,11 @@ interface User extends PrismaUser {
 }
 
 interface Relation {
-	followingId: string;
+	followingId: number;
 }
 
 interface ResultItem {
-	id: string;
+	id: number;
 	username: string;
 	description: string;
 	userImage?: {
@@ -43,7 +43,7 @@ interface ResultItem {
 	isFollowing: boolean | null;
 }
 
-function getUser(userId: string): Promise<User> {
+function getUser(userId: number): Promise<User> {
 	return prisma.user.findUnique({
 		where: { id: userId },
 		include: {
@@ -87,7 +87,7 @@ function getUser(userId: string): Promise<User> {
 
 export default async (req: Request, res: Response): Promise<void> => {
 	const type = req.query.type as FollowType;
-	const userId: string = req.params.id === 'me' ? req.tokenData.id : req.params.id;
+	const userId: number = req.params.id === 'me' ? req.tokenData.id : +req.params.id;
 
 	try {
 		// Fetch the user
@@ -127,7 +127,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 				},
 			});
 
-			const followingSet: Set<string> = new Set(
+			const followingSet: Set<number> = new Set(
 				relations.map(relation => relation.followingId),
 			);
 

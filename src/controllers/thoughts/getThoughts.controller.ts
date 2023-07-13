@@ -9,19 +9,19 @@ interface Query {
 	filter: 'recent' | 'popular' | 'following';
 	page: number;
 	limit: number;
-	authorId?: string;
+	authorId?: number;
 }
 
 interface Thought {
-	id: string;
+	id: number;
 	content: string;
 	author: {
-		id: string;
+		id: number;
 		username: string;
 		userImage: { cloudinaryImage: string };
 	};
-	likes: { authorId: string }[];
-	comments: { authorId: string }[];
+	likes: { authorId: number }[];
+	comments: { authorId: number }[];
 	createdAt: Date;
 	createdAgo?: string;
 	isAuthor?: boolean;
@@ -42,19 +42,19 @@ interface WhereType {
 	author?: {
 		followers: {
 			some: {
-				followerId: string;
+				followerId: number;
 			};
 		};
 	};
-	authorId?: string;
+	authorId?: number;
 }
 
 interface FetchThoughtsProps {
 	page: number;
 	limit: number;
 	type: string;
-	userId?: string;
-	authorId?: string;
+	userId?: number;
+	authorId?: number;
 }
 
 /**
@@ -125,7 +125,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			limit: Number(limit), // Number of thoughts per page
 			type: filter, // 'recent' | 'popular' | 'following'
 			userId: req.tokenData?.id, // User ID (required for filter 'following')
-			authorId: authorId, // Author ID (only for "recent" and "popular" filters)
+			authorId: +authorId, // Author ID (only for "recent" and "popular" filters)
 		});
 
 		// Check if the user is logged in

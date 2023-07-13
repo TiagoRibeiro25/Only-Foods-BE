@@ -8,7 +8,7 @@ import handleResponse from '../../utils/handleResponse';
 
 export default async (req: Request, res: Response) => {
 	const password: string = req.body.password;
-	const userId: string = req.tokenData.id;
+	const userId: number = req.tokenData.id;
 	const newToken: string = generateToken.resetPasswordToken({ id: userId });
 
 	// Encrypt new password

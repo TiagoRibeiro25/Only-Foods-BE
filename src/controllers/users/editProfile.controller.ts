@@ -15,7 +15,7 @@ interface EditProfileData {
 }
 
 interface HandleUserPictureProps {
-	userId: string;
+	userId: number;
 	picture: Base64Img;
 }
 
@@ -24,7 +24,7 @@ async function handleUserPicture(props: HandleUserPictureProps): Promise<void> {
 
 	// Check if the user already has a picture
 	const userPicture: UserImage = await prisma.userImage.findFirst({
-		where: { userId },
+		where: { userId: +userId },
 	});
 
 	// If the user already has a picture, update the cloudinary image with the id userPicture.cloudinaryId
@@ -68,7 +68,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 	try {
 		// Get the user id from the request
-		const userId: string = req.tokenData.id;
+		const userId: number = req.tokenData.id;
 
 		// Check if the user wants to update the picture
 		if (updates.picture) {

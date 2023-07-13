@@ -2,11 +2,16 @@ import { NextFunction, Response } from 'express';
 import { Request } from 'types';
 import prisma from '../../config/db.config';
 import handleError from '../../utils/handleError';
+import validateData from '../../utils/validateData';
 
 export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-	const thoughtId: string = req.params.id;
+	const thoughtId = +req.params.id;
 
 	try {
+		if (!validateData.id(thoughtId)) {
+			throw new Error('Invalid id');
+		}
+
 		// Find the thought
 		const thought = await prisma.thought.findUnique({
 			where: { id: thoughtId },

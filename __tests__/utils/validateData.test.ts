@@ -103,3 +103,23 @@ describe('base64Image', () => {
 		});
 	});
 });
+
+describe('id', () => {
+	it('should return true for a valid id', () => {
+		const validIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100, Number.MAX_SAFE_INTEGER];
+
+		validIds.forEach(id => {
+			const isValid = validateUtils.id(id);
+			expect(isValid).toBe(true);
+		});
+	});
+
+	it('should return false for an invalid id', () => {
+		const invalidIds = ['hello world', NaN, 0, -7, -8, -9, -10, Number.MIN_SAFE_INTEGER];
+
+		invalidIds.forEach(id => {
+			const isValid = validateUtils.id(id);
+			expect(isValid).toBe(false);
+		});
+	});
+});

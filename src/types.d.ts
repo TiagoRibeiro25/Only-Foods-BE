@@ -6,7 +6,7 @@ type Base64Img = `data:image/${ImgMimeType};base64${string}`;
 type FollowType = 'followers' | 'following';
 
 interface DecodedToken {
-	id: string;
+	id: number;
 	rememberMe: boolean;
 	isAdmin: boolean;
 	iat: number; // Issued at

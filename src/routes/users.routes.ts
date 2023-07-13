@@ -55,6 +55,7 @@ router.patch(
 	AuthMiddlewares.verifyToken,
 	AuthMiddlewares.handleToken,
 	AuthMiddlewares.verifyIsAdmin,
+	UsersMiddlewares.blockUser,
 	UsersController.blockUser,
 );
 

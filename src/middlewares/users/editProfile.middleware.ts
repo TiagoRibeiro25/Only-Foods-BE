@@ -14,7 +14,7 @@ interface EditProfileData {
 
 interface ValidateEmailProps {
 	email: string;
-	userId: string;
+	userId: number;
 }
 
 async function validateEmail(props: ValidateEmailProps): Promise<void> {
@@ -29,7 +29,11 @@ async function validateEmail(props: ValidateEmailProps): Promise<void> {
 	}
 
 	// Check if there's an account with the same email
-	const isEmailInUse = await prisma.user.findFirst({ where: { email } });
+	const isEmailInUse = await prisma.user.findFirst({
+		where: { email },
+		select: { id: true },
+	});
+
 	if (isEmailInUse && isEmailInUse.id !== userId) {
 		throw new Error('Email already in use');
 	}

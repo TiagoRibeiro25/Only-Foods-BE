@@ -5,7 +5,7 @@ import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 
 interface User {
-	id: string;
+	id: number;
 	username: string;
 	email: string;
 	description: string;
@@ -15,10 +15,10 @@ interface User {
 		cloudinaryImage: string;
 	};
 	followers: {
-		followerId: string;
+		followerId: number;
 	}[];
 	following: {
-		followingId: string;
+		followingId: number;
 	}[];
 }
 
@@ -29,7 +29,7 @@ interface ResponseData extends Omit<User, 'followers' | 'following'> {
 	isFollowing?: boolean;
 }
 
-const getUser = (id: string): Promise<User> => {
+const getUser = (id: number): Promise<User> => {
 	return prisma.user.findUnique({
 		where: {
 			id: id,
@@ -69,7 +69,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		}
 
 		// If the id is "me" and there's a token, return the user data
-		if (id === 'me' || id === req.tokenData?.id) {
+		if (id === 'me' || +id === req.tokenData?.id) {
 			const user: User = await getUser(req.tokenData.id);
 
 			responseData = {
@@ -80,7 +80,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			};
 		} else {
 			// Check if the user exists
-			const user: User = await getUser(id);
+			const user: User = await getUser(+id);
 			if (!user) {
 				throw new Error('Account not found');
 			}

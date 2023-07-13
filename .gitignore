@@ -12,3 +12,6 @@ node_modules/
 
 # Ignore the "dist" folder directory (where the compiled code goes)
 dist/
+
+# Migrations folder
+prisma/migrations/

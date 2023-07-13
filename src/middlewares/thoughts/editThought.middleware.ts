@@ -6,9 +6,13 @@ import validateData from '../../utils/validateData';
 
 export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	const content: string = req.body.content;
-	const thoughtId: string = req.params.id;
+	const thoughtId = +req.params.id;
 
 	try {
+		if (!validateData.id(thoughtId)) {
+			throw new Error('Invalid id');
+		}
+
 		if (!validateData.thoughtContent(content)) {
 			throw new Error('Invalid content');
 		}

@@ -1,12 +1,18 @@
 import { NextFunction, Response } from 'express';
 import { FollowType, Request } from 'types';
 import handleError from '../../utils/handleError';
+import validateData from '../../utils/validateData';
 
 export default (req: Request, res: Response, next: NextFunction): void => {
 	const type = req.query.type as FollowType;
 	const userId: string = req.params.id;
 
 	try {
+		// Check if the user id is valid
+		if (!validateData.id(userId)) {
+			throw new Error('Invalid id');
+		}
+
 		// Check if type is valid
 		if (!type || (type !== 'followers' && type !== 'following')) {
 			throw new Error('Invalid users type');
