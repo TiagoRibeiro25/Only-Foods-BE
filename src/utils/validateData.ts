@@ -52,6 +52,22 @@ const description = (descriptionInput: string): boolean => {
 };
 
 /**
+ *  Validate a thought content
+ * - Can have letters, numbers, spaces, and common punctuation marks
+ * - Must be between 10 and 200 characters
+ * @param thoughtContentInput - The thought content to validate
+ * @returns {boolean} - Whether the thought content is valid or not
+ */
+const thoughtContent = (thoughtContentInput: string): boolean => {
+	if (typeof thoughtContentInput !== 'string') {
+		return false;
+	}
+
+	// Since both thoughtContent and description have the same validation rules, we can just reuse the description validation function
+	return description(thoughtContentInput);
+};
+
+/**
  * Validate a base64 image
  * - Must be less than 1MB
  * - Must be a valid image format (png, jpg, jpeg, bmp, webp)
@@ -70,4 +86,4 @@ const base64Image = (imageInput: Base64Img): boolean => {
 	return base64Regex.test(imageInput);
 };
 
-export default { email, username, description, base64Image };
+export default { email, username, description, thoughtContent, base64Image };

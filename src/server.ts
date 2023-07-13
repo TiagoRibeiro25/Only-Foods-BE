@@ -27,7 +27,7 @@ app.listen(PORT, () => {
 			);
 			console.log(
 				colors.yellow('[server.ts] ') +
-					colors.cyan('Server.ts is running on port ' + colors.green(PORT)),
+					colors.cyan('Server is running on port ' + colors.green(PORT)),
 			);
 		})
 		.catch(error => {
