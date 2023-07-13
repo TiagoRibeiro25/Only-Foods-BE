@@ -1,4 +1,3 @@
-import { User as PrismaUser } from '@prisma/client';
 import { Response } from 'express';
 import { FollowType, Request } from 'types';
 import prisma from '../../config/db.config';
@@ -23,11 +22,6 @@ interface UserFollowing {
 	following: FollowData;
 }
 
-interface User extends PrismaUser {
-	followers: UserFollower[];
-	following: UserFollowing[];
-}
-
 interface Relation {
 	followingId: number;
 }
@@ -43,7 +37,7 @@ interface ResultItem {
 	isFollowing: boolean | null;
 }
 
-function getUser(userId: number): Promise<User> {
+function getUser(userId: number) {
 	return prisma.user.findUnique({
 		where: { id: userId },
 		include: {
@@ -91,7 +85,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 	try {
 		// Fetch the user
-		const user: User = await getUser(userId);
+		const user = await getUser(userId);
 
 		// Check if user exists
 		if (!user) {

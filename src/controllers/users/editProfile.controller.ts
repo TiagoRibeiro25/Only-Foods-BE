@@ -1,4 +1,3 @@
-import { UserImage } from '@prisma/client';
 import { UploadApiResponse } from 'cloudinary';
 import { Response } from 'express';
 import { Base64Img, Request } from 'types';
@@ -23,7 +22,7 @@ async function handleUserPicture(props: HandleUserPictureProps): Promise<void> {
 	const { userId, picture } = props;
 
 	// Check if the user already has a picture
-	const userPicture: UserImage = await prisma.userImage.findFirst({
+	const userPicture = await prisma.userImage.findFirst({
 		where: { userId: +userId },
 	});
 

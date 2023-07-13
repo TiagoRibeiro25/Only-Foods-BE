@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { CookieOptions, Response } from 'express';
 import { Request } from 'types';
@@ -18,7 +17,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 	try {
 		// Search if there's a user with the email provided
-		const user: User = await prisma.user.findUnique({ where: { email } });
+		const user = await prisma.user.findUnique({ where: { email } });
 
 		if (!user) {
 			throw new Error('Account not found');

@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import { Request } from 'types';
@@ -22,7 +21,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 		// Create the user and generate reset password token in one database transaction
 		await prisma.$transaction(async prisma => {
-			const createdUser: User = await prisma.user.create({
+			const createdUser = await prisma.user.create({
 				data: {
 					username,
 					email,

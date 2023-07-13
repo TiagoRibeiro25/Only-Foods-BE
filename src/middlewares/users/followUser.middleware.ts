@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import { NextFunction, Response } from 'express';
 import { Request } from 'types';
 import prisma from '../../config/db.config';
@@ -16,7 +15,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		}
 
 		// Check if the user exists
-		const user: User = await prisma.user.findUnique({ where: { id } });
+		const user = await prisma.user.findUnique({ where: { id } });
 
 		if (!user) {
 			throw new Error('Account not found');

@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import { Response } from 'express';
 import { Request } from 'types';
 import prisma from '../../config/db.config';
@@ -11,7 +10,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		const email: string = req.body.email;
 
 		// Check there's an account with the email provided
-		const user: User = await prisma.user.findUnique({
+		const user = await prisma.user.findUnique({
 			where: { email },
 		});
 

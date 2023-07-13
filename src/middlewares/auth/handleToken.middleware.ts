@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import colors from 'colors';
 import { CookieOptions, NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
@@ -50,7 +49,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
 
 			// Check if the user exists
-			const user: User = await prisma.user.findUnique({
+			const user = await prisma.user.findUnique({
 				where: { id: decoded.id },
 			});
 
