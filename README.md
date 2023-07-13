@@ -94,7 +94,7 @@ In order to run this project, you need to have installed
 2. Install NPM packages
 
    ```sh
-   npm install --force
+   npm install
    ```
 
 3. Create a .env file, add the variables in the .env.sample file and fill them with your own values. The .env file should have the following variables:
