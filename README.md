@@ -67,6 +67,9 @@ This project was made as a side project to elevate my skills in Prisma and Types
 * [Typescript](https://www.typescriptlang.org/)
 * [Prisma](https://www.prisma.io/)
 * [Socket.io](https://socket.io/)
+* [Cloudinary](https://cloudinary.com/)
+* [Mailjet](https://www.mailjet.com/)
+* [PostgreSQL](https://www.postgresql.org/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -116,10 +119,16 @@ In order to run this project, you need to have installed
 4. Run the migrations
 
    ```sh
-   npm run migrate
+   npx prisma migrate dev --name init
    ```
 
-5. Run the project
+5. Generate the Prisma client
+
+   ```sh
+   npx prisma generate
+   ```
+
+6. Run the project
 
    ```sh
    npm run dev
