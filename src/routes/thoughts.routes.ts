@@ -7,7 +7,6 @@ import ThoughtsMiddleware from '../middlewares/thoughts/index.thoughts.middlewar
 const router: AsyncRouter = Router();
 
 // Get Thoughts
-//TODO: filter by authorId
 router.get(
 	'/',
 	AuthMiddlewares.handleToken,
@@ -22,6 +21,14 @@ router.post(
 	AuthMiddlewares.handleToken,
 	ThoughtsMiddleware.addThought,
 	ThoughtsControllers.addThought,
+);
+
+// Delete Thought
+router.delete(
+	'/:id',
+	AuthMiddlewares.verifyToken,
+	AuthMiddlewares.handleToken,
+	ThoughtsControllers.deleteThought,
 );
 
 export default router;
