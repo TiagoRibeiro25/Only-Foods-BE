@@ -37,8 +37,13 @@ router.get(
 	UsersController.getFollowers,
 );
 
-// Get specific user by id
-router.get('/:id', AuthMiddlewares.handleToken, UsersController.getUser);
+// Get user by id
+router.get(
+	'/:id',
+	AuthMiddlewares.handleToken,
+	UsersMiddlewares.getUser,
+	UsersController.getUser,
+);
 
 // Follow / Unfollow someone
 router.patch(
