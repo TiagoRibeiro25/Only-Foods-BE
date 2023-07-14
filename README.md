@@ -43,8 +43,10 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+      	<li><a href="#prepare-for-production">Prepare for production</a></li>
       </ul>
     </li>
+  	<li><a href="#api-documentation">API Documentation</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -133,6 +135,34 @@ In order to run this project, you need to have installed
    ```sh
    npm run dev
    ```
+
+<!-- Production -->
+## Prepare for production
+
+1. Install NPM packages (if you haven't already)
+
+   ```sh
+   npm install
+   ```
+
+2. Build the project
+
+   ```sh
+   npm run build
+   ```
+
+3. Set the NODE_ENV variable to production and the rest of the variables in the .env file
+
+4. Run the project
+
+   ```sh
+   npm start
+   ```
+
+<!-- Documentation -->
+## API Documentation
+
+The API documentation is still in development. You can check the API routes in the routes folder.
 
 <!-- CONTRIBUTING -->
 ## Contributing
