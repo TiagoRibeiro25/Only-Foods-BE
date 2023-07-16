@@ -1,3 +1,4 @@
+import { Thought } from '@prisma/client';
 import { Response } from 'express';
 import { Request } from 'types';
 import prisma from '../../config/db.config';
@@ -9,7 +10,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 	try {
 		// Create new thought in the database
-		const thought = await prisma.thought.create({
+		const thought: Thought = await prisma.thought.create({
 			data: {
 				authorId: req.tokenData.id,
 				content,

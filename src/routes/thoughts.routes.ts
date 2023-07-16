@@ -14,6 +14,14 @@ router.get(
 	ThoughtsControllers.getThoughts,
 );
 
+// Get Thought
+router.get(
+	'/:id',
+	AuthMiddlewares.handleToken,
+	ThoughtsMiddleware.getThought,
+	ThoughtsControllers.getThought,
+);
+
 // Add Thought
 router.post(
 	'/',
