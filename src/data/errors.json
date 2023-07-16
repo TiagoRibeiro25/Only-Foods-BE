@@ -8,6 +8,10 @@
 		"status": 400
 	},
 	{
+		"message": "Invalid type",
+		"status": 400
+	},
+	{
 		"message": "Invalid users type",
 		"status": 400
 	},
