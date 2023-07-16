@@ -84,9 +84,6 @@ model Comment {
   recipeId  Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([authorId, thoughtId])
-  @@unique([authorId, recipeId])
 }
 
 model Recipe {
