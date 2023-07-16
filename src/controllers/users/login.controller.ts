@@ -17,7 +17,10 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 	try {
 		// Search if there's a user with the email provided
-		const user = await prisma.user.findUnique({ where: { email } });
+		const user = await prisma.user.findUnique({
+			where: { email },
+			include: { userImage: true },
+		});
 
 		if (!user) {
 			throw new Error('Account not found');
@@ -46,12 +49,22 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 		res.cookie('authorization', token, cookieOptions);
 
+		// Prepare the user data to send it back
+		const userData = {
+			id: user.id,
+			username: user.username,
+			email: user.email,
+			isAdmin: user.isAdmin,
+			picture: user.userImage?.cloudinaryImage,
+		};
+
 		// Send the response
 		handleResponse({
 			res,
 			status: 'success',
 			statusCode: 200,
 			message: 'Logged in successfully',
+			data: { user: userData },
 		});
 	} catch (error) {
 		const fileName =
