@@ -1,5 +1,10 @@
 import { Base64Img } from 'types';
 
+interface PaginationProps {
+	page: string | number;
+	limit: string | number;
+}
+
 /**
  * Validate an email
  * - Must be a valid email address format
@@ -93,4 +98,22 @@ const base64Image = (imageInput: Base64Img): boolean => {
  */
 const id = (idInput: string | number): boolean => +idInput > 0;
 
-export default { email, username, description, thoughtContent, base64Image, id };
+/**
+ * Validates pagination data.
+ * @param {number} page - The page number (default: 1)
+ * @param {number} limit - The limit of items per page (default: 1)
+ * @returns {boolean} - Returns true if the pagination data is valid, otherwise false
+ */
+const pagination = ({ page = 1, limit = 1 }: PaginationProps): boolean => {
+	return +page >= 1 && +limit >= 1;
+};
+
+export default {
+	email,
+	username,
+	description,
+	thoughtContent,
+	base64Image,
+	id,
+	pagination,
+};

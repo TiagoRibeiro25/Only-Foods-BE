@@ -7,6 +7,7 @@ import getUser from './getUser.middleware';
 import verifyLogin from './login.middleware';
 import verifyRegister from './register.middleware';
 import resetPassword from './resetPassword.middleware';
+import searchUsers from './searchUsers.middleware';
 
 export default {
 	verifyLogin,
@@ -18,4 +19,5 @@ export default {
 	getFollowers,
 	blockUser,
 	getUser,
+	searchUsers,
 };

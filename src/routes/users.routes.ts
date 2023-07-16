@@ -27,7 +27,12 @@ router.patch(
 router.post('/', UsersMiddlewares.verifyRegister, UsersController.register);
 
 // Search users
-router.get('/search', AuthMiddlewares.handleToken, UsersController.searchUsers);
+router.get(
+	'/search',
+	AuthMiddlewares.handleToken,
+	UsersMiddlewares.searchUsers,
+	UsersController.searchUsers,
+);
 
 // Get followers/following
 router.get(

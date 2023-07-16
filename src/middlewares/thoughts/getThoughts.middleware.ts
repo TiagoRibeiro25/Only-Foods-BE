@@ -10,11 +10,18 @@ const VALID_FILTERS: Filter[] = ['recent', 'popular', 'following'];
 export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	const filter = req.query.filter as Filter;
 	const authorId = req.query.authorId as string;
+	const page = req.query.page as string;
+	const limit = req.query.limit as string;
 
 	try {
 		// If there's an authorId, check if it's a valid id
 		if (authorId && !validateData.id(authorId)) {
 			throw new Error('Invalid id');
+		}
+
+		// Check if the page and limit are valid numbers
+		if (!validateData.pagination({ page, limit })) {
+			throw new Error('Invalid query value');
 		}
 
 		// If the filter is not valid, set it to 'recent' (default)

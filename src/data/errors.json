@@ -1,5 +1,9 @@
 [
 	{
+		"message": "Invalid query value",
+		"status": 400
+	},
+	{
 		"message": "Invalid id",
 		"status": 400
 	},
