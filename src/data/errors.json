@@ -96,6 +96,10 @@
 		"status": 404
 	},
 	{
+		"message": "No recipes found",
+		"status": 404
+	},
+	{
 		"message": "No comments found",
 		"status": 404
 	},

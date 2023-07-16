@@ -1,3 +1,4 @@
-import getComments from './getComments.middleware';
+import addComment from './addComment.middleware';
+import verifyRequest from './verifyRequest.middleware';
 
-export default { getComments };
+export default { verifyRequest, addComment };

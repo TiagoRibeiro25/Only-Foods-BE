@@ -73,6 +73,22 @@ const thoughtContent = (thoughtContentInput: string): boolean => {
 };
 
 /**
+ * Validate a comment content
+ * - Can have letters, numbers, spaces, and common punctuation marks
+ * - Must be between 10 and 200 characters
+ * @param commentContentInput - The comment content to validate
+ * @returns {boolean} - Whether the comment content is valid or not
+ */
+const commentContent = (commentContentInput: string): boolean => {
+	if (typeof commentContentInput !== 'string') {
+		return false;
+	}
+
+	// Since both commentContent and description have the same validation rules, we can just reuse the description validation function
+	return description(commentContentInput);
+};
+
+/**
  * Validate a base64 image
  * - Must be less than 1MB
  * - Must be a valid image format (png, jpg, jpeg, bmp, webp)
@@ -113,6 +129,7 @@ export default {
 	username,
 	description,
 	thoughtContent,
+	commentContent,
 	base64Image,
 	id,
 	pagination,
