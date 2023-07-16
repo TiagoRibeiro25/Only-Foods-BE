@@ -1,26 +1,27 @@
 import { NextFunction, Response } from 'express';
-import { FollowType, Request } from 'types';
+import { Request } from 'types';
 import handleError from '../../utils/handleError';
 import validateData from '../../utils/validateData';
 
+interface QueryParams {
+	id: string;
+	type: 'thought' | 'recipe';
+}
+
+const VALID_TYPES = ['thought', 'recipe'];
+
 export default (req: Request, res: Response, next: NextFunction): void => {
-	const type = req.query.type as FollowType;
-	const userId: string = req.params.id;
+	const { id, type } = req.params as unknown as QueryParams;
 
 	try {
-		// Check if the user id is valid
-		if (!validateData.id(userId)) {
+		// Check if the id is valid
+		if (!id || !validateData.id(id)) {
 			throw new Error('Invalid id');
 		}
 
-		// Check if type is valid
-		if (!type || (type !== 'followers' && type !== 'following')) {
+		// Check if the type is valid
+		if (!type || !VALID_TYPES.includes(type)) {
 			throw new Error('Invalid type');
-		}
-
-		// If the user id is "me", check if the user is logged in
-		if (userId === 'me' && !req.tokenData) {
-			throw new Error('No token provided');
 		}
 
 		// Call the next middleware
