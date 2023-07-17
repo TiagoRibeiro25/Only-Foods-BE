@@ -18,6 +18,7 @@ router.post(
 	'/:id/:type',
 	AuthMiddleware.verifyToken,
 	AuthMiddleware.handleToken,
+	AuthMiddleware.verifyIfBlocked,
 	CommentsMiddleware.verifyRequest,
 	CommentsMiddleware.addComment,
 	CommentsController.addComment,

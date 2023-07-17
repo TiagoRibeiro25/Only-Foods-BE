@@ -27,6 +27,7 @@ router.post(
 	'/',
 	AuthMiddlewares.verifyToken,
 	AuthMiddlewares.handleToken,
+	AuthMiddlewares.verifyIfBlocked,
 	ThoughtsMiddleware.addThought,
 	ThoughtsControllers.addThought,
 );
@@ -36,6 +37,7 @@ router.put(
 	'/:id',
 	AuthMiddlewares.verifyToken,
 	AuthMiddlewares.handleToken,
+	AuthMiddlewares.verifyIfBlocked,
 	ThoughtsMiddleware.editThought,
 	ThoughtsControllers.editThought,
 );

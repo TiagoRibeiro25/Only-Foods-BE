@@ -42,6 +42,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Set the cookie
 		const cookieOptions: CookieOptions = {
 			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
 			maxAge: parseInt(
 				rememberMe ? process.env.JWT_EXPIRES_IN_REMEMBER_ME : process.env.JWT_EXPIRES_IN,
 			),

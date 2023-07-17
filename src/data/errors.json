@@ -88,6 +88,10 @@
 		"status": 403
 	},
 	{
+		"message": "You are blocked",
+		"status": 403
+	},
+	{
 		"message": "Account not found",
 		"status": 404
 	},

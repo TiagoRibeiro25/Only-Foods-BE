@@ -11,6 +11,7 @@ router.patch(
 	'/:id/:type',
 	AuthMiddleware.verifyToken,
 	AuthMiddleware.handleToken,
+	AuthMiddleware.verifyIfBlocked,
 	LikesMiddleware.handleLike,
 	LikesController.handleLike,
 );
