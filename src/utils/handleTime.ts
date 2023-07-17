@@ -3,10 +3,12 @@ interface Props {
 	currentTime?: Date;
 }
 
-interface Props {
-	createdAt: Date;
-	currentTime?: Date;
-}
+// Define time intervals in seconds
+const MINUTE = 60;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+const MONTH = 30 * DAY;
+const YEAR = 365 * DAY;
 
 /**
  * Format the time ago string.
@@ -30,43 +32,36 @@ function calculateTimeAgo({ createdAt, currentTime = new Date() }: Props): strin
 	// Get the difference in seconds
 	const seconds = Math.floor((currentTime.getTime() - createdAt.getTime()) / 1000);
 
-	// Define time intervals in seconds
-	const minute = 60;
-	const hour = 60 * minute;
-	const day = 24 * hour;
-	const month = 30 * day;
-	const year = 365 * day;
-
 	// Determine the appropriate time interval based on the number of seconds
 
 	// Less than a minute
-	if (seconds < minute) {
+	if (seconds < MINUTE) {
 		return formatTimeAgo(seconds, 'second');
 	}
 
 	// Less than an hour
-	else if (seconds < hour) {
-		return formatTimeAgo(Math.floor(seconds / minute), 'minute');
+	else if (seconds < HOUR) {
+		return formatTimeAgo(Math.floor(seconds / MINUTE), 'minute');
 	}
 
 	// Less than a day
-	else if (seconds < day) {
-		return formatTimeAgo(Math.floor(seconds / hour), 'hour');
+	else if (seconds < DAY) {
+		return formatTimeAgo(Math.floor(seconds / HOUR), 'hour');
 	}
 
 	// Less than a month
-	else if (seconds < month) {
-		return formatTimeAgo(Math.floor(seconds / day), 'day');
+	else if (seconds < MONTH) {
+		return formatTimeAgo(Math.floor(seconds / DAY), 'day');
 	}
 
 	// Less than a year
-	else if (seconds < year) {
-		return formatTimeAgo(Math.floor(seconds / month), 'month');
+	else if (seconds < YEAR) {
+		return formatTimeAgo(Math.floor(seconds / MONTH), 'month');
 	}
 
 	// More than a year
 	else {
-		return formatTimeAgo(Math.floor(seconds / year), 'year');
+		return formatTimeAgo(Math.floor(seconds / YEAR), 'year');
 	}
 }
 
