@@ -89,6 +89,7 @@ model Comment {
 model Recipe {
   id           Int           @id @default(autoincrement())
   title        String
+  description  String        @default("No description")
   recipeImages RecipeImage[]
   author       User          @relation(fields: [authorId], references: [id])
   authorId     Int
