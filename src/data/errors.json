@@ -48,7 +48,19 @@
 		"status": 400
 	},
 	{
+		"message": "Invalid title",
+		"status": 400
+	},
+	{
 		"message": "Invalid content",
+		"status": 400
+	},
+	{
+		"message": "Invalid ingredients or instructions",
+		"status": 400
+	},
+	{
+		"message": "Invalid notes",
 		"status": 400
 	},
 	{

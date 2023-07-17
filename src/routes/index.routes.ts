@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import handleResponse from '../utils/handleResponse';
 import commentsRoutes from './comments.routes';
 import likesRoutes from './likes.routes';
+import recipesRoutes from './recipes.routes';
 import thoughtsRoutes from './thoughts.routes';
 import usersRoutes from './users.routes';
 
@@ -15,6 +16,7 @@ router.use('/users', usersRoutes);
 router.use('/thoughts', thoughtsRoutes);
 router.use('/comments', commentsRoutes);
 router.use('/likes', likesRoutes);
+router.use('/recipes', recipesRoutes);
 
 router.use((_req: Request, res: Response) => {
 	handleResponse({ res, status: 'error', statusCode: 404, message: 'Not Found' });
