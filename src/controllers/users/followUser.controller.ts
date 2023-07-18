@@ -34,22 +34,15 @@ export default async (req: Request, res: Response) => {
 					id: existingFollowing.id,
 				},
 			});
-
-			return handleResponse({
-				res,
-				status: 'success',
-				statusCode: 200,
-				message: 'User unfollowed successfully',
+		} else {
+			// User is not following the other user, follow him
+			await prisma.following.create({
+				data: {
+					follower: { connect: { id: followerId } },
+					following: { connect: { id: followingId } },
+				},
 			});
 		}
-
-		// User is not following the other user, follow him
-		await prisma.following.create({
-			data: {
-				follower: { connect: { id: followerId } },
-				following: { connect: { id: followingId } },
-			},
-		});
 
 		handleResponse({
 			res,
