@@ -114,11 +114,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 	const isUserLogged: boolean = req.tokenData !== undefined;
 
 	try {
-		// If the filter is following, and the user is not logged in, throw an error
-		if (filter === 'following' && !isUserLogged) {
-			throw new Error('No token provided');
-		}
-
 		// Fetch thoughts
 		let thoughts: Thought[] = await fetchThoughts({
 			page: Number(page), // Page number

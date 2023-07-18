@@ -8,7 +8,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 	const thoughtId = +req.params.id;
 
 	try {
-		if (!validateData.id(thoughtId)) {
+		if (!thoughtId || !validateData.id(thoughtId)) {
 			throw new Error('Invalid id');
 		}
 
