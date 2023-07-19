@@ -40,10 +40,6 @@
 		"status": 400
 	},
 	{
-		"message": "Invalid email or password",
-		"status": 400
-	},
-	{
 		"message": "Invalid remember me",
 		"status": 400
 	},
@@ -93,6 +89,10 @@
 	},
 	{
 		"message": "Insufficient permissions",
+		"status": 403
+	},
+	{
+		"message": "You cannot follow yourself",
 		"status": 403
 	},
 	{

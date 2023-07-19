@@ -21,6 +21,11 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			throw new Error('Account not found');
 		}
 
+		// Check if the user is trying to follow himself
+		if (id === req.tokenData.id) {
+			throw new Error('You cannot follow yourself');
+		}
+
 		// Call the next middleware
 		next();
 	} catch (error) {

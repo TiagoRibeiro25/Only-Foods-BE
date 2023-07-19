@@ -9,7 +9,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 
 	try {
 		// Check if the user id is valid
-		if (!validateData.id(userId)) {
+		if (userId !== 'me' && !validateData.id(userId)) {
 			throw new Error('Invalid id');
 		}
 

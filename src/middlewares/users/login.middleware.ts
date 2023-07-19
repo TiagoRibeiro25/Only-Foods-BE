@@ -18,16 +18,16 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 			throw new Error('All fields are required');
 		}
 
-		if (typeof email !== 'string' || typeof password !== 'string') {
-			throw new Error('Invalid email or password');
+		if (typeof email !== 'string' || !validateData.email(email)) {
+			throw new Error('Invalid email');
+		}
+
+		if (typeof password !== 'string') {
+			throw new Error('Invalid password');
 		}
 
 		if (typeof rememberMe !== 'boolean') {
 			throw new Error('Invalid remember me');
-		}
-
-		if (!validateData.email(email)) {
-			throw new Error('Invalid email');
 		}
 
 		next();

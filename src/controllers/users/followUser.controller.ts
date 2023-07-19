@@ -44,11 +44,14 @@ export default async (req: Request, res: Response) => {
 			});
 		}
 
+		// Get the action (follow/unfollow) to send it in the response
+		const action = existingFollowing ? 'unfollowed' : 'followed';
+
 		handleResponse({
 			res,
 			status: 'success',
 			statusCode: 200,
-			message: 'User followed successfully',
+			message: `User ${action} successfully`,
 		});
 	} catch (error) {
 		const fileName =

@@ -63,11 +63,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 	let responseData: ResponseData;
 
 	try {
-		// If the id is "me" and there's no token, return 401
-		if (id === 'me' && !isTokenProvided) {
-			throw new Error('No token provided');
-		}
-
 		// If the id is "me" and there's a token, return the user data
 		if (id === 'me' || +id === req.tokenData?.id) {
 			const user: User = await getUser(req.tokenData.id);

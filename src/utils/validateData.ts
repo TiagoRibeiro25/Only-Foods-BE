@@ -50,7 +50,7 @@ const description = (descriptionInput: string): boolean => {
 		return false;
 	}
 
-	const descriptionRegex = /^[a-zA-Z0-9\s:,.!?'"\\-]+$/;
+	const descriptionRegex = /^[a-zA-Z0-9\s:,.!?()'"\\-]+$/;
 	const isValidFormat = descriptionRegex.test(descriptionInput);
 	const isValidLength = descriptionInput.length >= 10 && descriptionInput.length <= 200;
 	return isValidFormat && isValidLength;

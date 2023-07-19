@@ -11,7 +11,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 
 	try {
 		// Validate the id
-		if (!validateData.id(id)) {
+		if (id !== 'me' && !validateData.id(id)) {
 			throw new Error('Invalid id');
 		}
 

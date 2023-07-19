@@ -7,7 +7,7 @@ import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
 
 // Maintain a blacklist of revoked tokens
-const tokenBlacklist: Set<string> = new Set();
+const TOKEN_BLACK_LIST: Set<string> = new Set();
 
 // Function to remove expired tokens from the blacklist
 function removeExpiredTokens() {
@@ -17,10 +17,10 @@ function removeExpiredTokens() {
 	);
 
 	const now = Date.now();
-	for (const token of tokenBlacklist) {
+	for (const token of TOKEN_BLACK_LIST) {
 		const decoded = jwt.decode(token) as DecodedToken;
 		if (decoded.exp && decoded.exp * 1000 < now) {
-			tokenBlacklist.delete(token);
+			TOKEN_BLACK_LIST.delete(token);
 		}
 	}
 }
@@ -41,7 +41,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 	try {
 		if (token) {
 			// Check if the token is in the blacklist
-			if (tokenBlacklist.has(token)) {
+			if (TOKEN_BLACK_LIST.has(token)) {
 				throw new Error('Token revoked');
 			}
 
@@ -87,7 +87,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				res.cookie('authorization', newToken, cookieOptions);
 
 				// Add the previous token to the blacklist
-				tokenBlacklist.add(token);
+				TOKEN_BLACK_LIST.add(token);
 			}
 
 			// Set the decoded token in the request

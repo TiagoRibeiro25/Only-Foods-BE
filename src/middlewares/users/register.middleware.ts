@@ -20,20 +20,16 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			throw new Error('All fields are required');
 		}
 
-		if (
-			typeof username !== 'string' ||
-			typeof email !== 'string' ||
-			typeof password !== 'string'
-		) {
-			throw new Error('Invalid email or password');
-		}
-
-		if (!validateData.username(username)) {
+		if (typeof username !== 'string' || !validateData.username(username)) {
 			throw new Error('Invalid username');
 		}
 
-		if (!validateData.email(email)) {
+		if (typeof email !== 'string' || !validateData.email(email)) {
 			throw new Error('Invalid email');
+		}
+
+		if (typeof password !== 'string') {
+			throw new Error('Invalid password');
 		}
 
 		// Verify if the email is already in use
