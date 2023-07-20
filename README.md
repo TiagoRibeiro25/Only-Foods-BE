@@ -8,16 +8,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="340" height="80">
-  </a>
+  <img src="images/logo.png" alt="Logo" width="340" height="80">
 
   <h3 align="center">Only Foods - Back End</h3>
 
   <p align="center">
     This is the back end of the Only Foods project, a web application that allows users to share thoughts, recipes, and chat with each other about food.
     <br />
-    <a href="https://github.com/TiagoRibeiro25/Only-Foods-BE"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/TiagoRibeiro25/Only-Foods-Docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://onlyfoods.netlify.app/">View Demo</a>
@@ -43,10 +41,10 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
-      	<li><a href="#prepare-for-production">Prepare for production</a></li>
+       <li><a href="#prepare-for-production">Prepare for production</a></li>
       </ul>
     </li>
-  	<li><a href="#api-documentation">API Documentation</a></li>
+   <li><a href="#documentation">Documentation</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -160,9 +158,9 @@ In order to run this project, you need to have installed
    ```
 
 <!-- Documentation -->
-## API Documentation
+## Documentation
 
-The API documentation is still in development. You can check the API routes in the routes folder.
+All the documentation can be found [here](https://github.com/TiagoRibeiro25/Only-Foods-Docs).
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -189,7 +187,6 @@ Contact section of my personal website:
 [tiagoribeiro.tech](https://tiagoribeiro.tech/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/TiagoRibeiro25/Only-Foods-BE.svg?style=for-the-badge
 [contributors-url]: https://github.com/TiagoRibeiro25/Only-Foods-BE/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/TiagoRibeiro25/Only-Foods-BE.svg?style=for-the-badge
