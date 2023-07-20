@@ -45,8 +45,8 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 			throw new Error('Invalid ingredients or instructions');
 		}
 
-		// If notes is present, check if it's a string with no more than 500 characters and no less than 3
-		if (notes && (typeof notes !== 'string' || notes.length < 3 || notes.length > 500)) {
+		// If notes is present, check if it's a string with no more than 500 characters and no less than 7
+		if (notes && (typeof notes !== 'string' || notes.length < 7 || notes.length > 500)) {
 			throw new Error('Invalid notes');
 		}
 
