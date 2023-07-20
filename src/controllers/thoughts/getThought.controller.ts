@@ -17,8 +17,10 @@ interface Thought {
 		};
 	};
 	likes: {
-		id: number;
 		authorId: number;
+	}[];
+	comments: {
+		id: number;
 	}[];
 	isAuthor?: boolean;
 	isLiked?: boolean;
@@ -43,8 +45,12 @@ function getThought(id: number): Promise<Thought> {
 			},
 			likes: {
 				select: {
-					id: true,
 					authorId: true,
+				},
+			},
+			comments: {
+				select: {
+					id: true,
 				},
 			},
 		},
@@ -77,7 +83,11 @@ export default async (req: Request, res: Response): Promise<void> => {
 		}
 
 		// Remove the likes array and add the likes count
-		const result = { ...thought, likes: thought.likes.length };
+		const result = {
+			...thought,
+			likes: thought.likes.length,
+			comments: thought.comments.length,
+		};
 
 		// Send the response
 		handleResponse({

@@ -27,6 +27,9 @@ interface Recipe {
 	likes: {
 		authorId: number;
 	}[];
+	comments: {
+		id: number;
+	}[];
 	isAuthor?: boolean;
 	isLiked?: boolean;
 	createdAgo?: string;
@@ -63,6 +66,11 @@ function getRecipe(id: number): Promise<Recipe> {
 					authorId: true,
 				},
 			},
+			comments: {
+				select: {
+					id: true,
+				},
+			},
 		},
 	});
 }
@@ -93,7 +101,11 @@ export default async (req: Request, res: Response): Promise<void> => {
 		recipe.isLiked = recipe.likes.some(like => like.authorId === req.tokenData?.id);
 
 		// Replace the likes array with the number of likes
-		const result = { ...recipe, likes: recipe.likes.length };
+		const result = {
+			...recipe,
+			likes: recipe.likes.length,
+			comments: recipe.comments.length,
+		};
 
 		// Send the response
 		handleResponse({
