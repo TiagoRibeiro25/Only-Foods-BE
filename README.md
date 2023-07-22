@@ -114,6 +114,9 @@ In order to run this project, you need to have installed
    CLOUDINARY_API_KEY
    CLOUDINARY_API_SECRET
    DATABASE_URL
+   MONGO_DB_URL
+   MONGO_DB_NAME
+   REDIS_URL
    ```
 
 4. Run the migrations

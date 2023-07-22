@@ -1,32 +1,12 @@
-import colors from 'colors';
+import { User } from '@prisma/client';
 import { CookieOptions, NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { DecodedToken, Request } from 'types';
 import prisma from '../../config/db.config';
+import mongodb from '../../config/mongo.config';
+import redis from '../../config/redis.config';
 import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
-
-// Maintain a blacklist of revoked tokens
-const TOKEN_BLACK_LIST: Set<string> = new Set();
-
-// Function to remove expired tokens from the blacklist
-function removeExpiredTokens() {
-	console.log(
-		colors.yellow('[handleToken.middleware.ts] ') +
-			colors.cyan('Removing expired tokens from the blacklist'),
-	);
-
-	const now = Date.now();
-	for (const token of TOKEN_BLACK_LIST) {
-		const decoded = jwt.decode(token) as DecodedToken;
-		if (decoded.exp && decoded.exp * 1000 < now) {
-			TOKEN_BLACK_LIST.delete(token);
-		}
-	}
-}
-
-// Schedule the removal of expired tokens at a desired interval
-setInterval(removeExpiredTokens, 24 * 60 * 60 * 1000); // Run every 24 hours
 
 /**
  * Middleware that handles the token
@@ -40,8 +20,10 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 
 	try {
 		if (token) {
-			// Check if the token is in the blacklist
-			if (TOKEN_BLACK_LIST.has(token)) {
+			// Check if the token is in the Redis cache of revoked tokens
+			const isTokenCached = await redis.get(token);
+
+			if (isTokenCached === 'revoked') {
 				throw new Error('Token revoked');
 			}
 
@@ -49,7 +31,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
 
 			// Check if the user exists
-			const user = await prisma.user.findUnique({
+			const user: User = await prisma.user.findUnique({
 				where: { id: decoded.id },
 			});
 
@@ -86,8 +68,11 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 
 				res.cookie('authorization', newToken, cookieOptions);
 
-				// Add the previous token to the blacklist
-				TOKEN_BLACK_LIST.add(token);
+				// Add the previous token to the MongoDB collection
+				await mongodb.db.collection('revokedTokens').insertOne({ token });
+
+				// Add the previous token to the Redis cache
+				await redis.set(token, 'revoked');
 			}
 
 			// Set the decoded token in the request
