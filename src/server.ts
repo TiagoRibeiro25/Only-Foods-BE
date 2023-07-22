@@ -12,7 +12,7 @@ if (!checkEnvs()) {
 
 import app from './app';
 import connectToDatabases from './utils/connectToDatabases';
-import updateTokenWhiteList from './utils/handleRevokedTokens';
+import updateTokenWhiteList from './utils/updateTokenWhiteList';
 const PORT: string = process.env.PORT;
 
 app.listen(PORT, () => {
