@@ -2,6 +2,8 @@ import bcrypt from 'bcryptjs';
 import { CookieOptions, Response } from 'express';
 import { Request } from 'types';
 import prisma from '../../config/db.config';
+import mongodb from '../../config/mongo.config';
+import redis from '../../config/redis.config';
 import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
@@ -49,6 +51,10 @@ export default async (req: Request, res: Response): Promise<void> => {
 		};
 
 		res.cookie('authorization', token, cookieOptions);
+
+		// Add the token to the Redis cache and MongoDB collection
+		await redis.set(token, 'whiteListed');
+		await mongodb.db.collection('tokens').insertOne({ token: token });
 
 		// Prepare the user data to send it back
 		const userData = {

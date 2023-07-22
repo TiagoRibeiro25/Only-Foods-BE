@@ -20,15 +20,15 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 
 	try {
 		if (token) {
-			// Check if the token is in the Redis cache of revoked tokens
-			const isTokenCached = await redis.get(token);
-
-			if (isTokenCached === 'revoked') {
-				throw new Error('Token revoked');
-			}
-
 			// Verify token
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
+
+			// Check if the token is whitelisted (not revoked)
+			const isTokenWhiteListed = await redis.get(token);
+
+			if (!isTokenWhiteListed) {
+				throw new Error('Token revoked');
+			}
 
 			// Check if the user exists
 			const user: User = await prisma.user.findUnique({
@@ -68,11 +68,13 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 
 				res.cookie('authorization', newToken, cookieOptions);
 
-				// Add the previous token to the MongoDB collection
-				await mongodb.db.collection('revokedTokens').insertOne({ token });
+				// Delete the previous token from the Redis cache and MongoDB collection
+				await redis.del(token);
+				await mongodb.db.collection('tokens').deleteOne({ token });
 
-				// Add the previous token to the Redis cache
-				await redis.set(token, 'revoked');
+				// Add the new token to the Redis cache and MongoDB collection
+				await redis.set(newToken, 'whiteListed');
+				await mongodb.db.collection('tokens').insertOne({ token: newToken });
 			}
 
 			// Set the decoded token in the request

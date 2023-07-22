@@ -12,7 +12,7 @@ if (!checkEnvs()) {
 
 import app from './app';
 import connectToDatabases from './utils/connectToDatabases';
-import updateRevokedTokens from './utils/handleRevokedTokens';
+import updateTokenWhiteList from './utils/handleRevokedTokens';
 const PORT: string = process.env.PORT;
 
 app.listen(PORT, () => {
@@ -20,16 +20,29 @@ app.listen(PORT, () => {
 	console.log(colors.yellow('[server.ts] ') + colors.cyan('Starting the server...'));
 
 	// Connect to the databases
-	connectToDatabases().then(() => {
-		console.log(
-			colors.yellow('[server.ts] ') +
-				colors.cyan('Server is running on port: ') +
-				colors.yellow(PORT),
-		);
-	});
+	connectToDatabases()
+		.then(() => {
+			console.log(
+				colors.yellow('[server.ts] ') +
+					colors.cyan('Server is running on port: ') +
+					colors.yellow(PORT),
+			);
 
-	// Every 1 hour, update the revoked tokens
-	setInterval(() => {
-		updateRevokedTokens();
-	}, 1000 * 60 * 60); // 1 hour
+			// Every 1 hour, reset Redis Cache and update the list of white listed tokens
+			setInterval(() => {
+				updateTokenWhiteList();
+			}, 1000 * 60 * 60);
+		})
+		.catch(error => {
+			console.log(
+				colors.yellow('[server.ts] ') + colors.red('Error: ') + colors.yellow(error.name),
+			);
+			console.log(
+				colors.yellow('[server.ts] ') +
+					colors.red('Message: ') +
+					colors.yellow(error.message),
+			);
+
+			process.exit(1);
+		});
 });

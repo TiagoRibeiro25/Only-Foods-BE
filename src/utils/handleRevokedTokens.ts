@@ -5,7 +5,7 @@ import mongodb from '../config/mongo.config';
 import redis from '../config/redis.config';
 
 // Function to remove expired tokens from the Redis cache
-async function updateRevokedTokens() {
+async function updateTokenWhiteList(): Promise<void> {
 	console.log(
 		colors.yellow('[handleToken.middleware.ts] ') +
 			colors.cyan('Removing expired tokens from Redis cache'),
@@ -13,30 +13,33 @@ async function updateRevokedTokens() {
 
 	const now = Date.now();
 
-	// Clear the Redis cache
-	await redis.flushall();
-
 	// Go fetch all the tokens from the MongoDB collection
-	const allRevokedTokens = await mongodb.db.collection('revokedTokens').find().toArray();
+	const tokens = await mongodb.db.collection('tokens').find().toArray();
+	const tokensToDelete: string[] = [];
+	const tokensToCache: { [key: string]: string } = {};
 
-	// Check if any token expired
-	for (const revokedToken of allRevokedTokens) {
-		const decoded = jwt.decode(revokedToken.token) as DecodedToken;
+	// Check if any token expired and create a new object with tokens to cache
+	for (const token of tokens) {
+		const decoded = jwt.decode(token.token) as DecodedToken;
 		if (decoded.exp && decoded.exp * 1000 < now) {
-			// Remove the token from the MongoDB collection
-			await mongodb.db
-				.collection('revokedTokens')
-				.deleteOne({ token: revokedToken.token });
-
-			// Remove the token from the array
-			allRevokedTokens.splice(allRevokedTokens.indexOf(revokedToken), 1);
+			// Add the token to the array of tokens to delete
+			tokensToDelete.push(token.token);
+		} else {
+			// Add the token to the object of tokens to cache
+			tokensToCache[token.token] = 'whiteListed';
 		}
 	}
 
-	// Cache all the tokens from the MongoDB collection
-	for (const revokedToken of allRevokedTokens) {
-		await redis.set(revokedToken.token, 'revoked');
+	// Remove the expired tokens from the MongoDB collection
+	await mongodb.db.collection('tokens').deleteMany({ token: { $in: tokensToDelete } });
+
+	// Clear the Redis cache
+	await redis.flushall();
+
+	// Cache all the non-expired tokens in Redis using mset
+	if (Object.keys(tokensToCache).length > 0) {
+		await redis.mset(tokensToCache);
 	}
 }
 
-export default updateRevokedTokens;
+export default updateTokenWhiteList;
