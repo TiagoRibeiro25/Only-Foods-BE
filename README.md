@@ -83,6 +83,14 @@ In order to run this project, you need to have installed
 * Nodejs
 * npm
 
+You also need to have access to the a:
+
+* PostgreSQL database
+* MongoDB database
+* Redis database
+* Cloudinary account
+* Mailjet account
+
 ### Installation
 
 1. Clone the repo
