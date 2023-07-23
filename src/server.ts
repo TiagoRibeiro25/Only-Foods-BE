@@ -11,8 +11,7 @@ if (!checkEnvs()) {
 }
 
 import app from './app';
-import connectToDatabases from './utils/connectToDatabases';
-import updateTokenWhiteList from './utils/updateTokenWhiteList';
+import connectToDatabases from './services/connectToDatabases';
 const PORT: string = process.env.PORT;
 
 app.listen(PORT, () => {
@@ -27,11 +26,6 @@ app.listen(PORT, () => {
 					colors.cyan('Server is running on port: ') +
 					colors.yellow(PORT),
 			);
-
-			// Every 1 hour, reset Redis Cache and update the list of white listed tokens
-			setInterval(() => {
-				updateTokenWhiteList();
-			}, 1000 * 60 * 60);
 		})
 		.catch(error => {
 			console.log(
