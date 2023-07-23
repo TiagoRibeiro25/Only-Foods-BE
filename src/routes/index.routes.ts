@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express';
 import { AsyncRouter } from 'types';
-import AuthMiddleware from '../middlewares/auth/index.auth.middleware';
 import handleResponse from '../utils/handleResponse';
 import commentsRoutes from './comments.routes';
 import likesRoutes from './likes.routes';
@@ -19,8 +18,6 @@ router.use('/thoughts', thoughtsRoutes);
 router.use('/comments', commentsRoutes);
 router.use('/likes', likesRoutes);
 router.use('/recipes', recipesRoutes);
-
-router.put('/update-token-white-list', AuthMiddleware.updateTokenWhiteList);
 
 router.use((_req: Request, res: Response) => {
 	handleResponse({ res, status: 'error', statusCode: 404, message: 'Not Found' });
