@@ -1,3 +1,4 @@
+import base64url from 'base64url';
 import jwt from 'jsonwebtoken';
 
 interface GenerateResetPasswordTokenProps {
@@ -16,7 +17,7 @@ interface GenerateAuthTokenProps extends GenerateResetPasswordTokenProps {
  */
 const resetPasswordToken = (props: GenerateResetPasswordTokenProps): string => {
 	const token = jwt.sign({ uniqueNumber: Date.now(), ...props }, process.env.JWT_SECRET);
-	return token;
+	return base64url.encode(token);
 };
 
 /**
