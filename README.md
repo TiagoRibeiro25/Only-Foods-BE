@@ -68,10 +68,11 @@ Note: To clear Redis cache and remove expired tokens from the database, I'm usin
 * [Express](https://expressjs.com/)
 * [Typescript](https://www.typescriptlang.org/)
 * [Prisma](https://www.prisma.io/)
-* [Socket.io](https://socket.io/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [MongoDB](https://www.mongodb.com/)
+* [Redis](https://redis.io/)
 * [Cloudinary](https://cloudinary.com/)
 * [Mailjet](https://www.mailjet.com/)
-* [PostgreSQL](https://www.postgresql.org/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
