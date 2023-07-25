@@ -127,7 +127,7 @@ You also need to have access to the a:
    MONGO_DB_URL
    MONGO_DB_NAME
    REDIS_URL
-   UPDATE_TOKEN_WHITE_LIST_KEY
+   FRONTEND_URL
    ```
 
 4. Run the migrations
