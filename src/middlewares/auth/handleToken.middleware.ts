@@ -1,11 +1,11 @@
 import { User } from '@prisma/client';
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { DecodedToken, Request } from 'types';
 import getCookiesOptions from '../../config/cookies.config';
 import prisma from '../../config/db.config';
 import mongodb from '../../config/mongo.config';
 import redis from '../../config/redis.config';
+import { DecodedToken, Request } from '../../types';
 import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
 

@@ -1,5 +1,5 @@
 import { NextFunction, Response } from 'express';
-import { Request } from 'types';
+import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 
 /**

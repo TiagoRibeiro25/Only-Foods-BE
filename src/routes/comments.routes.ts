@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { AsyncRouter } from 'types';
 import CommentsController from '../controllers/comments/index.comments.controller';
 import AuthMiddleware from '../middlewares/auth/index.auth.middleware';
 import CommentsMiddleware from '../middlewares/comments/index.comments.middleware';
+import { AsyncRouter } from '../types';
 
 const router: AsyncRouter = Router();
 

@@ -1,10 +1,10 @@
 import bcrypt from 'bcryptjs';
 import { Response } from 'express';
-import { Request } from 'types';
 import getCookiesOptions from '../../config/cookies.config';
 import prisma from '../../config/db.config';
 import mongodb from '../../config/mongo.config';
 import redis from '../../config/redis.config';
+import { Request } from '../../types';
 import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';

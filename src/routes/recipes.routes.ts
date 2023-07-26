@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { AsyncRouter } from 'types';
 import RecipesController from '../controllers/recipes/index.recipes.controller';
 import AuthMiddleware from '../middlewares/auth/index.auth.middleware';
 import RecipesMiddleware from '../middlewares/recipes/index.recipes.middleware';
+import { AsyncRouter } from '../types';
 
 const router: AsyncRouter = Router();
 

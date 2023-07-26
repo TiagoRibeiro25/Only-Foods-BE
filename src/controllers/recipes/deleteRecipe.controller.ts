@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { Request } from 'types';
 import cloudinary from '../../config/cloudinary.config';
 import prisma from '../../config/db.config';
+import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 

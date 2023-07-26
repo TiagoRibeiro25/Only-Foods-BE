@@ -1,8 +1,8 @@
 import { UploadApiResponse } from 'cloudinary';
 import { Response } from 'express';
-import { Base64Img, Request } from 'types';
 import cloudinary from '../../config/cloudinary.config';
 import prisma from '../../config/db.config';
+import { Base64Img, Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 

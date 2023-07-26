@@ -1,4 +1,4 @@
-import { Base64Img } from 'types';
+import { Base64Img } from '../types';
 
 interface PaginationProps {
 	page: string | number;

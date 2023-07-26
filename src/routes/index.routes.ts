@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { AsyncRouter } from 'types';
+import { AsyncRouter } from '../types';
 import handleResponse from '../utils/handleResponse';
 import commentsRoutes from './comments.routes';
 import likesRoutes from './likes.routes';

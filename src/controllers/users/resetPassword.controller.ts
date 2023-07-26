@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { Response } from 'express';
-import { Request } from 'types';
 import prisma from '../../config/db.config';
+import { Request } from '../../types';
 import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';

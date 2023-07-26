@@ -1,5 +1,5 @@
 import { NextFunction, Response } from 'express';
-import { FollowType, Request } from 'types';
+import { FollowType, Request } from '../../types';
 import handleError from '../../utils/handleError';
 import validateData from '../../utils/validateData';
 

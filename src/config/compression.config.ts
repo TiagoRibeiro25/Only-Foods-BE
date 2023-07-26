@@ -1,6 +1,6 @@
 import compression, { CompressionOptions } from 'compression';
 import { Response } from 'express';
-import { Request } from 'types';
+import { Request } from '../types';
 
 const shouldCompress = (req: Request, res: Response): boolean => {
 	// don't compress responses with this request header

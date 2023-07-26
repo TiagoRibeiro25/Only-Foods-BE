@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
-import { Request } from 'types';
 import prisma from '../../config/db.config';
+import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 
 interface User {

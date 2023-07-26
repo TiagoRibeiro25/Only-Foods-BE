@@ -1,11 +1,11 @@
 import { Request as ExpressRequest, NextFunction, Response, Router } from 'express';
 
-type ImgMimeType = 'png' | 'jpg' | 'jpeg' | 'bmp' | 'webp';
-type Base64Img = `data:image/${ImgMimeType};base64${string}`;
+export type ImgMimeType = 'png' | 'jpg' | 'jpeg' | 'bmp' | 'webp';
+export type Base64Img = `data:image/${ImgMimeType};base64${string}`;
 
-type FollowType = 'followers' | 'following';
+export type FollowType = 'followers' | 'following';
 
-interface DecodedToken {
+export interface DecodedToken {
 	id: number;
 	rememberMe: boolean;
 	isAdmin: boolean;
@@ -13,11 +13,11 @@ interface DecodedToken {
 	exp: number; // Expires
 }
 
-interface Request extends ExpressRequest {
+export interface Request extends ExpressRequest {
 	tokenData?: DecodedToken;
 }
 
-interface AsyncRouter extends Router {
+export interface AsyncRouter extends Router {
 	get(
 		path: string,
 		...handlers: Array<(req: Request, res: Response, next: NextFunction) => void>

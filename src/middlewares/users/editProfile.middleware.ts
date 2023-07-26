@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
-import { Base64Img, Request } from 'types';
 import prisma from '../../config/db.config';
+import { Base64Img, Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
 import validateData from '../../utils/validateData';
