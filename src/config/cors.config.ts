@@ -16,7 +16,7 @@ const corsConfig: CorsOptions = {
 		console.log('Requested origin:', origin); // Add this line for debugging purposes
 
 		if (process.env.NODE_ENV === 'production') {
-			if (origin === process.env.FRONTEND_URL) {
+			if (!origin || origin === process.env.FRONTEND_URL) {
 				callback(null, true); // Allow the request
 			} else {
 				callback(new Error('Not allowed by CORS')); // Throw an error if origin doesn't match
