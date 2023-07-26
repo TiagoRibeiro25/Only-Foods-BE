@@ -107,8 +107,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 			message: 'User data retrieved successfully',
 		});
 	} catch (error) {
-		const fileName =
-			process.env.NODE_ENV !== 'production' ? __filename.split('\\').at(-1) : '';
-		handleError({ res, error, fileName });
+		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
 	}
 };

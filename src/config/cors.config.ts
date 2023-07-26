@@ -13,8 +13,6 @@ import { CorsOptions } from 'cors';
  */
 const corsConfig: CorsOptions = {
 	origin: (origin, callback) => {
-		console.log('Requested origin:', origin); // Add this line for debugging purposes
-
 		if (process.env.NODE_ENV === 'production') {
 			if (!origin || origin === process.env.FRONTEND_URL) {
 				callback(null, true); // Allow the request
