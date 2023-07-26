@@ -1,7 +1,8 @@
 import { User } from '@prisma/client';
-import { CookieOptions, NextFunction, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { DecodedToken, Request } from 'types';
+import getCookiesOptions from '../../config/cookies.config';
 import prisma from '../../config/db.config';
 import mongodb from '../../config/mongo.config';
 import redis from '../../config/redis.config';
@@ -56,15 +57,16 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				});
 
 				// Update the cookie
-				const cookieOptions: CookieOptions = {
-					httpOnly: true,
-					secure: process.env.NODE_ENV === 'production',
-					maxAge: parseInt(
-						decoded.rememberMe
-							? process.env.JWT_EXPIRES_IN_REMEMBER_ME
-							: process.env.JWT_EXPIRES_IN,
-					),
-				};
+				// const cookieOptions: CookieOptions = {
+				// 	httpOnly: true,
+				// 	secure: process.env.NODE_ENV === 'production',
+				// 	maxAge: parseInt(
+				// 		decoded.rememberMe
+				// 			? process.env.JWT_EXPIRES_IN_REMEMBER_ME
+				// 			: process.env.JWT_EXPIRES_IN,
+				// 	),
+				// };
+				const cookieOptions = getCookiesOptions(decoded.rememberMe);
 
 				res.cookie('authorization', newToken, cookieOptions);
 

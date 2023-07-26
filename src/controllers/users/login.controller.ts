@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
-import { CookieOptions, Response } from 'express';
+import { Response } from 'express';
 import { Request } from 'types';
+import getCookiesOptions from '../../config/cookies.config';
 import prisma from '../../config/db.config';
 import mongodb from '../../config/mongo.config';
 import redis from '../../config/redis.config';
@@ -42,14 +43,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		});
 
 		// Set the cookie
-		const cookieOptions: CookieOptions = {
-			httpOnly: true,
-			secure: process.env.NODE_ENV === 'production',
-			maxAge: parseInt(
-				rememberMe ? process.env.JWT_EXPIRES_IN_REMEMBER_ME : process.env.JWT_EXPIRES_IN,
-			),
-		};
-
+		const cookieOptions = getCookiesOptions(rememberMe);
 		res.cookie('authorization', token, cookieOptions);
 
 		// Add the token to the Redis cache and MongoDB collection
