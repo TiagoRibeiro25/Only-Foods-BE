@@ -129,6 +129,7 @@ You also need to have access to the a:
    MONGO_DB_NAME
    REDIS_URL
    FRONTEND_URL
+   DOMAIN
    ```
 
 4. Run the migrations
