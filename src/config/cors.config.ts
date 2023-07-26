@@ -13,14 +13,16 @@ import { CorsOptions } from 'cors';
  */
 const corsConfig: CorsOptions = {
 	origin: (origin, callback) => {
+		console.log('Requested origin:', origin); // Add this line for debugging purposes
+
 		if (process.env.NODE_ENV === 'production') {
 			if (origin === process.env.FRONTEND_URL) {
-				callback(null, true);
+				callback(null, true); // Allow the request
 			} else {
-				callback(new Error('Not allowed by CORS'));
+				callback(new Error('Not allowed by CORS')); // Throw an error if origin doesn't match
 			}
 		} else {
-			callback(null, true);
+			callback(null, true); // Allow all requests in development mode
 		}
 	},
 	credentials: true, // Enable sending and receiving cookies from the client-side
