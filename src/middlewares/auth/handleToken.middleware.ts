@@ -57,17 +57,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				});
 
 				// Update the cookie
-				// const cookieOptions: CookieOptions = {
-				// 	httpOnly: true,
-				// 	secure: process.env.NODE_ENV === 'production',
-				// 	maxAge: parseInt(
-				// 		decoded.rememberMe
-				// 			? process.env.JWT_EXPIRES_IN_REMEMBER_ME
-				// 			: process.env.JWT_EXPIRES_IN,
-				// 	),
-				// };
 				const cookieOptions = getCookiesOptions(decoded.rememberMe);
-
 				res.cookie('authorization', newToken, cookieOptions);
 
 				// Delete the previous token from the Redis cache and MongoDB collection
