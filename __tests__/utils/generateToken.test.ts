@@ -1,3 +1,4 @@
+import base64url from 'base64url';
 import jwt from 'jsonwebtoken';
 import generateToken from '../../src/utils/generateToken';
 
@@ -11,7 +12,10 @@ describe('resetPasswordToken', () => {
 
 		const result = generateToken.resetPasswordToken(props);
 
-		expect(result).toBe(mockedToken);
+		// Encode the expected token using base64url.encode
+		const expectedToken = base64url.encode(mockedToken);
+
+		expect(result).toBe(expectedToken);
 		expect(jwt.sign).toHaveBeenCalledWith(
 			{ uniqueNumber: expect.any(Number), ...props },
 			process.env.JWT_SECRET,
