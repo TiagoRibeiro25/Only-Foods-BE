@@ -39,9 +39,9 @@ export default async (req: Request, res: Response): Promise<void> => {
 				where: { id: createdUser.id },
 				data: { resetPasswordToken: resetPwToken },
 			});
-
-			return createdUser;
 		});
+
+		//TODO: Send email about the account creation
 
 		handleResponse({
 			res,
