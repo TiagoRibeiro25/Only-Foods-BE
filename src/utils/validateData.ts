@@ -46,13 +46,15 @@ const username = (usernameInput: string): boolean => {
  * @returns {boolean} - Whether the description is valid or not
  */
 const description = (descriptionInput: string): boolean => {
-	if (typeof descriptionInput !== 'string') {
+	const description = descriptionInput.trim();
+
+	if (typeof description !== 'string') {
 		return false;
 	}
 
 	const descriptionRegex = /^[a-zA-Z0-9\s:,.!?()'"\\-]+$/;
-	const isValidFormat = descriptionRegex.test(descriptionInput);
-	const isValidLength = descriptionInput.length >= 10 && descriptionInput.length <= 200;
+	const isValidFormat = descriptionRegex.test(description);
+	const isValidLength = description.length >= 10 && description.length <= 200;
 	return isValidFormat && isValidLength;
 };
 
@@ -64,14 +66,15 @@ const description = (descriptionInput: string): boolean => {
  * @returns {boolean} - Whether the thought content is valid or not
  */
 const thoughtContent = (thoughtContentInput: string): boolean => {
-	if (typeof thoughtContentInput !== 'string') {
+	const thought = thoughtContentInput.trim();
+
+	if (typeof thought !== 'string') {
 		return false;
 	}
 
 	const thoughtContentRegex = /^[a-zA-Z0-9\s:,.!?()'"\\-]+$/;
-	const isValidFormat = thoughtContentRegex.test(thoughtContentInput);
-	const isValidLength =
-		thoughtContentInput.length >= 1 && thoughtContentInput.length <= 1000;
+	const isValidFormat = thoughtContentRegex.test(thought);
+	const isValidLength = thought.length >= 1 && thought.length <= 1000;
 	return isValidFormat && isValidLength;
 };
 
