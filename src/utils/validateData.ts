@@ -59,7 +59,7 @@ const description = (descriptionInput: string): boolean => {
 /**
  *  Validate a thought content
  * - Can have letters, numbers, spaces, and common punctuation marks
- * - Must be between 10 and 200 characters
+ * - Must be between 1 and 1000 characters
  * @param thoughtContentInput - The thought content to validate
  * @returns {boolean} - Whether the thought content is valid or not
  */
@@ -68,8 +68,11 @@ const thoughtContent = (thoughtContentInput: string): boolean => {
 		return false;
 	}
 
-	// Since both thoughtContent and description have the same validation rules, we can just reuse the description validation function
-	return description(thoughtContentInput);
+	const thoughtContentRegex = /^[a-zA-Z0-9\s:,.!?()'"\\-]+$/;
+	const isValidFormat = thoughtContentRegex.test(thoughtContentInput);
+	const isValidLength =
+		thoughtContentInput.length >= 1 && thoughtContentInput.length <= 1000;
+	return isValidFormat && isValidLength;
 };
 
 /**
