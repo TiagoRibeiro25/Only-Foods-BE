@@ -138,6 +138,20 @@ export default async (req: Request, res: Response): Promise<void> => {
 			});
 		}
 
+		let totalThoughts: number;
+		// Calculate the total number of thoughts
+		if (filter === 'following') {
+			totalThoughts = await prisma.thought.count({
+				where: { author: { followers: { some: { followerId: req.tokenData?.id } } } },
+			});
+		} else if (authorId) {
+			totalThoughts = await prisma.thought.count({
+				where: { authorId: +authorId },
+			});
+		} else {
+			totalThoughts = await prisma.thought.count();
+		}
+
 		// Calculate the time created ago (e.g. 2 hours ago)
 		const result = thoughts.map(thought => {
 			return {
@@ -159,7 +173,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			status: 'success',
 			statusCode: 200,
 			message: 'Thoughts fetched successfully',
-			data: result,
+			data: { thoughts: result, totalCount: totalThoughts },
 		});
 	} catch (error) {
 		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
