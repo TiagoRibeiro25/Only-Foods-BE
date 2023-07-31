@@ -52,7 +52,7 @@ const description = (descriptionInput: string): boolean => {
 		return false;
 	}
 
-	const descriptionRegex = /^[a-zA-Z0-9\s:,.!?()'"\\-]+$/;
+	const descriptionRegex = /^(?:[a-zA-Z0-9\-._~:/?#\\[\]@!$&'()*+,;=]|%[a-fA-F0-9]{2})+$/;
 	const isValidFormat = descriptionRegex.test(description);
 	const isValidLength = description.length >= 10 && description.length <= 200;
 	return isValidFormat && isValidLength;
@@ -72,7 +72,8 @@ const thoughtContent = (thoughtContentInput: string): boolean => {
 		return false;
 	}
 
-	const thoughtContentRegex = /^[a-zA-Z0-9\s:,.!?()'"\\-]+$/;
+	const thoughtContentRegex =
+		/^(?:[a-zA-Z0-9\-._~:/?#\\[\]@!$&'()*+,;=]|%[a-fA-F0-9]{2})+$/;
 	const isValidFormat = thoughtContentRegex.test(thought);
 	const isValidLength = thought.length >= 1 && thought.length <= 1000;
 	return isValidFormat && isValidLength;
