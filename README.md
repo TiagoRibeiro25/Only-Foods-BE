@@ -14,6 +14,10 @@
 
   <p align="center">
     This is the back end of the Only Foods project, a web application that allows users to share thoughts, recipes, and chat with each other about food.
+  <br />
+    <strong>Status: <u>Production-Ready</u>
+
+  </strong>
     <br />
     <a href="https://github.com/TiagoRibeiro25/Only-Foods-Docs"><strong>Explore the docs »</strong></a>
     <br />
