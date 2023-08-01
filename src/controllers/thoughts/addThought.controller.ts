@@ -15,7 +15,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 			content = content.replace(regex, '\n \n');
 		}
 
-
 		// Create new thought in the database
 		const thought: Thought = await prisma.thought.create({
 			data: {
