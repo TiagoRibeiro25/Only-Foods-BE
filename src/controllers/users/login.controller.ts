@@ -56,6 +56,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			username: user.username,
 			email: user.email,
 			isAdmin: user.isAdmin,
+			isBlocked: user.blocked,
 			picture: user.userImage?.cloudinaryImage,
 		};
 
