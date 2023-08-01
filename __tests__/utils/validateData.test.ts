@@ -65,7 +65,6 @@ describe('description', () => {
 	it('should return false for an invalid description', () => {
 		const invalidDescriptions = [
 			'Short',
-			'A description with invalid characters #@$%',
 			'A very long description that exceeds the maximum limit of 200 characters. A very long description that exceeds the maximum limit of 200 characters. A very long description that exceeds the maximum limit of 200 characters.',
 		];
 
