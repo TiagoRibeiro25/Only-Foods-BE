@@ -9,6 +9,7 @@ export interface DecodedToken {
 	id: number;
 	rememberMe: boolean;
 	isAdmin: boolean;
+	isBlocked: boolean;
 	iat: number; // Issued at
 	exp: number; // Expires
 }

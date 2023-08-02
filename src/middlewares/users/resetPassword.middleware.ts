@@ -29,6 +29,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 			id: user.id,
 			rememberMe: false,
 			isAdmin: user.isAdmin,
+			isBlocked: user.blocked,
 			iat: 0,
 			exp: 0,
 		};

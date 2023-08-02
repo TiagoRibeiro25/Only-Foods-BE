@@ -1,24 +1,13 @@
 import { NextFunction, Response } from 'express';
-import prisma from '../../config/db.config';
 import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 
-interface User {
-	blocked: boolean;
-}
-
-export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-	const userId: number = req.tokenData.id;
+export default (req: Request, res: Response, next: NextFunction): void => {
+	const isUserBlocked: boolean = req.tokenData.isBlocked;
 
 	try {
-		// Fetch the user
-		const user: User = await prisma.user.findUnique({
-			where: { id: userId },
-			select: { blocked: true },
-		});
-
 		// Check if the user is blocked
-		if (user.blocked) {
+		if (isUserBlocked) {
 			throw new Error('You are blocked');
 		}
 

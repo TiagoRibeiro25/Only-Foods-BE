@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import getCookiesOptions from '../../config/cookies.config';
@@ -32,16 +31,14 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			}
 
 			// Check if the user exists
-			const user: User = await prisma.user.findUnique({
+			const user: { isAdmin: boolean; blocked: boolean } = await prisma.user.findUnique({
 				where: { id: decoded.id },
+				select: { isAdmin: true, blocked: true },
 			});
 
 			if (!user) {
 				throw new Error('Invalid token');
 			}
-
-			// Set the user data in the decoded token
-			decoded.isAdmin = user.isAdmin;
 
 			// Check if the token should be regenerated
 			const tokenExpiration: number = parseInt(process.env.JWT_GENERATE_TOKEN_IN);
@@ -73,8 +70,8 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				]);
 			}
 
-			// Set the decoded token in the request
-			req.tokenData = decoded;
+			// Set the decoded token in the request plus the user data
+			req.tokenData = { ...decoded, isAdmin: user.isAdmin, isBlocked: user.blocked };
 		}
 
 		// Call the next middleware
