@@ -45,16 +45,5 @@ app.listen(PORT, () => {
 					colors.yellow(PORT + '\n'),
 			);
 		})
-		.catch(error => {
-			console.log(
-				colors.yellow('[server.ts] ') + colors.red('Error: ') + colors.yellow(error.name),
-			);
-			console.log(
-				colors.yellow('[server.ts] ') +
-					colors.red('Message: ') +
-					colors.yellow(error.message),
-			);
-
-			process.exit(1);
-		});
+		.catch(() => process.exit(1));
 });
