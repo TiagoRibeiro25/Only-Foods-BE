@@ -16,7 +16,7 @@ import handleError from '../../utils/handleError';
  */
 export default async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	// Get token value
-	const token: string | undefined = req.cookies['authorization'];
+	const token: string | undefined = req.cookies['onlyfoods_jwt'];
 
 	try {
 		if (token) {
@@ -55,7 +55,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 
 				// Update the cookie
 				const cookieOptions = getCookiesOptions(decoded.rememberMe);
-				res.cookie('authorization', newToken, cookieOptions);
+				res.cookie('onlyfoods_jwt', newToken, cookieOptions);
 
 				// Add the new token to the Redis cache and MongoDB collection
 				await Promise.all([

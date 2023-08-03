@@ -44,7 +44,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 		// Set the cookie
 		const cookieOptions = getCookiesOptions(rememberMe);
-		res.cookie('authorization', token, cookieOptions);
+		res.cookie('onlyfoods_jwt', token, cookieOptions);
 
 		// Add the token to the Redis cache and MongoDB collection
 		await redis.set(token, 'whiteListed');
