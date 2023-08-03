@@ -64,7 +64,7 @@ Only Foods is a web application that allows users to share thoughts, recipes, an
 
 This project was made as a side project to elevate my skills in Prisma and Typescript. It was made fully alone, from the design to the deployment.
 
-Note: To clear Redis cache and remove expired tokens from the database, I'm using a cron job that runs every 24 hours. It makes a request to the only endpoint of this [API](https://github.com/TiagoRibeiro25/Only-Foods-Cron-Job-API);
+Note: To clear Redis cache and remove expired tokens from the database, I'm using a cron job that runs every 24 hours. It makes a request to the endpoint "/api/v1/update-token-white-list" with a secret key.
 
 ### Built With
 
@@ -134,6 +134,7 @@ You also need to have access to the a:
    REDIS_URL
    FRONTEND_URL
    DOMAIN
+   UPDATE_TOKEN_WHITE_LIST_KEY
    ```
 
 4. Run the migrations

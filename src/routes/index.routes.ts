@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import updateTokenWhiteListController from '../controllers/updateTokenWhiteList.controller';
 import { AsyncRouter } from '../types';
 import handleResponse from '../utils/handleResponse';
 import commentsRoutes from './comments.routes';
@@ -18,6 +19,9 @@ router.use('/thoughts', thoughtsRoutes);
 router.use('/comments', commentsRoutes);
 router.use('/likes', likesRoutes);
 router.use('/recipes', recipesRoutes);
+
+// Route to remove expired tokens from database
+router.post('/update-token-white-list', updateTokenWhiteListController);
 
 router.use((_req: Request, res: Response) => {
 	handleResponse({ res, status: 'error', statusCode: 404, message: 'Not Found' });
