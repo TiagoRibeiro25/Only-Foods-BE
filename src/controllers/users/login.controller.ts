@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { Response } from 'express';
-import getCookiesOptions from '../../config/cookies.config';
+import { getCookiesOptions } from '../../config/cookies.config';
 import prisma from '../../config/db.config';
 import mongodb from '../../config/mongo.config';
 import redis from '../../config/redis.config';

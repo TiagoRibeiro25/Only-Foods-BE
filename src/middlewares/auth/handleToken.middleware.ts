@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import getCookiesOptions from '../../config/cookies.config';
+import { getCookiesOptions } from '../../config/cookies.config';
 import prisma from '../../config/db.config';
 import mongodb from '../../config/mongo.config';
 import redis from '../../config/redis.config';
