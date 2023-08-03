@@ -204,8 +204,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Contact section of my personal website:
-[tiagoribeiro.tech](https://tiagoribeiro.tech/)
+Contact through my [personal website](https://tiagoribeiro.tech/contact).
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/TiagoRibeiro25/Only-Foods-BE.svg?style=for-the-badge
