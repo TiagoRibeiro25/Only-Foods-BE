@@ -15,6 +15,7 @@ interface Query {
 interface Thought {
 	id: number;
 	content: string;
+	edited: boolean;
 	author: {
 		id: number;
 		username: string;
@@ -89,6 +90,7 @@ function fetchThoughts(props: FetchThoughtsProps): Promise<Thought[]> {
 		select: {
 			id: true,
 			content: true,
+			edited: true,
 			author: {
 				select: {
 					id: true,

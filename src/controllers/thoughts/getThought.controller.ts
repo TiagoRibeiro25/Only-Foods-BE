@@ -8,6 +8,7 @@ import handleTime from '../../utils/handleTime';
 interface Thought {
 	id: number;
 	content: string;
+	edited: boolean;
 	createdAt: Date;
 	author: {
 		id: number;
@@ -33,6 +34,7 @@ function getThought(id: number): Promise<Thought> {
 		select: {
 			id: true,
 			content: true,
+			edited: true,
 			createdAt: true,
 			author: {
 				select: {

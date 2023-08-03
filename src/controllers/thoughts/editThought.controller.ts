@@ -18,7 +18,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Update thought
 		await prisma.thought.update({
 			where: { id: thoughtId },
-			data: { content },
+			data: { content, edited: true },
 		});
 
 		// Send response
