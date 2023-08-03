@@ -8,7 +8,7 @@ function getCookiesOptions(rememberMe = false): CookieOptions {
 		maxAge: parseInt(
 			rememberMe ? process.env.JWT_EXPIRES_IN_REMEMBER_ME : process.env.JWT_EXPIRES_IN,
 		),
-		domain: process.env.NODE_ENV === 'production' ? process.env.DOMAIN : undefined,
+		domain: undefined,
 	};
 }
 
