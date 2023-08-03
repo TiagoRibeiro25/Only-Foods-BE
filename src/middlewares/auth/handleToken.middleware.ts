@@ -57,16 +57,16 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				const cookieOptions = getCookiesOptions(decoded.rememberMe);
 				res.cookie('authorization', newToken, cookieOptions);
 
-				// Delete the previous token from the Redis cache and MongoDB collection
-				await Promise.all([
-					redis.del(token),
-					mongodb.db.collection('tokens').deleteOne({ token }),
-				]);
-
 				// Add the new token to the Redis cache and MongoDB collection
 				await Promise.all([
 					redis.set(newToken, 'whiteListed'),
 					mongodb.db.collection('tokens').insertOne({ token: newToken }),
+				]);
+
+				// Delete the previous token from the Redis cache and MongoDB collection
+				await Promise.all([
+					redis.del(token),
+					mongodb.db.collection('tokens').deleteOne({ token }),
 				]);
 			}
 
