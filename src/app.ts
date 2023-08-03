@@ -22,6 +22,6 @@ if (process.env.NODE_ENV !== 'production' && process.env.ENABLE_LOGGING === 'tru
 	app.use(require('morgan')('dev'));
 }
 
-app.use('/api', routes); // Enable Routes
+app.use('/api/v1', routes); // Enable Routes
 
 export default app;
