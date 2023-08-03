@@ -22,7 +22,7 @@
     <a href="https://github.com/TiagoRibeiro25/Only-Foods-Docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://onlyfoods.netlify.app/">View Demo</a>
+    <a href="https://onlyfoods.onrender.com">View Demo</a>
     ·
     <a href="https://github.com/TiagoRibeiro25/Only-Foods-BE/issues">Report Bug</a>
     ·
@@ -58,7 +58,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://onlyfoods.netlify.app/)
+[![Product Name Screen Shot][product-screenshot]](https://onlyfoods.onrender.com)
 
 Only Foods is a web application that allows users to share thoughts, recipes, and chat with each other about food.
 
