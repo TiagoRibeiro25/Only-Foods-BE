@@ -11,7 +11,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		const cookie = req.cookies['onlyfoods_jwt'];
 
 		// Delete the cookie authorization
-		res.clearCookie('onlyfoods_jwt');
+		res.clearCookie('onlyfoods_jwt', { expires: new Date(0) });
 
 		// Delete the token from the Redis cache and MongoDB collection
 		await redis.del(cookie);
