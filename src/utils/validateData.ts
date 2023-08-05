@@ -46,11 +46,11 @@ const username = (usernameInput: string): boolean => {
  * @returns {boolean} - Whether the description is valid or not
  */
 const description = (descriptionInput: string): boolean => {
-	const description = descriptionInput.trim();
-
-	if (typeof description !== 'string') {
+	if (typeof descriptionInput !== 'string') {
 		return false;
 	}
+	
+	const description = descriptionInput.trim();
 
 	const isValidLength = description.length >= 10 && description.length <= 200;
 	return isValidLength;
@@ -64,11 +64,11 @@ const description = (descriptionInput: string): boolean => {
  * @returns {boolean} - Whether the thought content is valid or not
  */
 const thoughtContent = (thoughtContentInput: string): boolean => {
-	const thought = thoughtContentInput.trim();
-
-	if (typeof thought !== 'string') {
+		if (typeof thoughtContentInput !== 'string') {
 		return false;
 	}
+
+	const thought = thoughtContentInput.trim();
 
 	const isValidLength = thought.length >= 1 && thought.length <= 1000;
 	return isValidLength;
@@ -82,12 +82,15 @@ const thoughtContent = (thoughtContentInput: string): boolean => {
  * @returns {boolean} - Whether the comment content is valid or not
  */
 const commentContent = (commentContentInput: string): boolean => {
+	
 	if (typeof commentContentInput !== 'string') {
 		return false;
 	}
-
-	// Since both commentContent and description have the same validation rules, we can just reuse the description validation function
-	return description(commentContentInput);
+	
+	const comment = commentContentInput.trim();
+	
+	const isValidLength = comment.length >= 4 && comment.length <= 2000;
+	return isValidLength;
 };
 
 /**
