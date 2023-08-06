@@ -73,7 +73,6 @@ Note: To clear Redis cache and remove expired tokens from the database, I'm usin
 * [Typescript](https://www.typescriptlang.org/)
 * [Prisma](https://www.prisma.io/)
 * [PostgreSQL](https://www.postgresql.org/)
-* [MongoDB](https://www.mongodb.com/)
 * [Redis](https://redis.io/)
 * [Cloudinary](https://cloudinary.com/)
 * [Mailjet](https://www.mailjet.com/)
@@ -93,7 +92,6 @@ In order to run this project, you need to have installed
 You also need to have access to the a:
 
 * PostgreSQL database
-* MongoDB database
 * Redis database
 * Cloudinary account
 * Mailjet account
@@ -129,8 +127,6 @@ You also need to have access to the a:
    CLOUDINARY_API_KEY
    CLOUDINARY_API_SECRET
    DATABASE_URL
-   MONGO_DB_URL
-   MONGO_DB_NAME
    REDIS_URL
    FRONTEND_URL
    DOMAIN

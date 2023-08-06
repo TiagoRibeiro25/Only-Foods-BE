@@ -1,6 +1,5 @@
 import { Response } from 'express';
 import { getDeleteCookiesOptions } from '../../config/cookies.config';
-import mongodb from '../../config/mongo.config';
 import redis from '../../config/redis.config';
 import { Request } from '../../types';
 import handleError from '../../utils/handleError';
@@ -15,9 +14,8 @@ export default async (req: Request, res: Response): Promise<void> => {
 		const deleteCookiesOptions = getDeleteCookiesOptions();
 		res.clearCookie('onlyfoods_jwt', deleteCookiesOptions);
 
-		// Delete the token from the Redis cache and MongoDB collection
+		// Delete the token from Redis
 		await redis.del(cookie);
-		await mongodb.db.collection('tokens').deleteOne({ token: cookie });
 
 		// Send the response
 		handleResponse({

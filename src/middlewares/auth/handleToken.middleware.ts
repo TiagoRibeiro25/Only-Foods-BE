@@ -2,7 +2,6 @@ import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { getCookiesOptions } from '../../config/cookies.config';
 import prisma from '../../config/db.config';
-import mongodb from '../../config/mongo.config';
 import redis from '../../config/redis.config';
 import { DecodedToken, Request } from '../../types';
 import generateToken from '../../utils/generateToken';
@@ -57,17 +56,11 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				const cookieOptions = getCookiesOptions(decoded.rememberMe);
 				res.cookie('onlyfoods_jwt', newToken, cookieOptions);
 
-				// Add the new token to the Redis cache and MongoDB collection
-				await Promise.all([
-					redis.set(newToken, 'whiteListed'),
-					mongodb.db.collection('tokens').insertOne({ token: newToken }),
-				]);
+				// Add the new token to Redis
+				await redis.set(newToken, 'whiteListed');
 
-				// Delete the previous token from the Redis cache and MongoDB collection
-				await Promise.all([
-					redis.del(token),
-					mongodb.db.collection('tokens').deleteOne({ token }),
-				]);
+				// Delete the previous token from Redis
+				await redis.del(token);
 			}
 
 			// Set the decoded token in the request plus the user data

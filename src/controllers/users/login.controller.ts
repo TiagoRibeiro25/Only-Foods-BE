@@ -2,7 +2,6 @@ import bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import { getCookiesOptions } from '../../config/cookies.config';
 import prisma from '../../config/db.config';
-import mongodb from '../../config/mongo.config';
 import redis from '../../config/redis.config';
 import { Request } from '../../types';
 import generateToken from '../../utils/generateToken';
@@ -46,9 +45,8 @@ export default async (req: Request, res: Response): Promise<void> => {
 		const cookieOptions = getCookiesOptions(rememberMe);
 		res.cookie('onlyfoods_jwt', token, cookieOptions);
 
-		// Add the token to the Redis cache and MongoDB collection
+		// Add the token to Redis
 		await redis.set(token, 'whiteListed');
-		await mongodb.db.collection('tokens').insertOne({ token: token });
 
 		// Prepare the user data to send it back
 		const userData = {

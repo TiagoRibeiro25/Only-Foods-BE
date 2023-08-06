@@ -1,6 +1,5 @@
 import colors from 'colors';
 import prisma from '../config/db.config';
-import mongodb from '../config/mongo.config';
 
 export default async function connectToDatabases(): Promise<void> {
 	try {
@@ -9,13 +8,6 @@ export default async function connectToDatabases(): Promise<void> {
 		console.log(
 			colors.yellow('[connectToDatabases.ts] ') +
 				colors.cyan('Connected successfully to postgresql database'),
-		);
-
-		// Connect to the mongodb database
-		await mongodb.connect();
-		console.log(
-			colors.yellow('[connectToDatabases.ts] ') +
-				colors.cyan('Connected successfully to mongodb database'),
 		);
 
 		// Connect to the redis database
