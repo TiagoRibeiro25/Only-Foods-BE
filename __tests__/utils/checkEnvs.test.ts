@@ -27,11 +27,10 @@ describe('checkEnvs', () => {
 			CLOUDINARY_API_KEY: 'api-key',
 			CLOUDINARY_API_SECRET: 'api-secret',
 			DATABASE_URL: 'postgresql://localhost:5432/my_db',
-			MONGO_DB_URL: 'mongodb://localhost:27017/',
-			MONGO_DB_NAME: 'my_db',
 			REDIS_URL: 'redis://localhost:6379',
 			FRONTEND_URL: 'http://localhost:3000',
 			DOMAIN: 'localhost',
+			UPDATE_TOKEN_WHITE_LIST_KEY: 'update-token-white-list-key',
 		};
 
 		const result = checkEnvs();
@@ -54,11 +53,10 @@ describe('checkEnvs', () => {
 			MAILJET_SECRET_KEY: 'secret-key',
 			MAILJET_FROM_EMAIL: 'noreply@example.com',
 			DATABASE_URL: 'mongodb://localhost:27017/my_db',
-			MONGO_DB_URL: 'mongodb://localhost:27017/',
-			MONGO_DB_NAME: 'my_db',
 			REDIS_URL: 'redis://localhost:6379',
 			FRONTEND_URL: 'http://localhost:3000',
 			DOMAIN: 'localhost',
+			UPDATE_TOKEN_WHITE_LIST_KEY: 'update-token-white-list-key',
 		};
 
 		const result = checkEnvs();
