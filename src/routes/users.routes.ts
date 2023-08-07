@@ -10,7 +10,12 @@ const router: AsyncRouter = Router();
 router.post('/login', UsersMiddlewares.verifyLogin, UsersController.login);
 
 // Logout
-router.post('/logout', AuthMiddlewares.verifyToken, UsersController.logout);
+router.post(
+	'/logout',
+	AuthMiddlewares.verifyToken,
+	AuthMiddlewares.handleToken,
+	UsersController.logout,
+);
 
 // Forgot password
 router.post(
