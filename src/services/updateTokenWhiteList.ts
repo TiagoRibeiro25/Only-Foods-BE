@@ -18,14 +18,15 @@ function verifyIfTokenExpired(token: string): boolean {
 
 export default async (): Promise<string> => {
 	// Get all keys from the Redis cache
-	const tokens = await redis.keys('*');
+	const users = await redis.keys('*');
 	const tokensToDelete: string[] = [];
 
 	// Check if any token is expired
-	for (const token of tokens) {
+	for (const userId of users) {
+		const token = await redis.get(userId);
 		if (verifyIfTokenExpired(token)) {
 			// Add the token to the array of tokens to delete
-			tokensToDelete.push(token);
+			tokensToDelete.push(userId);
 		}
 	}
 

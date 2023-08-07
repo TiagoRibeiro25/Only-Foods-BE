@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { getCookiesOptions } from '../../config/cookies.config';
+import { getCookiesOptions, getDeleteCookiesOptions } from '../../config/cookies.config';
 import prisma from '../../config/db.config';
 import redis from '../../config/redis.config';
 import { DecodedToken, Request } from '../../types';
@@ -22,8 +22,11 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			// Verify token
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
 
+			// Find the token in Redis
+			const userToken = await redis.get(decoded.id.toString());
+
 			// Check if the token is whitelisted (not revoked)
-			const isTokenWhiteListed = await redis.get(token);
+			const isTokenWhiteListed = userToken === token;
 
 			if (!isTokenWhiteListed) {
 				throw new Error('Token revoked');
@@ -56,11 +59,8 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				const cookieOptions = getCookiesOptions(decoded.rememberMe);
 				res.cookie('onlyfoods_jwt', newToken, cookieOptions);
 
-				// Add the new token to Redis
-				await redis.set(newToken, 'whiteListed');
-
-				// Delete the previous token from Redis
-				await redis.del(token);
+				// Replace the value in redis with the new token
+				await redis.set(decoded.id.toString(), newToken);
 			}
 
 			// Set the decoded token in the request plus the user data
@@ -70,6 +70,10 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 		// Call the next middleware
 		next();
 	} catch (error) {
+		// Delete the token from the user cookies
+		const deleteCookiesOptions = getDeleteCookiesOptions();
+		res.clearCookie('onlyfoods_jwt', deleteCookiesOptions);
+
 		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
 	}
 };

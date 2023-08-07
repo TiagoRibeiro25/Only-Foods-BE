@@ -46,7 +46,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		res.cookie('onlyfoods_jwt', token, cookieOptions);
 
 		// Add the token to Redis
-		await redis.set(token, 'whiteListed');
+		await redis.set(user.id.toString(), token);
 
 		// Prepare the user data to send it back
 		const userData = {

@@ -7,15 +7,12 @@ import handleResponse from '../../utils/handleResponse';
 
 export default async (req: Request, res: Response): Promise<void> => {
 	try {
-		// Get the cookie authorization
-		const cookie = req.cookies['onlyfoods_jwt'];
-
 		// Delete the cookie authorization
 		const deleteCookiesOptions = getDeleteCookiesOptions();
 		res.clearCookie('onlyfoods_jwt', deleteCookiesOptions);
 
 		// Delete the token from Redis
-		await redis.del(cookie);
+		await redis.del(req.tokenData.id.toString());
 
 		// Send the response
 		handleResponse({
