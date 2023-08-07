@@ -15,6 +15,7 @@ interface Query {
 interface Recipe {
 	id: number;
 	title: string;
+	description: string;
 	author: {
 		id: number;
 		username: string;
@@ -95,6 +96,7 @@ function fetchRecipes(props: FetchRecipesProps): Promise<Recipe[]> {
 		select: {
 			id: true,
 			title: true,
+			description: true,
 			createdAt: true,
 			author: {
 				select: {

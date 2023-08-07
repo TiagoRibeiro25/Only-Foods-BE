@@ -5,6 +5,7 @@ import validateData from '../../utils/validateData';
 
 interface AddRecipeRequestData {
 	title: string;
+	description?: string;
 	recipeImages: Base64Img[];
 	ingredients: string[];
 	instructions: string[];
@@ -12,8 +13,14 @@ interface AddRecipeRequestData {
 }
 
 export default (req: Request, res: Response, next: NextFunction): void => {
-	const { title, recipeImages, ingredients, instructions, notes }: AddRecipeRequestData =
-		req.body;
+	const {
+		title,
+		description,
+		recipeImages,
+		ingredients,
+		instructions,
+		notes,
+	}: AddRecipeRequestData = req.body;
 
 	try {
 		// Check if all mandatory fields are present
@@ -22,8 +29,13 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 		}
 
 		// Check if title is a string with at least 3 characters and no more than 50
-		if (typeof title !== 'string' || title.length < 3 || title.length > 50) {
+		if (!validateData.recipeTitle(title)) {
 			throw new Error('Invalid title');
+		}
+
+		// If description is present, check if it's valid
+		if (description && !validateData.description(description)) {
+			throw new Error('Invalid description');
 		}
 
 		// Check if recipeImages is an array with at least 1 image and each image is valid
@@ -46,7 +58,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 		}
 
 		// If notes is present, check if it's a string with no more than 500 characters and no less than 7
-		if (notes && (typeof notes !== 'string' || notes.length < 7 || notes.length > 500)) {
+		if (notes && !validateData.recipeNotes(notes)) {
 			throw new Error('Invalid notes');
 		}
 

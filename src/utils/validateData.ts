@@ -49,7 +49,7 @@ const description = (descriptionInput: string): boolean => {
 	if (typeof descriptionInput !== 'string') {
 		return false;
 	}
-	
+
 	const description = descriptionInput.trim();
 
 	const isValidLength = description.length >= 10 && description.length <= 200;
@@ -64,13 +64,49 @@ const description = (descriptionInput: string): boolean => {
  * @returns {boolean} - Whether the thought content is valid or not
  */
 const thoughtContent = (thoughtContentInput: string): boolean => {
-		if (typeof thoughtContentInput !== 'string') {
+	if (typeof thoughtContentInput !== 'string') {
 		return false;
 	}
 
 	const thought = thoughtContentInput.trim();
 
 	const isValidLength = thought.length >= 1 && thought.length <= 1000;
+	return isValidLength;
+};
+
+/**
+ * Validate a recipe title
+ * - Can have letters, numbers, spaces, and common punctuation marks
+ * - Must be between 4 and 50 characters
+ * @param recipeTitleInput - The recipe title to validate
+ * @returns {boolean} - Whether the recipe title is valid or not
+ */
+const recipeTitle = (recipeTitleInput: string): boolean => {
+	if (typeof recipeTitleInput !== 'string') {
+		return false;
+	}
+
+	const recipeTitle = recipeTitleInput.trim();
+
+	const isValidLength = recipeTitle.length >= 4 && recipeTitle.length <= 50;
+	return isValidLength;
+};
+
+/**
+ * Validate a recipe notes
+ * - Can have letters, numbers, spaces, and common punctuation marks
+ * - Must be between 7 and 2000 characters
+ * @param recipeNotesInput - The recipe notes to validate
+ * @returns {boolean} - Whether the recipe notes is valid or not
+ */
+const recipeNotes = (recipeNotesInput: string): boolean => {
+	if (typeof recipeNotesInput !== 'string') {
+		return false;
+	}
+
+	const recipeNotes = recipeNotesInput.trim();
+
+	const isValidLength = recipeNotes.length >= 7 && recipeNotes.length <= 2000;
 	return isValidLength;
 };
 
@@ -82,13 +118,12 @@ const thoughtContent = (thoughtContentInput: string): boolean => {
  * @returns {boolean} - Whether the comment content is valid or not
  */
 const commentContent = (commentContentInput: string): boolean => {
-	
 	if (typeof commentContentInput !== 'string') {
 		return false;
 	}
-	
+
 	const comment = commentContentInput.trim();
-	
+
 	const isValidLength = comment.length >= 4 && comment.length <= 2000;
 	return isValidLength;
 };
@@ -134,6 +169,8 @@ export default {
 	username,
 	description,
 	thoughtContent,
+	recipeTitle,
+	recipeNotes,
 	commentContent,
 	base64Image,
 	id,

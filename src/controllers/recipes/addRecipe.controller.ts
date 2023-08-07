@@ -8,6 +8,7 @@ import handleResponse from '../../utils/handleResponse';
 
 interface AddRecipeRequestData {
 	title: string;
+	description?: string;
 	recipeImages: Base64Img[];
 	ingredients: string[];
 	instructions: string[];
@@ -15,14 +16,21 @@ interface AddRecipeRequestData {
 }
 
 export default async (req: Request, res: Response): Promise<void> => {
-	const { title, recipeImages, ingredients, instructions, notes }: AddRecipeRequestData =
-		req.body;
+	const {
+		title,
+		description,
+		recipeImages,
+		ingredients,
+		instructions,
+		notes,
+	}: AddRecipeRequestData = req.body;
 
 	try {
 		// Create the recipe
 		const recipe = await prisma.recipe.create({
 			data: {
-				title,
+				title: title.trim(),
+				description: description?.trim(),
 				authorId: req.tokenData.id,
 				ingredients,
 				instructions,
