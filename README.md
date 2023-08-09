@@ -64,8 +64,6 @@ Only Foods is a web application that allows users to share thoughts, recipes, an
 
 This project was made as a side project to elevate my skills in Prisma and Typescript. It was made fully alone, from the design to the deployment.
 
-Note: To clear Redis cache and remove expired tokens from the database, I'm using a cron job that runs every 24 hours. It makes a request to the endpoint "/api/v1/update-token-white-list" with a secret key.
-
 ### Built With
 
 * [Nodejs](https://nodejs.org/en)

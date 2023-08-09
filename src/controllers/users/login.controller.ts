@@ -47,6 +47,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 		// Add the token to Redis
 		await redis.set(user.id.toString(), token);
+		await redis.expire(user.id.toString(), cookieOptions.maxAge / 1000);
 
 		// Prepare the user data to send it back
 		const userData = {

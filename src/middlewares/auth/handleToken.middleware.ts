@@ -61,6 +61,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 
 				// Replace the value in redis with the new token
 				await redis.set(decoded.id.toString(), newToken);
+				await redis.expire(decoded.id.toString(), cookieOptions.maxAge / 1000);
 			}
 
 			// Set the decoded token in the request plus the user data
