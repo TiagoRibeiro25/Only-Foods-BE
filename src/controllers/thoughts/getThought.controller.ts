@@ -3,7 +3,6 @@ import prisma from '../../config/db.config';
 import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
-import handleTime from '../../utils/handleTime';
 
 interface Thought {
 	id: number;
@@ -25,7 +24,6 @@ interface Thought {
 	}[];
 	isAuthor?: boolean;
 	isLiked?: boolean;
-	createdAgo?: string;
 }
 
 function getThought(id: number): Promise<Thought> {
@@ -70,9 +68,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 		if (!thought) {
 			throw new Error('No thoughts found');
 		}
-
-		// Calculate the time created ago (e.g. 2 hours ago)
-		thought.createdAgo = handleTime.calculateTimeAgo({ createdAt: thought.createdAt });
 
 		// Check if the thought is from the current user
 		if (thought.author.id === req.tokenData?.id) {

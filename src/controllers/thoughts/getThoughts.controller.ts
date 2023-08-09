@@ -3,7 +3,6 @@ import prisma from '../../config/db.config';
 import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
-import handleTime from '../../utils/handleTime';
 
 interface Query {
 	filter: 'recent' | 'popular' | 'following';
@@ -24,7 +23,6 @@ interface Thought {
 	likes: { authorId: number }[];
 	comments: { authorId: number }[];
 	createdAt: Date;
-	createdAgo?: string;
 	isAuthor?: boolean;
 	isLiked?: boolean;
 }
@@ -160,7 +158,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 				...thought,
 				likes: thought.likes.length,
 				comments: thought.comments.length,
-				createdAgo: handleTime.calculateTimeAgo({ createdAt: thought.createdAt }),
 			};
 		});
 

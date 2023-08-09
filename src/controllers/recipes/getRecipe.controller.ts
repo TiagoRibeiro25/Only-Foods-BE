@@ -3,7 +3,6 @@ import prisma from '../../config/db.config';
 import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
-import handleTime from '../../utils/handleTime';
 
 interface Recipe {
 	id: number;
@@ -32,7 +31,6 @@ interface Recipe {
 	}[];
 	isAuthor?: boolean;
 	isLiked?: boolean;
-	createdAgo?: string;
 }
 
 function getRecipe(id: number): Promise<Recipe> {
@@ -86,11 +84,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 		if (!recipe) {
 			throw new Error('No recipes found');
 		}
-
-		// Calculate the time created ago (e.g. 2 hours ago)
-		recipe.createdAgo = handleTime.calculateTimeAgo({
-			createdAt: recipe.createdAt,
-		});
 
 		// Check if the user is the author of the recipe
 		if (recipe.author.id === req.tokenData?.id) {

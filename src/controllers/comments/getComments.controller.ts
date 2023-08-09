@@ -3,7 +3,6 @@ import prisma from '../../config/db.config';
 import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
-import handleTime from '../../utils/handleTime';
 
 interface QueryParams {
 	id: string;
@@ -26,10 +25,6 @@ interface Comment {
 		};
 	};
 	createdAt: Date;
-}
-
-interface CommentResult extends Comment {
-	createdAgo: string;
 }
 
 function getComments(props: GetCommentsProps): Promise<Comment[]> {
@@ -74,16 +69,8 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Fetch the comments
 		const comments: Comment[] = await getComments({ id, type, page, limit });
 
-		// Calculate the time created ago (e.g. 2 hours ago)
-		const commentsResult: CommentResult[] = comments.map(comment => {
-			return {
-				...comment,
-				createdAgo: handleTime.calculateTimeAgo({ createdAt: comment.createdAt }),
-			};
-		});
-
 		// Check if there are no comments
-		if (commentsResult.length === 0) {
+		if (comments.length === 0) {
 			throw new Error('No comments found');
 		}
 
@@ -99,7 +86,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			statusCode: 200,
 			message: 'Comments fetched successfully',
 			data: {
-				comments: commentsResult,
+				comments: comments,
 				totalCount,
 			},
 		});

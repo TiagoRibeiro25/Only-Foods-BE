@@ -3,7 +3,6 @@ import prisma from '../../config/db.config';
 import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
-import handleTime from '../../utils/handleTime';
 
 interface Query {
 	filter: 'recent' | 'popular' | 'following';
@@ -155,18 +154,8 @@ export default async (req: Request, res: Response): Promise<void> => {
 			});
 		}
 
-		// Calculate the time created ago (e.g. 2 hours ago)
-		const result = recipes.map(recipe => {
-			return {
-				...recipe,
-				likes: recipe.likes.length,
-				comments: recipe.comments.length,
-				createdAgo: handleTime.calculateTimeAgo({ createdAt: recipe.createdAt }),
-			};
-		});
-
 		// Check if there are any recipes
-		if (result.length === 0) {
+		if (recipes.length === 0) {
 			throw new Error('No recipes found');
 		}
 
@@ -176,7 +165,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			status: 'success',
 			statusCode: 200,
 			message: 'Recipes fetched successfully',
-			data: result,
+			data: recipes,
 		});
 	} catch (error) {
 		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
