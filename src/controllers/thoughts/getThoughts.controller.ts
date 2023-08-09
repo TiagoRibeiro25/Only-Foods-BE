@@ -138,8 +138,8 @@ export default async (req: Request, res: Response): Promise<void> => {
 			});
 		}
 
-		let totalThoughts: number;
 		// Calculate the total number of thoughts
+		let totalThoughts: number;
 		if (filter === 'following') {
 			totalThoughts = await prisma.thought.count({
 				where: { author: { followers: { some: { followerId: req.tokenData?.id } } } },

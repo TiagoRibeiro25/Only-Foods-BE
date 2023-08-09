@@ -154,6 +154,18 @@ export default async (req: Request, res: Response): Promise<void> => {
 			});
 		}
 
+		// Calculate the tonal number of recipes
+		let totalRecipes: number;
+		if (filter === 'following') {
+			totalRecipes = await prisma.recipe.count({
+				where: { author: { followers: { some: { followerId: req.tokenData?.id } } } },
+			});
+		} else if (authorId) {
+			totalRecipes = await prisma.recipe.count({ where: { authorId: +authorId } });
+		} else {
+			totalRecipes = await prisma.recipe.count();
+		}
+
 		// Calculate the time created ago (e.g. 2 hours ago)
 		const result = recipes.map(recipe => {
 			return {
@@ -174,7 +186,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			status: 'success',
 			statusCode: 200,
 			message: 'Recipes fetched successfully',
-			data: result,
+			data: { recipes: result, totalCount: totalRecipes },
 		});
 	} catch (error) {
 		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
