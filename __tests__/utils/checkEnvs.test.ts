@@ -30,7 +30,6 @@ describe('checkEnvs', () => {
 			REDIS_URL: 'redis://localhost:6379',
 			FRONTEND_URL: 'http://localhost:3000',
 			DOMAIN: 'localhost',
-			UPDATE_TOKEN_WHITE_LIST_KEY: 'update-token-white-list-key',
 		};
 
 		const result = checkEnvs();
@@ -56,7 +55,6 @@ describe('checkEnvs', () => {
 			REDIS_URL: 'redis://localhost:6379',
 			FRONTEND_URL: 'http://localhost:3000',
 			DOMAIN: 'localhost',
-			UPDATE_TOKEN_WHITE_LIST_KEY: 'update-token-white-list-key',
 		};
 
 		const result = checkEnvs();

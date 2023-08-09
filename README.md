@@ -128,7 +128,6 @@ You also need to have access to the a:
    REDIS_URL
    FRONTEND_URL
    DOMAIN
-   UPDATE_TOKEN_WHITE_LIST_KEY
    ```
 
 4. Run the migrations
