@@ -154,8 +154,17 @@ export default async (req: Request, res: Response): Promise<void> => {
 			});
 		}
 
+		// Calculate the time created ago (e.g. 2 hours ago)
+		const result = recipes.map(recipe => {
+			return {
+				...recipe,
+				likes: recipe.likes.length,
+				comments: recipe.comments.length,
+			};
+		});
+
 		// Check if there are any recipes
-		if (recipes.length === 0) {
+		if (result.length === 0) {
 			throw new Error('No recipes found');
 		}
 
@@ -165,7 +174,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			status: 'success',
 			statusCode: 200,
 			message: 'Recipes fetched successfully',
-			data: recipes,
+			data: result,
 		});
 	} catch (error) {
 		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
