@@ -41,7 +41,7 @@ const username = (usernameInput: string): boolean => {
 /**
  * Validate a description
  * - Can have letters, numbers, spaces, and common punctuation marks
- * - Must be between 10 and 200 characters
+ * - Must be between 10 and 150 characters
  * @param descriptionInput - The description to validate
  * @returns {boolean} - Whether the description is valid or not
  */
@@ -52,7 +52,7 @@ const description = (descriptionInput: string): boolean => {
 
 	const description = descriptionInput.trim();
 
-	const isValidLength = description.length >= 10 && description.length <= 200;
+	const isValidLength = description.length >= 10 && description.length <= 150;
 	return isValidLength;
 };
 
