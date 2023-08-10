@@ -51,6 +51,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 				const result: UploadApiResponse = await cloudinary.uploader.upload(image.image, {
 					folder: 'only_foods/recipes',
 					crop: 'scale',
+					transformation: { width: 750, height: 300, crop: 'limit' },
 				});
 
 				images.push({

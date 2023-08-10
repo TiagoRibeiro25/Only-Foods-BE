@@ -31,6 +31,7 @@ async function handleUserPicture(props: HandleUserPictureProps): Promise<void> {
 		const result: UploadApiResponse = await cloudinary.uploader.upload(picture, {
 			public_id: userPicture.cloudinaryId,
 			overwrite: true,
+			transformation: { width: 150, height: 150, crop: 'limit' },
 		});
 
 		// Update the user image in the database
@@ -48,6 +49,7 @@ async function handleUserPicture(props: HandleUserPictureProps): Promise<void> {
 		const result: UploadApiResponse = await cloudinary.uploader.upload(picture, {
 			folder: 'only_foods/users',
 			crop: 'scale',
+			transformation: { width: 150, height: 150, crop: 'limit' },
 		});
 
 		// Create a new user image in the database
