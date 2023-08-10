@@ -136,13 +136,7 @@ You also need to have access to the a:
    npx prisma migrate dev --name init
    ```
 
-5. Generate the Prisma client
-
-   ```sh
-   npx prisma generate
-   ```
-
-6. Run the project
+5. Run the project
 
    ```sh
    npm run dev
