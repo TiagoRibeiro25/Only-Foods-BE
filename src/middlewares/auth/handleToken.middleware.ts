@@ -1,7 +1,6 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { getCookiesOptions, getDeleteCookiesOptions } from '../../config/cookies.config';
-import prisma from '../../config/db.config';
 import redis from '../../config/redis.config';
 import { DecodedToken, Request } from '../../types';
 import generateToken from '../../utils/generateToken';
@@ -26,20 +25,8 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			const userToken = await redis.get(decoded.id.toString());
 
 			// Check if the token is whitelisted (not revoked)
-			const isTokenWhiteListed = userToken === token;
-
-			if (!isTokenWhiteListed) {
+			if (userToken !== token) {
 				throw new Error('Token revoked');
-			}
-
-			// Check if the user exists
-			const user: { isAdmin: boolean; blocked: boolean } = await prisma.user.findUnique({
-				where: { id: decoded.id },
-				select: { isAdmin: true, blocked: true },
-			});
-
-			if (!user) {
-				throw new Error('Invalid token');
 			}
 
 			// Check if the token should be regenerated
@@ -65,7 +52,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			}
 
 			// Set the decoded token in the request plus the user data
-			req.tokenData = { ...decoded, isAdmin: user.isAdmin, isBlocked: user.blocked };
+			req.tokenData = decoded;
 		}
 
 		// Call the next middleware
