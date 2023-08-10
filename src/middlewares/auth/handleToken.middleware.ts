@@ -1,6 +1,7 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { getCookiesOptions, getDeleteCookiesOptions } from '../../config/cookies.config';
+import prisma from '../../config/db.config';
 import redis from '../../config/redis.config';
 import { DecodedToken, Request } from '../../types';
 import generateToken from '../../utils/generateToken';
@@ -36,10 +37,20 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 
 			// If the token was generated "JWT_GENERATE_TOKEN_IN" milliseconds ago, then generate a new one
 			if (shouldGenerateNewToken) {
+				// Get the user from the database to update isBlocked and isAdmin
+				const user = await prisma.user.findUnique({
+					where: { id: decoded.id },
+					select: { isAdmin: true, blocked: true },
+				});
+
+				decoded.isAdmin = user?.isAdmin || false;
+				decoded.isBlocked = user?.blocked || false;
+
 				const newToken: string = generateToken.authToken({
 					id: decoded.id,
 					rememberMe: decoded.rememberMe,
 					isAdmin: decoded.isAdmin,
+					isBlocked: decoded.isBlocked,
 				});
 
 				// Update the cookie

@@ -39,6 +39,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			id: user.id,
 			rememberMe,
 			isAdmin: user.isAdmin,
+			isBlocked: user.blocked,
 		});
 
 		// Set the cookie
