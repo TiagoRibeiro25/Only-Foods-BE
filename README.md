@@ -112,7 +112,6 @@ You also need to have access to the a:
 
    ```js
    PORT
-   ENABLE_LOGGING
    JWT_SECRET
    JWT_EXPIRES_IN
    JWT_EXPIRES_IN_REMEMBER_ME

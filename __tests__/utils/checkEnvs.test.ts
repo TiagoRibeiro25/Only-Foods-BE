@@ -14,7 +14,6 @@ describe('checkEnvs', () => {
 		process.env = {
 			NODE_ENV: 'development',
 			PORT: '3000',
-			ENABLE_LOGGING: 'true',
 			JWT_SECRET: 'secret',
 			JWT_EXPIRES_IN: '3600',
 			JWT_EXPIRES_IN_REMEMBER_ME: '86400',
@@ -42,7 +41,6 @@ describe('checkEnvs', () => {
 		process.env = {
 			NODE_ENV: 'development',
 			PORT: '3000',
-			ENABLE_LOGGING: 'true',
 			JWT_SECRET: 'secret',
 			JWT_EXPIRES_IN: '3600',
 			JWT_EXPIRES_IN_REMEMBER_ME: '86400',

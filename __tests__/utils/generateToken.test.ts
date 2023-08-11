@@ -29,6 +29,7 @@ describe('authToken', () => {
 			id: 123,
 			rememberMe: false,
 			isAdmin: false,
+			isBlocked: false,
 		};
 		const expiresIn = 'mockedExpiresIn';
 		const mockedToken = 'mockedTokenValue';
@@ -46,6 +47,7 @@ describe('authToken', () => {
 			id: 123,
 			rememberMe: true,
 			isAdmin: false,
+			isBlocked: false,
 		};
 		const expiresInRememberMe = 'mockedExpiresInRememberMe';
 		const mockedToken = 'mockedTokenValue';
