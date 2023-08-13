@@ -135,7 +135,13 @@ You also need to have access to the a:
    npx prisma migrate dev --name init
    ```
 
-5. Run the project
+5. Generate the prisma client
+
+   ```sh
+   npx prisma generate
+   ```
+
+6. Run the project
 
    ```sh
    npm run dev
@@ -158,7 +164,13 @@ You also need to have access to the a:
 
 3. Set the NODE_ENV variable to production and the rest of the variables in the .env file
 
-4. Run the project
+4. Generate the prisma client
+
+   ```sh
+   npx prisma generate
+   ```
+
+5. Run the project
 
    ```sh
    npm start
