@@ -21,7 +21,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		commentData[type + 'Id'] = +id;
 
 		// Add the comment
-		await prisma.comment.create({
+		const result = await prisma.comment.create({
 			data: commentData,
 		});
 
@@ -31,6 +31,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			status: 'success',
 			statusCode: 201,
 			message: 'Comment added successfully',
+			data: result,
 		});
 	} catch (error) {
 		handleError({ res, error, fileName: __filename.split('\\').at(-1) });
