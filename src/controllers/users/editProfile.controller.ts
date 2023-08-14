@@ -45,9 +45,11 @@ async function handleUserPicture(props: HandleUserPictureProps): Promise<void> {
 			},
 		});
 	} else {
+		const folderName = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+
 		// Create a new user image in Cloudinary
 		const result: UploadApiResponse = await cloudinary.uploader.upload(picture, {
-			folder: 'only_foods/users',
+			folder: `only_foods/${folderName}/users`,
 			crop: 'scale',
 			transformation: { width: 150, height: 150, crop: 'limit' },
 		});
