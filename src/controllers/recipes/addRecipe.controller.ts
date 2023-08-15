@@ -26,18 +26,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 	}: AddRecipeRequestData = req.body;
 
 	try {
-		// Create the recipe
-		const recipe = await prisma.recipe.create({
-			data: {
-				title: title.trim(),
-				description: description?.trim(),
-				authorId: req.tokenData.id,
-				ingredients,
-				instructions,
-				...(notes && { notes }),
-			},
-		});
-
 		// Create the recipe images
 		const recipeImagesData = recipeImages.map(image => ({
 			recipeId: recipe.id,
@@ -62,6 +50,18 @@ export default async (req: Request, res: Response): Promise<void> => {
 				});
 			}),
 		);
+
+		// After the images were uploaded to cloudinary, create the recipe in the database
+		const recipe = await prisma.recipe.create({
+			data: {
+				title: title.trim(),
+				description: description?.trim(),
+				authorId: req.tokenData.id,
+				ingredients,
+				instructions,
+				...(notes && { notes }),
+			},
+		});
 
 		// Create the recipe images in the database
 		await prisma.recipeImage.createMany({
