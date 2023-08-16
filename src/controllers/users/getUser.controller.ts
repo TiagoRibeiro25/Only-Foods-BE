@@ -7,7 +7,6 @@ import handleResponse from '../../utils/handleResponse';
 interface User {
 	id: number;
 	username: string;
-	email: string;
 	description: string;
 	blocked: boolean;
 	isAdmin: boolean;
@@ -37,7 +36,6 @@ const getUser = (id: number): Promise<User> => {
 		select: {
 			id: true,
 			username: true,
-			email: true,
 			description: true,
 			blocked: true,
 			isAdmin: true,
