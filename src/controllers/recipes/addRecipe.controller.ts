@@ -26,18 +26,12 @@ export default async (req: Request, res: Response): Promise<void> => {
 	}: AddRecipeRequestData = req.body;
 
 	try {
-		// Create the recipe images
-		const recipeImagesData = recipeImages.map(image => ({
-			recipeId: recipe.id,
-			image,
-		}));
-
 		const images = [];
 		const folderName = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 		// Upload the recipe images to Cloudinary
 		await Promise.all(
-			recipeImagesData.map(async image => {
-				const result: UploadApiResponse = await cloudinary.uploader.upload(image.image, {
+			recipeImages.map(async image => {
+				const result: UploadApiResponse = await cloudinary.uploader.upload(image, {
 					folder: `only_foods/${folderName}/recipes`,
 					crop: 'scale',
 					transformation: { width: 750, height: 300, crop: 'limit' },
@@ -46,7 +40,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 				images.push({
 					cloudinaryId: result.public_id,
 					cloudinaryImage: result.secure_url,
-					recipeId: image.recipeId,
+					// recipeId: image.recipeId,
 				});
 			}),
 		);
@@ -65,7 +59,10 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 		// Create the recipe images in the database
 		await prisma.recipeImage.createMany({
-			data: images,
+			data: images.map(image => ({
+				...image,
+				recipeId: recipe.id,
+			})),
 		});
 
 		// Send the response
