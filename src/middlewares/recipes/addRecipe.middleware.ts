@@ -34,7 +34,7 @@ export default (req: Request, res: Response, next: NextFunction): void => {
 		}
 
 		// If description is present, check if it's valid
-		if (description && !validateData.description(description)) {
+		if (description && !validateData.recipeDescription(description)) {
 			throw new Error('Invalid description');
 		}
 

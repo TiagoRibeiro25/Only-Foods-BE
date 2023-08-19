@@ -57,6 +57,24 @@ const description = (descriptionInput: string): boolean => {
 };
 
 /**
+ * Validate a recipe description
+ * - Can have letters, numbers, spaces, and common punctuation marks
+ * - Must be between 3 and 550 characters
+ * @param recipeDescriptionInput - The recipe description to validate
+ * @returns {boolean} - Whether the recipe description is valid or not
+ */
+const recipeDescription = (recipeDescriptionInput: string): boolean => {
+	if (typeof recipeDescriptionInput !== 'string') {
+		return false;
+	}
+
+	const recipeDescription = recipeDescriptionInput.trim();
+
+	const isValidLength = recipeDescription.length >= 10 && recipeDescription.length <= 550;
+	return isValidLength;
+};
+
+/**
  *  Validate a thought content
  * - Can have letters, numbers, spaces, and common punctuation marks
  * - Must be between 1 and 1000 characters
@@ -168,6 +186,7 @@ export default {
 	email,
 	username,
 	description,
+	recipeDescription,
 	thoughtContent,
 	recipeTitle,
 	recipeNotes,
