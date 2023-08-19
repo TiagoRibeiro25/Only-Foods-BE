@@ -7,6 +7,7 @@ import handleResponse from '../../utils/handleResponse';
 interface User {
 	id: number;
 	username: string;
+	email: string;
 	description: string;
 	blocked: boolean;
 	isAdmin: boolean;
@@ -36,6 +37,7 @@ const getUser = (id: number): Promise<User> => {
 		select: {
 			id: true,
 			username: true,
+			email: true,
 			description: true,
 			blocked: true,
 			isAdmin: true,
@@ -83,6 +85,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 				followers: user.followers.length,
 				following: user.following.length,
 				isLoggedUser: false,
+				email: undefined,
 			};
 
 			// If there's a token,
