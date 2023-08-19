@@ -75,6 +75,34 @@ describe('description', () => {
 	});
 });
 
+describe('recipe description', () => {
+	it('should return true for a valid description', () => {
+		const validDescriptions = [
+			'This is a valid description.',
+			'A valid description with punctuation marks: !?.,',
+			'A valid description with numbers: 1234567890',
+			'The perfect classic cheesecake is rich, not too dense, silky smooth, and as creamy as can be. Our recipe combines a handful of simple ingredients to make a satisfying dessert that everyone loves. You could serve this cheesecake as is for celebrations of any kind, but if you want to go the extra mile, try a drizzle of melted dark chocolate or a handful of fresh berries on top. A buttery graham cracker crust makes this dessert an instant classic. The crumbly texture is a perfect complement to the velvety smooth cream cheese filling.',
+		];
+
+		validDescriptions.forEach(description => {
+			const isValid = validateUtils.recipeDescription(description);
+			expect(isValid).toBe(true);
+		});
+	});
+
+	it('should return false for an invalid description', () => {
+		const invalidDescriptions = [
+			'Short',
+			'A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters.A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters. A very long description that exceeds the maximum limit of 550 characters.',
+		];
+
+		invalidDescriptions.forEach(description => {
+			const isValid = validateUtils.recipeDescription(description);
+			expect(isValid).toBe(false);
+		});
+	});
+});
+
 describe('base64Image', () => {
 	it('should return true for a valid base64 image', () => {
 		const validImages: Base64Img[] = [
