@@ -49,11 +49,11 @@ export default async (req: Request, res: Response): Promise<void> => {
 		const recipe = await prisma.recipe.create({
 			data: {
 				title: title.trim(),
-				description: description?.trim(),
 				authorId: req.tokenData.id,
 				ingredients,
 				instructions,
-				...(notes && { notes }),
+				...(description && { description: description.trim() }),
+				...(notes && { notes: notes.trim() }),
 			},
 		});
 

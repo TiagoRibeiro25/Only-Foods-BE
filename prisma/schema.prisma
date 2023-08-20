@@ -96,7 +96,7 @@ model Recipe {
   authorId     Int
   ingredients  String[]
   instructions String[]
-  notes        String
+  notes        String        @default("No notes")
   likes        Like[]
   comments     Comment[]
   createdAt    DateTime      @default(now())
