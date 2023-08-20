@@ -1,5 +1,6 @@
 import base64url from 'base64url';
 import jwt from 'jsonwebtoken';
+import jwtConfig from '../../src/config/jwt.config';
 import generateToken from '../../src/utils/generateToken';
 
 jest.mock('jsonwebtoken');
@@ -31,15 +32,15 @@ describe('authToken', () => {
 			isAdmin: false,
 			isBlocked: false,
 		};
-		const expiresIn = 'mockedExpiresIn';
 		const mockedToken = 'mockedTokenValue';
 		(jwt.sign as jest.Mock).mockReturnValueOnce(mockedToken);
-		process.env.JWT_EXPIRES_IN = expiresIn;
 
 		const result = generateToken.authToken(props);
 
 		expect(result).toBe(mockedToken);
-		expect(jwt.sign).toHaveBeenCalledWith(props, process.env.JWT_SECRET, { expiresIn });
+		expect(jwt.sign).toHaveBeenCalledWith(props, process.env.JWT_SECRET, {
+			expiresIn: jwtConfig.expiresIn,
+		});
 	});
 
 	it('should generate an authentication token with remember me', () => {
@@ -49,16 +50,14 @@ describe('authToken', () => {
 			isAdmin: false,
 			isBlocked: false,
 		};
-		const expiresInRememberMe = 'mockedExpiresInRememberMe';
 		const mockedToken = 'mockedTokenValue';
 		(jwt.sign as jest.Mock).mockReturnValueOnce(mockedToken);
-		process.env.JWT_EXPIRES_IN_REMEMBER_ME = expiresInRememberMe;
 
 		const result = generateToken.authToken(props);
 
 		expect(result).toBe(mockedToken);
 		expect(jwt.sign).toHaveBeenCalledWith(props, process.env.JWT_SECRET, {
-			expiresIn: expiresInRememberMe,
+			expiresIn: jwtConfig.expiresInRememberMe,
 		});
 	});
 });
