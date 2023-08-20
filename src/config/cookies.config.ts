@@ -1,4 +1,5 @@
 import { CookieOptions } from 'express';
+import jwtConfig from './jwt.config';
 
 const cookieOptions: CookieOptions = {
 	httpOnly: true,
@@ -10,9 +11,7 @@ const cookieOptions: CookieOptions = {
 export function getCookiesOptions(rememberMe = false): CookieOptions {
 	return {
 		...cookieOptions,
-		maxAge: parseInt(
-			rememberMe ? process.env.JWT_EXPIRES_IN_REMEMBER_ME : process.env.JWT_EXPIRES_IN,
-		),
+		maxAge: rememberMe ? jwtConfig.expiresInRememberMe : jwtConfig.expiresIn,
 	};
 }
 

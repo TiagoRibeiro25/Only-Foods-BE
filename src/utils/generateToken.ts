@@ -1,5 +1,6 @@
 import base64url from 'base64url';
 import jwt from 'jsonwebtoken';
+import jwtConfig from '../config/jwt.config';
 
 interface GenerateResetPasswordTokenProps {
 	id: number;
@@ -28,8 +29,8 @@ const resetPasswordToken = (props: GenerateResetPasswordTokenProps): string => {
  */
 const authToken = (props: GenerateAuthTokenProps): string => {
 	const expiresIn = props.rememberMe
-		? process.env.JWT_EXPIRES_IN_REMEMBER_ME
-		: process.env.JWT_EXPIRES_IN;
+		? jwtConfig.expiresInRememberMe
+		: jwtConfig.expiresIn;
 
 	const token = jwt.sign(props, process.env.JWT_SECRET, { expiresIn });
 	return token;

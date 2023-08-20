@@ -68,7 +68,7 @@
 		"status": 401
 	},
 	{
-		"message": "Token revoked",
+		"message": "Token Blacklisted",
 		"status": 401
 	},
 	{

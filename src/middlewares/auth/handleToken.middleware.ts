@@ -2,6 +2,7 @@ import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { getCookiesOptions, getDeleteCookiesOptions } from '../../config/cookies.config';
 import prisma from '../../config/db.config';
+import jwtConfig from '../../config/jwt.config';
 import redis from '../../config/redis.config';
 import { DecodedToken, Request } from '../../types';
 import generateToken from '../../utils/generateToken';
@@ -30,13 +31,8 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				throw new Error('Token revoked');
 			}
 
-			// Check if the token should be regenerated
-			const tokenExpiration: number = parseInt(process.env.JWT_GENERATE_TOKEN_IN);
-			const shouldGenerateNewToken: boolean =
-				Date.now() - decoded.iat * 1000 > tokenExpiration;
-
-			// If the token was generated "JWT_GENERATE_TOKEN_IN" milliseconds ago, then generate a new one
-			if (shouldGenerateNewToken) {
+			// If the token was generated 30 minutes ago, generate a new one
+			if (Date.now() - decoded.iat * 1000 > jwtConfig.generateNewTokenInterval) {
 				// Get the user from the database to update isBlocked and isAdmin
 				const user = await prisma.user.findUnique({
 					where: { id: decoded.id },
