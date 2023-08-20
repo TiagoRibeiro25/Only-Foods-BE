@@ -19,6 +19,7 @@ interface Recipe {
 	author: {
 		id: number;
 		username: string;
+		blocked: boolean;
 		userImage: {
 			cloudinaryImage: string;
 		};
@@ -54,6 +55,7 @@ function getRecipe(id: number): Promise<Recipe> {
 				select: {
 					id: true,
 					username: true,
+					blocked: true,
 					userImage: {
 						select: { cloudinaryImage: true },
 					},

@@ -18,6 +18,7 @@ interface Recipe {
 	author: {
 		id: number;
 		username: string;
+		blocked: boolean;
 	};
 	recipeImages: { cloudinaryImage: string }[];
 	likes: {
@@ -101,6 +102,7 @@ function fetchRecipes(props: FetchRecipesProps): Promise<Recipe[]> {
 				select: {
 					id: true,
 					username: true,
+					blocked: true,
 				},
 			},
 			recipeImages: {
