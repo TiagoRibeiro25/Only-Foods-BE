@@ -12,6 +12,7 @@ interface Thought {
 	author: {
 		id: number;
 		username: string;
+		blocked: boolean;
 		userImage: {
 			cloudinaryImage: string;
 		};
@@ -38,6 +39,7 @@ function getThought(id: number): Promise<Thought> {
 				select: {
 					id: true,
 					username: true,
+					blocked: true,
 					userImage: {
 						select: { cloudinaryImage: true },
 					},

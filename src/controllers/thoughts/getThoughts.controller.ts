@@ -18,6 +18,7 @@ interface Thought {
 	author: {
 		id: number;
 		username: string;
+		blocked: boolean;
 		userImage: { cloudinaryImage: string };
 	};
 	likes: { authorId: number }[];
@@ -93,6 +94,7 @@ function fetchThoughts(props: FetchThoughtsProps): Promise<Thought[]> {
 				select: {
 					id: true,
 					username: true,
+					blocked: true,
 					userImage: {
 						select: { cloudinaryImage: true },
 					},
