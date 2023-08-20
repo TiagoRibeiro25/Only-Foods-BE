@@ -57,13 +57,19 @@ export default async (req: Request, res: Response): Promise<void> => {
 			},
 		});
 
-		// Create the recipe images in the database
-		await prisma.recipeImage.createMany({
-			data: images.map(image => ({
-				...image,
-				recipeId: recipe.id,
-			})),
-		});
+		// Create the recipe images in the database and return them
+		const imagesCreated = await prisma.$transaction([
+			prisma.recipeImage.createMany({
+				data: images.map(image => ({
+					...image,
+					recipeId: recipe.id,
+				})),
+			}),
+			prisma.recipeImage.findMany({
+				where: { recipeId: recipe.id },
+				select: { id: true, cloudinaryImage: true, cloudinaryId: true, recipeId: true },
+			}),
+		]);
 
 		// Send the response
 		handleResponse({
@@ -71,7 +77,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			status: 'success',
 			statusCode: 201,
 			message: 'Recipe created successfully',
-			data: { recipe, images },
+			data: { recipe, images: imagesCreated[1] },
 		});
 	} catch (error) {
 		const fileName =
