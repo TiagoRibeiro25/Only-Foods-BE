@@ -5,7 +5,7 @@ import handleError from '../../utils/handleError';
 export default (req: Request, res: Response, next: NextFunction): void => {
 	try {
 		// If the user is not an admin, throw an error
-		if (req.tokenData.isAdmin) {
+		if (!req.tokenData.isAdmin) {
 			throw new Error('Insufficient permissions');
 		}
 

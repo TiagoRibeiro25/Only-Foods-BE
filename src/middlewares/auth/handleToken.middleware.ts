@@ -1,7 +1,6 @@
 import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { getCookiesOptions, getDeleteCookiesOptions } from '../../config/cookies.config';
-import prisma from '../../config/db.config';
 import jwtConfig from '../../config/jwt.config';
 import redis from '../../config/redis.config';
 import { DecodedToken, Request } from '../../types';
@@ -24,24 +23,18 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
 
 			// Find the token in Redis
-			const userTokens = JSON.parse(await redis.get(decoded.id.toString()));
+			const userData = JSON.parse(await redis.get(decoded.id.toString()));
 
 			// Check if the token is whitelisted (not revoked)
-			if (token !== userTokens[0] && token !== userTokens[1]) {
+			if (token !== userData.tokens[0] && token !== userData.tokens[1]) {
 				throw new Error('Token revoked');
 			}
 
+			decoded.isAdmin = userData.status.isAdmin;
+			decoded.isBlocked = userData.status.isBlocked;
+
 			// If the token was generated 30 minutes ago, generate a new one
 			if (Date.now() - decoded.iat * 1000 > jwtConfig.generateNewTokenInterval) {
-				// Get the user from the database to update isBlocked and isAdmin
-				const user = await prisma.user.findUnique({
-					where: { id: decoded.id },
-					select: { isAdmin: true, blocked: true },
-				});
-
-				decoded.isAdmin = user?.isAdmin || false;
-				decoded.isBlocked = user?.blocked || false;
-
 				const newToken: string = generateToken.authToken({
 					id: decoded.id,
 					rememberMe: decoded.rememberMe,
@@ -53,8 +46,11 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				const cookieOptions = getCookiesOptions(decoded.rememberMe);
 				res.cookie('onlyfoods_jwt', newToken, cookieOptions);
 
-				// Replace the value in redis with the new token
-				await redis.set(decoded.id.toString(), JSON.stringify([token, newToken]));
+				// Update the data in Redis
+				await redis.set(
+					decoded.id.toString(),
+					JSON.stringify({ status: { ...userData.status }, tokens: [token, newToken] }),
+				);
 				await redis.expire(decoded.id.toString(), cookieOptions.maxAge / 1000);
 			}
 

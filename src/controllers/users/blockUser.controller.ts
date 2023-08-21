@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import prisma from '../../config/db.config';
+import redis from '../../config/redis.config';
 import { Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
@@ -38,6 +39,18 @@ export default async (req: Request, res: Response): Promise<void> => {
 			where: { id },
 			data: { blocked: !blockStatus },
 		});
+
+		// Update the user in Redis (if he's logged in)
+		const redisUser = await redis.get(id.toString());
+		if (!redisUser) {
+			await redis.set(
+				id.toString(),
+				JSON.stringify({
+					status: { isAdmin: user.isAdmin, isBlocked: !blockStatus },
+					tokens: JSON.parse(redisUser).tokens,
+				}),
+			);
+		}
 
 		// Send the response
 		handleResponse({

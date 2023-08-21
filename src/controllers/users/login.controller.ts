@@ -47,7 +47,13 @@ export default async (req: Request, res: Response): Promise<void> => {
 		res.cookie('onlyfoods_jwt', token, cookieOptions);
 
 		// Add the token to Redis
-		await redis.set(user.id.toString(), JSON.stringify([token]));
+		await redis.set(
+			user.id.toString(),
+			JSON.stringify({
+				status: { isAdmin: user.isAdmin, isBlocked: user.blocked },
+				tokens: [token],
+			}),
+		);
 		await redis.expire(user.id.toString(), cookieOptions.maxAge / 1000);
 
 		// Prepare the user data to send it back
