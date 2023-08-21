@@ -42,7 +42,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 		// Update the user in Redis (if he's logged in)
 		const redisUser = await redis.get(id.toString());
-		if (!redisUser) {
+		if (redisUser) {
 			await redis.set(
 				id.toString(),
 				JSON.stringify({
