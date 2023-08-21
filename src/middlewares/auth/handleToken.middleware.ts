@@ -24,10 +24,10 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 			const decoded = jwt.verify(token, process.env.JWT_SECRET) as DecodedToken;
 
 			// Find the token in Redis
-			const userToken = await redis.get(decoded.id.toString());
+			const userTokens = JSON.parse(await redis.get(decoded.id.toString()));
 
 			// Check if the token is whitelisted (not revoked)
-			if (userToken !== token) {
+			if (token !== userTokens[0] && token !== userTokens[1]) {
 				throw new Error('Token revoked');
 			}
 
@@ -54,7 +54,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				res.cookie('onlyfoods_jwt', newToken, cookieOptions);
 
 				// Replace the value in redis with the new token
-				await redis.set(decoded.id.toString(), newToken);
+				await redis.set(decoded.id.toString(), JSON.stringify([token, newToken]));
 				await redis.expire(decoded.id.toString(), cookieOptions.maxAge / 1000);
 			}
 
