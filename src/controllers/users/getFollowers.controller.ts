@@ -8,6 +8,7 @@ interface FollowData {
 	id: number;
 	username: string;
 	description: string;
+	blocked: boolean;
 	userImage?: {
 		cloudinaryImage: string;
 	};
@@ -108,6 +109,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 				id: userData.id,
 				username: userData.username,
 				description: userData.description,
+				blocked: userData.blocked,
 				userImage: userData.userImage,
 				isAdmin: userData.isAdmin,
 				isFollowing: null,
