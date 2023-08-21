@@ -20,6 +20,7 @@ interface User {
 	following: {
 		followingId: number;
 	}[];
+	createdAt: Date;
 }
 
 interface ResponseData extends Omit<User, 'followers' | 'following'> {
@@ -50,6 +51,7 @@ const getUser = (id: number): Promise<User> => {
 			following: {
 				select: { followingId: true },
 			},
+			createdAt: true,
 		},
 	});
 };
