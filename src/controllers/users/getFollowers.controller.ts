@@ -48,6 +48,7 @@ function getUser(userId: number) {
 							id: true,
 							username: true,
 							description: true,
+							blocked: true,
 							isAdmin: true,
 							userImage: {
 								select: {
@@ -65,6 +66,7 @@ function getUser(userId: number) {
 							id: true,
 							username: true,
 							description: true,
+							blocked: true,
 							isAdmin: true,
 							userImage: {
 								select: {
@@ -97,14 +99,20 @@ export default async (req: Request, res: Response): Promise<void> => {
 			throw new Error('No users found');
 		}
 
-		const result: ResultItem[] = user[type].map((item: UserFollower | UserFollowing) => ({
-			id: item[type].id,
-			username: item[type].username,
-			description: item[type].description,
-			userImage: item[type].userImage,
-			isAdmin: item[type].isAdmin,
-			isFollowing: null,
-		}));
+		const result: ResultItem[] = user[type].map((item: UserFollower | UserFollowing) => {
+			const isFollower = 'follower' in item;
+
+			const userData = isFollower ? item.follower : item.following;
+
+			return {
+				id: userData.id,
+				username: userData.username,
+				description: userData.description,
+				userImage: userData.userImage,
+				isAdmin: userData.isAdmin,
+				isFollowing: null,
+			};
+		});
 
 		const tokenDataId = req.tokenData?.id;
 		const followingIds = result.map(item => item.id);
