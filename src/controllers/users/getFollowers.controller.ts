@@ -116,14 +116,12 @@ export default async (req: Request, res: Response): Promise<void> => {
 			};
 		});
 
-		const tokenDataId = req.tokenData?.id;
-		const followingIds = result.map(item => item.id);
-
 		// Check if logged user is following any of the users
-		if (tokenDataId && followingIds.includes(tokenDataId)) {
+		const followingIds = result.map(item => item.id);
+		if (req.tokenData?.id && followingIds.length > 0) {
 			const relations: Relation[] = await prisma.following.findMany({
 				where: {
-					followerId: tokenDataId,
+					followerId: req.tokenData?.id,
 					followingId: { in: followingIds },
 				},
 				select: {
@@ -137,7 +135,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 
 			for (const item of result) {
 				// Check if logged user is the same as the current user
-				if (item.id === tokenDataId) {
+				if (item.id === req.tokenData?.id) {
 					item.isFollowing = null;
 				} else {
 					// Check if the current user is being followed by the logged user
