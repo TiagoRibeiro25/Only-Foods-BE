@@ -8,6 +8,7 @@ interface User {
 	id: number;
 	username: string;
 	email: string;
+	resetPasswordToken: string,
 	description: string;
 	blocked: boolean;
 	isAdmin: boolean;
@@ -39,6 +40,7 @@ const getUser = (id: number): Promise<User> => {
 			id: true,
 			username: true,
 			email: true,
+			resetPasswordToken: true,
 			description: true,
 			blocked: true,
 			isAdmin: true,
@@ -88,6 +90,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 				following: user.following.length,
 				isLoggedUser: false,
 				email: undefined,
+				resetPasswordToken: undefined,
 			};
 
 			// If there's a token,
