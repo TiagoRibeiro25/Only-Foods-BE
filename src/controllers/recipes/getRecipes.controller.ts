@@ -156,7 +156,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 			});
 		}
 
-		// Calculate the tonal number of recipes
+		// Calculate the total number of recipes
 		let totalRecipes: number;
 		if (filter === 'following') {
 			totalRecipes = await prisma.recipe.count({
@@ -168,7 +168,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 			totalRecipes = await prisma.recipe.count();
 		}
 
-		// Calculate the time created ago (e.g. 2 hours ago)
 		const result = recipes.map(recipe => {
 			return {
 				...recipe,
