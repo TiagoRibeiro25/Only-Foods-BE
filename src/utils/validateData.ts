@@ -41,6 +41,7 @@ const username = (usernameInput: string): boolean => {
 /**
  * Validate a description
  * - Can have letters, numbers, spaces, and common punctuation marks
+ * - Can't have more than 10 "\n" characters
  * - Must be between 10 and 150 characters
  * @param descriptionInput - The description to validate
  * @returns {boolean} - Whether the description is valid or not
@@ -52,6 +53,12 @@ const description = (descriptionInput: string): boolean => {
 
 	const description = descriptionInput.trim();
 
+	const newLineRegex = /\n/g;
+	const newLineMatches = description.match(newLineRegex);
+	if (newLineMatches && newLineMatches.length > 10) {
+		return false;
+	}
+
 	const isValidLength = description.length >= 10 && description.length <= 150;
 	return isValidLength;
 };
@@ -59,6 +66,7 @@ const description = (descriptionInput: string): boolean => {
 /**
  * Validate a recipe description
  * - Can have letters, numbers, spaces, and common punctuation marks
+ * - Can't have more than 10 "\n" characters
  * - Must be between 3 and 550 characters
  * @param recipeDescriptionInput - The recipe description to validate
  * @returns {boolean} - Whether the recipe description is valid or not
@@ -69,6 +77,12 @@ const recipeDescription = (recipeDescriptionInput: string): boolean => {
 	}
 
 	const recipeDescription = recipeDescriptionInput.trim();
+
+	const newLineRegex = /\n/g;
+	const newLineMatches = recipeDescription.match(newLineRegex);
+	if (newLineMatches && newLineMatches.length > 10) {
+		return false;
+	}
 
 	const isValidLength = recipeDescription.length >= 10 && recipeDescription.length <= 550;
 	return isValidLength;
