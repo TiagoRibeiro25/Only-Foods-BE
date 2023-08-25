@@ -66,6 +66,7 @@ describe('description', () => {
 		const invalidDescriptions = [
 			'Short',
 			'A very long description that exceeds the maximum limit of 200 characters. A very long description that exceeds the maximum limit of 200 characters. A very long description that exceeds the maximum limit of 200 characters.',
+			'Hello\n\n\nWorld\n\n\n!\n\n \n\n\n :)',
 		];
 
 		invalidDescriptions.forEach(description => {
