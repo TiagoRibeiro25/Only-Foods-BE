@@ -14,6 +14,14 @@ router.get(
 	RecipesController.getRecipes,
 );
 
+// Search Recipes
+router.get(
+	'/search',
+	AuthMiddleware.handleToken,
+	RecipesMiddleware.searchRecipes,
+	RecipesController.searchRecipes,
+);
+
 // Get a Recipe
 router.get(
 	'/:id',
