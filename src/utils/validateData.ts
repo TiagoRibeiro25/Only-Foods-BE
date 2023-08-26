@@ -169,11 +169,6 @@ const commentContent = (commentContentInput: string): boolean => {
  * @returns {boolean} - Whether the image is valid or not
  */
 const base64Image = (imageInput: Base64Img): boolean => {
-	// check if the image is more than 1MB
-	if (imageInput.length > 1e6) {
-		return false;
-	}
-
 	const base64Regex =
 		/^data:image\/(?:gif|png|jpeg|bmp|webp)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9+/])+={0,2}/;
 
