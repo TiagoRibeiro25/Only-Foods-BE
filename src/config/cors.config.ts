@@ -13,7 +13,7 @@ import { CorsOptions } from 'cors';
  */
 const corsConfig: CorsOptions = {
 	origin: (origin, callback) => {
-		if (process.env.NODE_ENV !== 'production') {
+		if (process.env.NODE_ENV === 'production') {
 			if (origin === process.env.FRONTEND_URL) {
 				callback(null, true); // Allow the request
 			} else {
