@@ -21,7 +21,7 @@ const corsConfig: CorsOptions = {
 				console.log('origin', origin);
 				console.log('process.env.FRONTEND_URL', process.env.FRONTEND_URL);
 
-				callback(new Error('Not allowed by CORS')); // Throw an error if origin doesn't match
+				callback(null, false);
 			}
 		} else {
 			callback(null, true); // Allow all requests in development mode
