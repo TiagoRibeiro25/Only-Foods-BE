@@ -3,7 +3,7 @@ import { CorsOptions } from 'cors';
 /**
  * CORS Configuration
  *
- * This configuration will check if the origin of the request is the same as the frontend URL.
+ * This configuration will check if the origin of the request is the same as the frontend URL or if it's undefined (for example, when the request is made from Postman)
  * If it is, it will allow the request. If it's not, it will throw an error.
  * This is to prevent CSRF attacks.
  *
@@ -14,7 +14,7 @@ import { CorsOptions } from 'cors';
 const corsConfig: CorsOptions = {
 	origin: (origin, callback) => {
 		if (process.env.NODE_ENV === 'production') {
-			if (origin === process.env.FRONTEND_URL) {
+			if (!origin || origin === process.env.FRONTEND_URL) {
 				callback(null, true); // Allow the request
 			} else {
 				console.log('origin: ', origin);
