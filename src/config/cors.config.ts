@@ -13,17 +13,18 @@ import { CorsOptions } from 'cors';
  */
 const corsConfig: CorsOptions = {
 	origin: (origin, callback) => {
-		if (process.env.NODE_ENV === 'production') {
+		if (process.env.NODE_ENV !== 'production') {
 			if (origin === process.env.FRONTEND_URL) {
 				callback(null, true); // Allow the request
 			} else {
-				callback(new Error('Not allowed by CORS')); // Throw an error if origin doesn't match (don't allow the request)
+				callback(new Error('Not allowed by CORS')); // Throw an error if origin doesn't match
 			}
 		} else {
 			callback(null, true); // Allow all requests in development mode
 		}
 	},
 	credentials: true, // Enable sending and receiving cookies from the client-side
+	maxAge: 86400, // How long the results of a preflight request can be cached in a preflight result cache (in seconds)
 };
 
 export default corsConfig;
