@@ -40,7 +40,6 @@ export default async (req: Request, res: Response): Promise<void> => {
 				images.push({
 					cloudinaryId: result.public_id,
 					cloudinaryImage: result.secure_url,
-					// recipeId: image.recipeId,
 				});
 			}),
 		);
