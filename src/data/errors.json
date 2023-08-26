@@ -76,6 +76,10 @@
 		"status": 401
 	},
 	{
+		"message": "Not allowed by CORS",
+		"status": 403
+	},
+	{
 		"message": "Invalid token",
 		"status": 403
 	},
