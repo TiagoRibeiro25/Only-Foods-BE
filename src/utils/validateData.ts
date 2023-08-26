@@ -175,7 +175,8 @@ const base64Image = (imageInput: Base64Img): boolean => {
 	}
 
 	const base64Regex =
-		/^data:image\/(?:gif|png|jpeg|bmp|webp)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9]|[+/])+={0,2}/;
+		/^data:image\/(?:gif|png|jpeg|bmp|webp)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9+/])+={0,2}/;
+
 	return base64Regex.test(imageInput);
 };
 
