@@ -14,8 +14,9 @@ interface User {
 	id: number;
 	username: string;
 	description: string;
-	isAdmin: boolean;
 	blocked: boolean;
+	isAdmin: boolean;
+	createdAt: Date;
 	userImage: {
 		cloudinaryImage: string;
 	};
@@ -53,8 +54,9 @@ function getUsers(keyword: string, page: number, limit: number): Promise<User[]>
 			id: true,
 			username: true,
 			description: true,
-			isAdmin: true,
 			blocked: true,
+			isAdmin: true,
+			createdAt: true,
 			userImage: {
 				select: { cloudinaryImage: true },
 			},
