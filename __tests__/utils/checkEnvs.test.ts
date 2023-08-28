@@ -23,7 +23,9 @@ describe('checkEnvs', () => {
 			CLOUDINARY_API_KEY: 'api-key',
 			CLOUDINARY_API_SECRET: 'api-secret',
 			DATABASE_URL: 'postgresql://localhost:5432/my_db',
-			REDIS_URL: 'redis://localhost:6379',
+			REDIS_HOST: 'localhost',
+			REDIS_PORT: '6379',
+			REDIS_DB: '0',
 			FRONTEND_URL: 'http://localhost:3000',
 			DOMAIN: 'localhost',
 		};
@@ -44,7 +46,9 @@ describe('checkEnvs', () => {
 			MAILJET_SECRET_KEY: 'secret-key',
 			MAILJET_FROM_EMAIL: 'noreply@example.com',
 			DATABASE_URL: 'mongodb://localhost:27017/my_db',
-			REDIS_URL: 'redis://localhost:6379',
+			REDIS_HOST: 'localhost',
+			REDIS_PORT: '6379',
+			REDIS_DB: '0',
 			FRONTEND_URL: 'http://localhost:3000',
 			DOMAIN: 'localhost',
 		};
