@@ -13,6 +13,9 @@ node_modules/
 # Ignore the "dist" folder directory (where the compiled code goes)
 dist/
 
+# Ignore the docker volume directory
+db/
+
 # Migrations folder
 prisma/migrations/
 
