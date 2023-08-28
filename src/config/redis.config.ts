@@ -18,8 +18,6 @@ const connectionOptions = {
 const redis = new Redis({
 	host: process.env.REDIS_HOST,
 	port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
-	password:
-		process.env.NODE_ENV === 'production' ? process.env.REDIS_PASSWORD : undefined,
 	db: 0,
 	...connectionOptions,
 });
