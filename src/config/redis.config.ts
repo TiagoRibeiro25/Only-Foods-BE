@@ -1,8 +1,5 @@
 import Redis from 'ioredis';
 
-// Connection URL
-const url: string = process.env.REDIS_URL;
-
 // Configure connection options with a timeout
 const connectionOptions = {
 	retryStrategy: (times: number) => {
@@ -17,6 +14,14 @@ const connectionOptions = {
 };
 
 // Connect to Redis with the specified options
-const redis = new Redis(url, connectionOptions);
+// const redis = new Redis(url, connectionOptions);
+const redis = new Redis({
+	host: process.env.REDIS_HOST,
+	port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
+	password:
+		process.env.NODE_ENV === 'production' ? process.env.REDIS_PASSWORD : undefined,
+	db: 0,
+	...connectionOptions,
+});
 
 export default redis;
