@@ -16,7 +16,7 @@ const connectionOptions = {
 // Connect to Redis with the specified options
 const redis = new Redis({
 	host: process.env.REDIS_HOST,
-	port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
+	port: parseInt(process.env.REDIS_PORT),
 	db: 0,
 	...connectionOptions,
 });
