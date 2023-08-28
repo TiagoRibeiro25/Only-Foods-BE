@@ -89,8 +89,8 @@ In order to run this project, you need to have installed
 
 You also need to have access to the a:
 
-* PostgreSQL database
-* Redis database
+* PostgreSQL database (or use the provided docker-compose file)
+* Redis database (or use the provided docker-compose file)
 * Cloudinary account
 * Mailjet account
 
@@ -126,19 +126,21 @@ You also need to have access to the a:
    DOMAIN
    ```
 
-4. Run the migrations
+4. Have a PostgreSQL database and Redis database running (or use the provided docker-compose file) and update the DATABASE_URL and REDIS_URL variables in the .env file
+
+5. Run the migrations
 
    ```sh
    npx prisma migrate dev --name init
    ```
 
-5. Generate the prisma client
+6. Generate the prisma client
 
    ```sh
    npx prisma generate
    ```
 
-6. Run the project
+7. Run the project
 
    ```sh
    npm run dev
