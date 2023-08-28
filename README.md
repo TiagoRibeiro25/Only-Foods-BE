@@ -74,6 +74,7 @@ This project was made as a side project to elevate my skills in Prisma and Types
 * [Redis](https://redis.io/)
 * [Cloudinary](https://cloudinary.com/)
 * [Mailjet](https://www.mailjet.com/)
+* [Docker](https://www.docker.com/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
