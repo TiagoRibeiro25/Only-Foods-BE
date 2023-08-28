@@ -122,7 +122,9 @@ You also need to have access to the a:
    CLOUDINARY_API_KEY
    CLOUDINARY_API_SECRET
    DATABASE_URL
-   REDIS_URL
+   REDIS_HOST
+   REDIS_PORT
+   REDIS_DB
    FRONTEND_URL
    DOMAIN
    ```
