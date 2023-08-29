@@ -8,7 +8,7 @@ interface User {
 	id: number;
 	username: string;
 	email: string;
-	resetPasswordToken: string,
+	resetPasswordToken: string;
 	description: string;
 	blocked: boolean;
 	isAdmin: boolean;
