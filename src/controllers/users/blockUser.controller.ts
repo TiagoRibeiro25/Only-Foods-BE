@@ -7,6 +7,8 @@ import handleResponse from '../../utils/handleResponse';
 
 interface User {
 	id: number;
+	username: string;
+	password: string;
 	blocked: boolean;
 	isAdmin: boolean;
 }
@@ -18,7 +20,13 @@ export default async (req: Request, res: Response): Promise<void> => {
 		// Get the user to block
 		const user: User = await prisma.user.findUnique({
 			where: { id },
-			select: { id: true, blocked: true, isAdmin: true },
+			select: {
+				id: true,
+				username: true,
+				password: true,
+				blocked: true,
+				isAdmin: true,
+			},
 		});
 
 		// Check if the user exists
@@ -46,7 +54,12 @@ export default async (req: Request, res: Response): Promise<void> => {
 			await redis.set(
 				id.toString(),
 				JSON.stringify({
-					status: { isAdmin: user.isAdmin, isBlocked: !blockStatus },
+					status: {
+						username: user.username,
+						password: user.password,
+						isAdmin: user.isAdmin,
+						isBlocked: !blockStatus,
+					},
 					tokens: JSON.parse(redisUser).tokens,
 				}),
 			);

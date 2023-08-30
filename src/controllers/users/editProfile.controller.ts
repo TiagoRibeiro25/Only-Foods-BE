@@ -2,6 +2,7 @@ import { UploadApiResponse } from 'cloudinary';
 import { Response } from 'express';
 import cloudinary from '../../config/cloudinary.config';
 import prisma from '../../config/db.config';
+import redis from '../../config/redis.config';
 import { Base64Img, Request } from '../../types';
 import handleError from '../../utils/handleError';
 import handleResponse from '../../utils/handleResponse';
@@ -91,6 +92,25 @@ export default async (req: Request, res: Response): Promise<void> => {
 				...updates,
 			},
 		});
+
+		if (updates.username) {
+			// Update the user in Redis (if he's logged in)
+			const redisUser = await redis.get(userId.toString());
+			if (redisUser) {
+				await redis.set(
+					userId.toString(),
+					JSON.stringify({
+						status: {
+							username: updates.username,
+							password: JSON.parse(redisUser).status.password,
+							isAdmin: JSON.parse(redisUser).status.isAdmin,
+							isBlocked: JSON.parse(redisUser).status.isBlocked,
+						},
+						tokens: JSON.parse(redisUser).tokens,
+					}),
+				);
+			}
+		}
 
 		// Send the response
 		handleResponse({

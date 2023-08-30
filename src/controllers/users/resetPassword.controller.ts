@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { Response } from 'express';
 import prisma from '../../config/db.config';
+import redis from '../../config/redis.config';
 import { Request } from '../../types';
 import generateToken from '../../utils/generateToken';
 import handleError from '../../utils/handleError';
@@ -23,6 +24,23 @@ export default async (req: Request, res: Response) => {
 				resetPasswordToken: newToken,
 			},
 		});
+
+		// Update the user in Redis (if he's logged in)
+		const redisUser = await redis.get(userId.toString());
+		if (redisUser) {
+			await redis.set(
+				userId.toString(),
+				JSON.stringify({
+					status: {
+						username: JSON.parse(redisUser).status.username,
+						password: passwordEncrypted,
+						isAdmin: JSON.parse(redisUser).status.isAdmin,
+						isBlocked: JSON.parse(redisUser).status.isBlocked,
+					},
+					tokens: JSON.parse(redisUser).tokens,
+				}),
+			);
+		}
 
 		// Send the response
 		handleResponse({
