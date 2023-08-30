@@ -30,8 +30,8 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				throw new Error('Token revoked');
 			}
 
-			decoded.isAdmin = userData.status.isAdmin;
-			decoded.isBlocked = userData.status.isBlocked;
+			decoded.isAdmin = userData.userData.isAdmin;
+			decoded.isBlocked = userData.userData.isBlocked;
 
 			// If the token was generated 30 minutes ago, generate a new one
 			if (Date.now() - decoded.iat * 1000 > jwtConfig.generateNewTokenInterval) {
@@ -49,7 +49,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				// Update the data in Redis
 				await redis.set(
 					decoded.id.toString(),
-					JSON.stringify({ status: { ...userData.status }, tokens: [token, newToken] }),
+					JSON.stringify({ status: { ...userData.userData }, tokens: [token, newToken] }),
 				);
 				await redis.expire(decoded.id.toString(), cookieOptions.maxAge / 1000);
 			}

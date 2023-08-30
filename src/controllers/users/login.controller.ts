@@ -50,7 +50,7 @@ export default async (req: Request, res: Response): Promise<void> => {
 		await redis.set(
 			user.id.toString(),
 			JSON.stringify({
-				status: {
+				userData: {
 					username: user.username,
 					password: user.password,
 					isAdmin: user.isAdmin,
