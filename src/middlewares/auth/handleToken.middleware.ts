@@ -49,7 +49,10 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 				// Update the data in Redis
 				await redis.set(
 					decoded.id.toString(),
-					JSON.stringify({ status: { ...userData.userData }, tokens: [token, newToken] }),
+					JSON.stringify({
+						userData: { ...userData.userData },
+						tokens: [token, newToken],
+					}),
 				);
 				await redis.expire(decoded.id.toString(), cookieOptions.maxAge / 1000);
 			}

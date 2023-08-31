@@ -100,11 +100,11 @@ export default async (req: Request, res: Response): Promise<void> => {
 				await redis.set(
 					userId.toString(),
 					JSON.stringify({
-						status: {
+						userData: {
 							username: updates.username,
-							password: JSON.parse(redisUser).status.password,
-							isAdmin: JSON.parse(redisUser).status.isAdmin,
-							isBlocked: JSON.parse(redisUser).status.isBlocked,
+							password: JSON.parse(redisUser).userData.password,
+							isAdmin: JSON.parse(redisUser).userData.isAdmin,
+							isBlocked: JSON.parse(redisUser).userData.isBlocked,
 						},
 						tokens: JSON.parse(redisUser).tokens,
 					}),

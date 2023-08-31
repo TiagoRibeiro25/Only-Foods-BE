@@ -31,11 +31,11 @@ export default async (req: Request, res: Response) => {
 			await redis.set(
 				userId.toString(),
 				JSON.stringify({
-					status: {
-						username: JSON.parse(redisUser).status.username,
+					userData: {
+						username: JSON.parse(redisUser).userData.username,
 						password: passwordEncrypted,
-						isAdmin: JSON.parse(redisUser).status.isAdmin,
-						isBlocked: JSON.parse(redisUser).status.isBlocked,
+						isAdmin: JSON.parse(redisUser).userData.isAdmin,
+						isBlocked: JSON.parse(redisUser).userData.isBlocked,
 					},
 					tokens: JSON.parse(redisUser).tokens,
 				}),
