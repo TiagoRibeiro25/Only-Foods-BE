@@ -7,8 +7,7 @@
 		"build": "npx tsc",
 		"start": "node dist/server.js",
 		"dev": "nodemon",
-		"test": "jest",
-		"resetDB": "ts-node src/scripts/resetDB.ts"
+		"test": "jest"
 	},
 	"keywords": [],
 	"author": "Tiago Ribeiro",
