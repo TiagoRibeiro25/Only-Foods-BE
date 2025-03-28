@@ -25,6 +25,8 @@ describe('checkEnvs', () => {
 			DATABASE_URL: 'postgresql://localhost:5432/my_db',
 			REDIS_HOST: 'localhost',
 			REDIS_PORT: '6379',
+			REDIS_USERNAME: 'username',
+			REDIS_PASSWORD: 'password',
 			REDIS_DB: '0',
 			FRONTEND_URL: 'http://localhost:3000',
 			DOMAIN: 'localhost',
@@ -49,6 +51,8 @@ describe('checkEnvs', () => {
 			REDIS_HOST: 'localhost',
 			REDIS_PORT: '6379',
 			REDIS_DB: '0',
+			REDIS_USERNAME: 'username',
+			REDIS_PASSWORD: 'password',
 			FRONTEND_URL: 'http://localhost:3000',
 			DOMAIN: 'localhost',
 		};
