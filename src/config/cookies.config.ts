@@ -1,11 +1,18 @@
 import { CookieOptions } from 'express';
 import jwtConfig from './jwt.config';
 
+// const cookieOptions: CookieOptions = {
+// 	httpOnly: true,
+// 	secure: process.env.NODE_ENV === 'production',
+// 	sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+// 	domain: process.env.NODE_ENV === 'production' ? process.env.DOMAIN : undefined,
+// };
+
 const cookieOptions: CookieOptions = {
 	httpOnly: true,
 	secure: process.env.NODE_ENV === 'production',
 	sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-	domain: process.env.NODE_ENV === 'production' ? process.env.DOMAIN : undefined,
+	path: '/',
 };
 
 export function getCookiesOptions(rememberMe = false): CookieOptions {
@@ -16,5 +23,9 @@ export function getCookiesOptions(rememberMe = false): CookieOptions {
 }
 
 export function getDeleteCookiesOptions(): CookieOptions {
-	return cookieOptions;
+	return {
+		...cookieOptions,
+		maxAge: 0,
+	};
 }
+
